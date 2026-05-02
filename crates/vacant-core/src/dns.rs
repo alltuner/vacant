@@ -8,9 +8,11 @@ use std::sync::{Arc, Mutex};
 use std::time::{Duration, Instant};
 
 use hickory_proto::op::{Message, MessageType, OpCode, Query, ResponseCode};
-use hickory_proto::rr::{Name, RecordType};
-use hickory_resolver::config::{ResolverConfig, ResolverOpts};
-use hickory_resolver::TokioAsyncResolver;
+use hickory_proto::rr::{Name, RData, RecordType};
+use hickory_proto::ProtoError;
+use hickory_resolver::config::ResolverConfig;
+use hickory_resolver::net::runtime::TokioRuntimeProvider;
+use hickory_resolver::TokioResolver;
 use thiserror::Error;
 use tokio::net::UdpSocket;
 use tokio::runtime::Runtime;
@@ -45,7 +47,7 @@ pub enum DnsError {
     #[error("resolver init: {0}")]
     Init(String),
     #[error("name parse: {0}")]
-    Name(#[from] hickory_proto::error::ProtoError),
+    Name(#[from] ProtoError),
 }
 
 /// Per-host RDAP semaphore: keeps each registry from being hammered.
@@ -97,7 +99,7 @@ impl RdapThrottle {
 }
 
 pub struct DnsClient {
-    resolver: TokioAsyncResolver,
+    resolver: TokioResolver,
     runtime: Arc<Runtime>,
     http: reqwest::Client,
     rdap_throttle: Arc<RdapThrottle>,
@@ -109,12 +111,17 @@ impl DnsClient {
     pub fn new(timeout: Duration) -> Result<Self, DnsError> {
         let runtime = Runtime::new().map_err(|e| DnsError::Init(e.to_string()))?;
         let runtime = Arc::new(runtime);
-        let resolver = runtime.block_on(async {
-            TokioAsyncResolver::tokio_from_system_conf()
-                .or_else(|_| Ok::<_, hickory_resolver::error::ResolveError>(
-                    TokioAsyncResolver::tokio(ResolverConfig::default(), ResolverOpts::default()),
-                ))
-        }).map_err(|e: hickory_resolver::error::ResolveError| DnsError::Init(e.to_string()))?;
+        let resolver = runtime
+            .block_on(async {
+                let builder = TokioResolver::builder_tokio().unwrap_or_else(|_| {
+                    TokioResolver::builder_with_config(
+                        ResolverConfig::default(),
+                        TokioRuntimeProvider::default(),
+                    )
+                });
+                builder.build()
+            })
+            .map_err(|e| DnsError::Init(e.to_string()))?;
         let http = rdap::build_client(timeout).map_err(|e| DnsError::Init(e.to_string()))?;
         Ok(Self {
             resolver,
@@ -209,7 +216,7 @@ impl DnsClient {
 }
 
 async fn run_full_job(
-    resolver: &TokioAsyncResolver,
+    resolver: &TokioResolver,
     http: &reqwest::Client,
     throttle: &RdapThrottle,
     health: &HostHealth,
@@ -260,7 +267,7 @@ fn rdap_host(base_url: &str) -> Option<String> {
 }
 
 async fn check_authoritative_async(
-    resolver: &TokioAsyncResolver,
+    resolver: &TokioResolver,
     health: &HostHealth,
     zone: &str,
     registered: &str,
@@ -272,8 +279,12 @@ async fn check_authoritative_async(
     };
     let all_nameservers: Vec<String> = match resolver.lookup(zone_name, RecordType::NS).await {
         Ok(lookup) => lookup
+            .answers()
             .iter()
-            .filter_map(|rdata| rdata.as_ns().map(|n| n.to_utf8().trim_end_matches('.').to_string()))
+            .filter_map(|record| match &record.data {
+                RData::NS(ns) => Some(ns.0.to_utf8().trim_end_matches('.').to_string()),
+                _ => None,
+            })
             .collect(),
         Err(e) => return DnsVerdict::Failure { detail: format!("zone NS lookup failed: {e}") },
     };
@@ -299,7 +310,7 @@ async fn check_authoritative_async(
     let mut last_error: Option<String> = None;
     for ns in healthy {
         let ip = match resolver.lookup_ip(&ns).await {
-            Ok(addrs) => match addrs.iter().next() {
+            Ok(addrs) => match addrs.iter().find(|ip| ip.is_ipv4()).or_else(|| addrs.iter().next()) {
                 Some(ip) => ip,
                 None => {
                     health.mark(&ns, format!("no A/AAAA for {ns}"));
@@ -336,11 +347,8 @@ async fn query_authoritative_async(
     ip: IpAddr,
     timeout: Duration,
 ) -> Result<Message, String> {
-    let mut msg = Message::new();
-    msg.set_id(rand::random::<u16>());
-    msg.set_op_code(OpCode::Query);
-    msg.set_message_type(MessageType::Query);
-    msg.set_recursion_desired(false);
+    let mut msg = Message::new(rand::random::<u16>(), MessageType::Query, OpCode::Query);
+    msg.metadata.recursion_desired = false;
     msg.add_query(Query::query(name.clone(), RecordType::NS));
 
     let bytes = msg.to_vec().map_err(|e| e.to_string())?;
@@ -364,15 +372,15 @@ async fn query_authoritative_async(
 }
 
 fn classify(response: &Message, ns: &str) -> Option<DnsVerdict> {
-    match response.response_code() {
+    match response.metadata.response_code {
         ResponseCode::NXDomain => Some(DnsVerdict::Available {
             detail: format!("NXDOMAIN via {ns}"),
         }),
         ResponseCode::NoError => {
             let has_ns = response
-                .answers()
+                .answers
                 .iter()
-                .chain(response.name_servers().iter())
+                .chain(response.authorities.iter())
                 .any(|r| r.record_type() == RecordType::NS);
             if has_ns {
                 Some(DnsVerdict::Registered {
