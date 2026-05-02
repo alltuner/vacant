@@ -9,6 +9,3 @@ members = [
 edition = "2021"
 license = "MIT"
 authors = ["David Poblador i Garcia <david@poblador.com>"]
-
-[workspace.dependencies]
-vacant-core = { path = "crates/vacant-core", version = "0.1.0" }
