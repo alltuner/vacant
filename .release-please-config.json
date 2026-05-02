@@ -10,7 +10,6 @@
     "crates/vacant-core": {
       "package-name": "vacant-core",
       "release-type": "rust",
-      "changelog-path": "../../CHANGELOG.md",
       "include-component-in-tag": true,
       "bump-minor-pre-major": true,
       "bump-patch-for-minor-pre-major": false,
@@ -36,7 +35,6 @@
     "crates/vacant-cli": {
       "package-name": "vacant",
       "release-type": "rust",
-      "changelog-path": "../../CHANGELOG.md",
       "include-component-in-tag": true,
       "bump-minor-pre-major": true,
       "bump-patch-for-minor-pre-major": false,
