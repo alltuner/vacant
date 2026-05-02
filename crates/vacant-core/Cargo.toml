@@ -5,6 +5,10 @@ edition.workspace = true
 license.workspace = true
 authors.workspace = true
 description = "Pure-Rust core for vacant: rules, DNS, RDAP."
+repository = "https://github.com/alltuner/vacant"
+homepage = "https://github.com/alltuner/vacant"
+keywords = ["domain", "availability", "dns", "registrar", "tld"]
+categories = ["network-programming"]
 
 [dev-dependencies]
 proptest = "1"
