@@ -1,0 +1,37 @@
+[project]
+name = "vacant"
+version = "0.0.1"
+description = "Name reservation for the upcoming `vacant` domain availability checker (a Rust CLI shipped via Homebrew/cargo, not pip)."
+readme = "README.md"
+requires-python = ">=3.9"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [
+    { name = "David Poblador i Garcia", email = "david@poblador.com" },
+]
+maintainers = [
+    { name = "All Tuner Labs", email = "david@poblador.com" },
+]
+keywords = ["domain", "availability", "dns", "registrar", "tld", "whois"]
+classifiers = [
+    "Development Status :: 1 - Planning",
+    "Intended Audience :: Developers",
+    "Intended Audience :: System Administrators",
+    "Topic :: Internet :: Name Service (DNS)",
+    "Topic :: System :: Networking",
+]
+
+[project.urls]
+Homepage = "https://github.com/alltuner/vacant"
+Repository = "https://github.com/alltuner/vacant"
+Issues = "https://github.com/alltuner/vacant/issues"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/vacant"]
+
+[tool.hatch.build.targets.sdist]
+include = ["src/vacant", "README.md", "LICENSE", "pyproject.toml"]

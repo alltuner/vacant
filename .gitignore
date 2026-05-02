@@ -1,0 +1,7 @@
+/target
+/pypi-placeholder/dist
+/pypi-placeholder/*.egg-info
+__pycache__/
+*.pyc
+.venv/
+.DS_Store

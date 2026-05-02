@@ -1,0 +1,15 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/vacant-core",
+    "crates/vacant-cli",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+authors = ["David Poblador i Garcia <david@poblador.com>"]
+
+[workspace.dependencies]
+vacant-core = { path = "crates/vacant-core" }

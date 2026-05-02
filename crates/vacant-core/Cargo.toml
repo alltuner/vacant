@@ -1,0 +1,23 @@
+[package]
+name = "vacant-core"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+description = "Pure-Rust core for vacant: rules, DNS, RDAP."
+
+[dev-dependencies]
+proptest = "1"
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+toml = "0.8"
+regex = "1"
+thiserror = "1"
+hickory-resolver = { version = "0.24", features = ["tokio-runtime"] }
+hickory-proto = "0.24"
+rand = "0.8"
+tokio = { version = "1", features = ["rt-multi-thread", "net", "time", "sync", "macros"] }
+futures = "0.3"
+reqwest = { version = "0.12", default-features = false, features = ["rustls-tls", "http2"] }
+rusqlite = { version = "0.32", features = ["bundled"] }
