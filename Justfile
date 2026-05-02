@@ -20,11 +20,11 @@ check:
     cargo fmt --all -- --check
     cargo clippy --workspace --all-targets -- -D warnings
 
-# Refresh data/rules.toml from the Public Suffix List (writes the file).
+# Refresh crates/vacant-cli/data/rules.toml from the Public Suffix List (writes the file).
 ingest-psl *args:
     uv run ingest/psl.py {{args}}
 
-# Refresh data/rules.toml with RDAP bootstrap data (writes the file).
+# Refresh crates/vacant-cli/data/rules.toml with RDAP bootstrap data (writes the file).
 ingest-rdap *args:
     uv run ingest/rdap.py {{args}}
 

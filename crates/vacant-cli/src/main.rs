@@ -10,7 +10,7 @@ use clap::{Parser, ValueEnum};
 use vacant_core::{check_many, CheckResult, DiskCache, DnsClient, RuleSet, Status};
 use serde::Serialize;
 
-const BUNDLED_RULES: &str = include_str!("../../../data/rules.toml");
+const BUNDLED_RULES: &str = include_str!("../data/rules.toml");
 
 #[derive(Parser, Debug)]
 #[command(name = "vacant", about = "Check domain availability via authoritative DNS.")]

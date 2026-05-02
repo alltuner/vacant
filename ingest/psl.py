@@ -22,7 +22,7 @@ from tomlkit import TOMLDocument, table
 from tomlkit.items import Table
 
 URL = "https://publicsuffix.org/list/public_suffix_list.dat"
-RULES = Path(__file__).resolve().parent.parent / "data" / "rules.toml"
+RULES = Path(__file__).resolve().parent.parent / "crates" / "vacant-cli" / "data" / "rules.toml"
 
 _VERSION_RE = re.compile(r"^//\s*VERSION:\s*(?P<v>\S+)")
 _COMMIT_RE = re.compile(r"^//\s*COMMIT:\s*(?P<c>[0-9a-f]+)", re.IGNORECASE)
