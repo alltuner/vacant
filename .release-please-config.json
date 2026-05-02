@@ -32,6 +32,12 @@
       "include-component-in-tag": true,
       "bump-minor-pre-major": true,
       "bump-patch-for-minor-pre-major": false,
+      "extra-files": [
+        {
+          "type": "generic",
+          "path": "Cargo.toml"
+        }
+      ],
       "changelog-sections": [
         { "type": "feat",     "section": "Features" },
         { "type": "fix",      "section": "Bug Fixes" },
