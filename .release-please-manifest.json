@@ -1,3 +1,4 @@
 {
-  ".": "0.1.0"
+  "crates/vacant-core": "0.1.0",
+  "crates/vacant-cli": "0.1.0"
 }

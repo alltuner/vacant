@@ -1,10 +1,43 @@
 {
+  "plugins": [
+    {
+      "type": "linked-versions",
+      "groupName": "vacant",
+      "components": ["vacant-core", "vacant"]
+    }
+  ],
   "packages": {
-    ".": {
+    "crates/vacant-core": {
+      "package-name": "vacant-core",
+      "release-type": "rust",
+      "changelog-path": "../../CHANGELOG.md",
+      "include-component-in-tag": true,
+      "bump-minor-pre-major": true,
+      "bump-patch-for-minor-pre-major": false,
+      "extra-files": [
+        {
+          "type": "generic",
+          "path": "../../Cargo.toml"
+        }
+      ],
+      "changelog-sections": [
+        { "type": "feat",     "section": "Features" },
+        { "type": "fix",      "section": "Bug Fixes" },
+        { "type": "refactor", "section": "Code Refactoring" },
+        { "type": "perf",     "section": "Performance Improvements" },
+        { "type": "chore",    "section": "Miscellaneous Chores" },
+        { "type": "docs",     "section": "Documentation Updates" },
+        { "type": "ci",       "section": "CI/CD Changes" },
+        { "type": "style",    "section": "Styling Changes" },
+        { "type": "build",    "section": "Build System" },
+        { "type": "test",     "section": "Tests" }
+      ]
+    },
+    "crates/vacant-cli": {
       "package-name": "vacant",
       "release-type": "rust",
-      "changelog-path": "CHANGELOG.md",
-      "include-component-in-tag": false,
+      "changelog-path": "../../CHANGELOG.md",
+      "include-component-in-tag": true,
       "bump-minor-pre-major": true,
       "bump-patch-for-minor-pre-major": false,
       "changelog-sections": [
