@@ -39,10 +39,13 @@ permissions:
 # If there's a prerelease-style suffix to the version, then the release(s)
 # will be marked as a prerelease.
 on:
-  pull_request:
   push:
+    # Only the user-facing binary tag should kick off a release. release-please
+    # creates both `vacant-core-vX.Y.Z` and `vacant-vX.Y.Z` for every release,
+    # and dist would otherwise spin up two concurrent runs racing on the same
+    # GitHub release. (NOTE: re-applied after every `dist generate`.)
     tags:
-      - '**[0-9]+.[0-9]+.[0-9]+*'
+      - 'vacant-v[0-9]+.[0-9]+.[0-9]+*'
 
 jobs:
   # Run 'dist plan' (or host) to determine what tasks we need to do
