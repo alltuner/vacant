@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.1](https://github.com/alltuner/vacant/compare/vacant-v0.2.0...vacant-v0.2.1) (2026-05-02)
+
+
+### Bug Fixes
+
+* bump vacant-core path-dep version constraint to 0.2.0 ([578f1dd](https://github.com/alltuner/vacant/commit/578f1ddbb6bbf505205981ef56092cfaec682dbe))
+
 ## [0.2.0](https://github.com/alltuner/vacant/compare/vacant-v0.1.1...vacant-v0.2.0) (2026-05-02)
 
 
