@@ -63,7 +63,7 @@ throttling (2 concurrent + 100ms gap) keep things polite under heavy use.
 
 ## Bundled data
 
-`crates/vacant-cli/data/rules.toml` ships baked into the binary at compile time. It carries:
+`data/rules.toml` ships baked into the binary at compile time. It carries:
 
 - The Public Suffix List ICANN section (~6900 zones)
 - IANA RDAP bootstrap URLs per TLD
@@ -80,8 +80,8 @@ just              # menu
 just build        # cargo build --release
 just test         # cargo nextest / cargo test
 just check        # fmt + clippy
-just ingest-psl   # refresh PSL data (writes crates/vacant-cli/data/rules.toml)
-just ingest-rdap  # refresh RDAP bootstrap (writes crates/vacant-cli/data/rules.toml)
+just ingest-psl   # refresh PSL data (writes data/rules.toml)
+just ingest-rdap  # refresh RDAP bootstrap (writes data/rules.toml)
 ```
 
 ## Etiquette

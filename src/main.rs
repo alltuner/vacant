@@ -8,7 +8,7 @@ use std::time::Duration;
 
 use clap::{Parser, ValueEnum};
 use serde::Serialize;
-use vacant_core::{check_many, CheckResult, DiskCache, DnsClient, RuleSet, Status};
+use vacant::{check_many, CheckResult, DiskCache, DnsClient, RuleSet, Status};
 
 const BUNDLED_RULES: &str = include_str!("../data/rules.toml");
 

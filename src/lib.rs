@@ -1,5 +1,5 @@
-// ABOUTME: Pure-Rust core library for vacant.
-// ABOUTME: Holds the rules engine; DNS, RDAP, and disk-cache will land in their own modules.
+// ABOUTME: Library surface for vacant: rules engine, DNS, RDAP, and disk-cache.
+// ABOUTME: The vacant binary in src/main.rs is the primary consumer.
 
 pub mod disk_cache;
 mod dns;
@@ -13,8 +13,3 @@ pub use orchestrator::{check_many, CheckResult};
 pub use rules::{
     LoadError, MatchResult, PreCheck, RuleSet, RuleViolation, Status, ZoneMatch, ZonePolicy,
 };
-
-/// Smoke-test entry point so the maturin binding has something to call.
-pub fn hello() -> &'static str {
-    "vacant-core: ready"
-}

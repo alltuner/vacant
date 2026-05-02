@@ -2025,18 +2025,9 @@ dependencies = [
 
 [[package]]
 name = "vacant"
-version = "0.2.1"
+version = "0.2.2"
 dependencies = [
  "clap",
- "serde",
- "serde_json",
- "vacant-core",
-]
-
-[[package]]
-name = "vacant-core"
-version = "0.2.1"
-dependencies = [
  "futures",
  "hickory-proto",
  "hickory-resolver",
@@ -2046,6 +2037,7 @@ dependencies = [
  "reqwest",
  "rusqlite",
  "serde",
+ "serde_json",
  "thiserror 1.0.69",
  "tokio",
  "toml",

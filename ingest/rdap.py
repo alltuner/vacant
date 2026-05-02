@@ -19,7 +19,7 @@ from tomlkit import TOMLDocument
 from tomlkit.items import Table
 
 URL = "https://data.iana.org/rdap/dns.json"
-RULES = Path(__file__).resolve().parent.parent / "crates" / "vacant-cli" / "data" / "rules.toml"
+RULES = Path(__file__).resolve().parent.parent / "data" / "rules.toml"
 
 
 def fetch() -> dict:
