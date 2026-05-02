@@ -14,6 +14,7 @@ jobs:
     outputs:
       releases_created: ${{ steps.release.outputs.releases_created }}
       paths_released: ${{ steps.release.outputs.paths_released }}
+      vacant_tag: ${{ steps.release.outputs['crates/vacant-cli--tag_name'] }}
     steps:
       - name: Run Release Please
         id: release
@@ -42,3 +43,18 @@ jobs:
       - name: cargo publish vacant
         if: contains(fromJson(needs.release-please.outputs.paths_released), 'crates/vacant-cli')
         run: cargo publish -p vacant --token ${{ secrets.CRATES_IO_TOKEN }}
+
+  # Chain into dist's workflow on release. Tags pushed by release-please using
+  # GITHUB_TOKEN do not trigger downstream workflows (GitHub safety feature),
+  # so we explicitly invoke the binary build via workflow_call.
+  binaries:
+    needs: [release-please, publish-crates]
+    if: needs.release-please.outputs.releases_created == 'true' && needs.release-please.outputs.vacant_tag != ''
+    uses: ./.github/workflows/release.yml
+    with:
+      tag: ${{ needs.release-please.outputs.vacant_tag }}
+    secrets: inherit
+    permissions:
+      contents: write
+      id-token: write
+      attestations: write
