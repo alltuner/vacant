@@ -2025,7 +2025,7 @@ dependencies = [
 
 [[package]]
 name = "vacant"
-version = "0.1.1"
+version = "0.2.0"
 dependencies = [
  "clap",
  "serde",
@@ -2035,7 +2035,7 @@ dependencies = [
 
 [[package]]
 name = "vacant-core"
-version = "0.1.1"
+version = "0.2.0"
 dependencies = [
  "futures",
  "hickory-proto",
