@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.2.2](https://github.com/alltuner/vacant/compare/vacant-v0.2.1...vacant-v0.2.2) (2026-05-02)
+
+
+### CI/CD Changes
+
+* add PR-CI (fmt, clippy, build, test) and clear pre-existing lints ([05aff1d](https://github.com/alltuner/vacant/commit/05aff1d7fd09d90fa78fd5b7c3cfbceb92c97d68))
+* **release:** auto-bump vacant-core path-dep version constraint ([e878273](https://github.com/alltuner/vacant/commit/e878273e8c3db43d70dc0dd875f6c2937566bf97))
+
 ## [0.2.1](https://github.com/alltuner/vacant/compare/vacant-v0.2.0...vacant-v0.2.1) (2026-05-02)
 
 
