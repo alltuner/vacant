@@ -3,8 +3,8 @@
 
 use std::str::FromStr;
 
-use vacant_core::{PreCheck, RuleSet, Status};
 use proptest::prelude::*;
+use vacant_core::{PreCheck, RuleSet, Status};
 
 const FIXTURE: &str = r#"
 [default]
@@ -214,8 +214,9 @@ proptest! {
     fn well_formed_label_proceeds(
         label in ldh_label(3, 30)
             .prop_filter("must be valid LDH", |s| {
-                !s.starts_with('-') && !s.ends_with('-')
-                    && !(s.len() >= 4 && &s[2..4] == "--" && !s.starts_with("xn--"))
+                !(s.starts_with('-')
+                    || s.ends_with('-')
+                    || s.len() >= 4 && &s[2..4] == "--" && !s.starts_with("xn--"))
             })
     ) {
         let rs = ruleset();

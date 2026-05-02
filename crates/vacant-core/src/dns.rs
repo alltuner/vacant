@@ -79,7 +79,10 @@ impl HostHealth {
 
     fn mark(&self, host: &str, reason: String) {
         let mut guard = self.blocked.lock().expect("host health lock");
-        guard.insert(host.to_string(), (Instant::now() + NS_HOST_COOLDOWN, reason));
+        guard.insert(
+            host.to_string(),
+            (Instant::now() + NS_HOST_COOLDOWN, reason),
+        );
     }
 }
 
@@ -144,11 +147,7 @@ impl DnsClient {
     }
 
     /// Run a batch of (zone, registered) pairs concurrently. Order preserved.
-    pub fn check_batch(
-        &self,
-        pairs: Vec<(String, String)>,
-        concurrency: usize,
-    ) -> Vec<DnsVerdict> {
+    pub fn check_batch(&self, pairs: Vec<(String, String)>, concurrency: usize) -> Vec<DnsVerdict> {
         let resolver = self.resolver.clone();
         let health = self.host_health.clone();
         let timeout = self.timeout;
@@ -223,11 +222,21 @@ async fn run_full_job(
     job: FullCheckJob,
     timeout: Duration,
 ) -> FullVerdict {
-    let dns = check_authoritative_async(resolver, health, &job.zone, &job.registered, timeout).await;
+    let dns =
+        check_authoritative_async(resolver, health, &job.zone, &job.registered, timeout).await;
     match dns {
-        DnsVerdict::Registered { detail } => FullVerdict { kind: "registered", detail },
-        DnsVerdict::Available { detail } => FullVerdict { kind: "available", detail },
-        DnsVerdict::Failure { detail } => FullVerdict { kind: "failure", detail },
+        DnsVerdict::Registered { detail } => FullVerdict {
+            kind: "registered",
+            detail,
+        },
+        DnsVerdict::Available { detail } => FullVerdict {
+            kind: "available",
+            detail,
+        },
+        DnsVerdict::Failure { detail } => FullVerdict {
+            kind: "failure",
+            detail,
+        },
         DnsVerdict::Nodata { detail } => match job.rdap_url {
             Some(base) => {
                 let host = rdap_host(&base).unwrap_or_else(|| base.clone());
@@ -275,7 +284,11 @@ async fn check_authoritative_async(
 ) -> DnsVerdict {
     let zone_name = match Name::from_str(zone) {
         Ok(n) => n,
-        Err(e) => return DnsVerdict::Failure { detail: format!("bad zone {zone}: {e}") },
+        Err(e) => {
+            return DnsVerdict::Failure {
+                detail: format!("bad zone {zone}: {e}"),
+            }
+        }
     };
     let all_nameservers: Vec<String> = match resolver.lookup(zone_name, RecordType::NS).await {
         Ok(lookup) => lookup
@@ -286,10 +299,16 @@ async fn check_authoritative_async(
                 _ => None,
             })
             .collect(),
-        Err(e) => return DnsVerdict::Failure { detail: format!("zone NS lookup failed: {e}") },
+        Err(e) => {
+            return DnsVerdict::Failure {
+                detail: format!("zone NS lookup failed: {e}"),
+            }
+        }
     };
     if all_nameservers.is_empty() {
-        return DnsVerdict::Failure { detail: format!("zone {zone} has no NS") };
+        return DnsVerdict::Failure {
+            detail: format!("zone {zone} has no NS"),
+        };
     }
 
     let healthy: Vec<String> = all_nameservers
@@ -304,13 +323,21 @@ async fn check_authoritative_async(
 
     let registered_name = match Name::from_str(registered) {
         Ok(n) => n,
-        Err(e) => return DnsVerdict::Failure { detail: format!("bad domain {registered}: {e}") },
+        Err(e) => {
+            return DnsVerdict::Failure {
+                detail: format!("bad domain {registered}: {e}"),
+            }
+        }
     };
 
     let mut last_error: Option<String> = None;
     for ns in healthy {
         let ip = match resolver.lookup_ip(&ns).await {
-            Ok(addrs) => match addrs.iter().find(|ip| ip.is_ipv4()).or_else(|| addrs.iter().next()) {
+            Ok(addrs) => match addrs
+                .iter()
+                .find(|ip| ip.is_ipv4())
+                .or_else(|| addrs.iter().next())
+            {
                 Some(ip) => ip,
                 None => {
                     health.mark(&ns, format!("no A/AAAA for {ns}"));
@@ -353,8 +380,12 @@ async fn query_authoritative_async(
 
     let bytes = msg.to_vec().map_err(|e| e.to_string())?;
     let bind_addr = if ip.is_ipv6() { "[::]:0" } else { "0.0.0.0:0" };
-    let sock = UdpSocket::bind(bind_addr).await.map_err(|e| e.to_string())?;
-    sock.connect(SocketAddr::new(ip, 53)).await.map_err(|e| e.to_string())?;
+    let sock = UdpSocket::bind(bind_addr)
+        .await
+        .map_err(|e| e.to_string())?;
+    sock.connect(SocketAddr::new(ip, 53))
+        .await
+        .map_err(|e| e.to_string())?;
 
     let send = sock.send(&bytes);
     tokio_timeout(timeout, send)

@@ -172,7 +172,6 @@ impl std::str::FromStr for RuleSet {
 }
 
 impl RuleSet {
-
     pub fn policy_for(&self, zone: &str) -> &ZonePolicy {
         self.zones
             .get(&zone.to_ascii_lowercase())
@@ -311,10 +310,16 @@ fn merge(default: &RawSpec, override_: &RawSpec) -> RawSpec {
     RawSpec {
         min_length: override_.min_length.or(default.min_length),
         max_length: override_.max_length.or(default.max_length),
-        charset: override_.charset.clone().or_else(|| default.charset.clone()),
+        charset: override_
+            .charset
+            .clone()
+            .or_else(|| default.charset.clone()),
         no_edge_hyphen: override_.no_edge_hyphen.or(default.no_edge_hyphen),
         no_tagged_hyphen: override_.no_tagged_hyphen.or(default.no_tagged_hyphen),
-        pattern: override_.pattern.clone().or_else(|| default.pattern.clone()),
+        pattern: override_
+            .pattern
+            .clone()
+            .or_else(|| default.pattern.clone()),
         forbid_pattern: override_
             .forbid_pattern
             .clone()

@@ -55,7 +55,12 @@ pub fn check_many(
         }
 
         match rules.precheck(&cleaned) {
-            PreCheck::Verdict { status, detail, zone, registered } => {
+            PreCheck::Verdict {
+                status,
+                detail,
+                zone,
+                registered,
+            } => {
                 results[i] = Some(CheckResult {
                     input: raw.clone(),
                     domain: registered,
@@ -65,7 +70,12 @@ pub fn check_many(
                     from_cache: false,
                 });
             }
-            PreCheck::Proceed { zone, registered, rdap, .. } => {
+            PreCheck::Proceed {
+                zone,
+                registered,
+                rdap,
+                ..
+            } => {
                 pending.push((i, zone, registered, rdap));
             }
         }

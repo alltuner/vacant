@@ -7,13 +7,16 @@ use std::str::FromStr;
 use std::time::Duration;
 
 use clap::{Parser, ValueEnum};
-use vacant_core::{check_many, CheckResult, DiskCache, DnsClient, RuleSet, Status};
 use serde::Serialize;
+use vacant_core::{check_many, CheckResult, DiskCache, DnsClient, RuleSet, Status};
 
 const BUNDLED_RULES: &str = include_str!("../data/rules.toml");
 
 #[derive(Parser, Debug)]
-#[command(name = "vacant", about = "Check domain availability via authoritative DNS.")]
+#[command(
+    name = "vacant",
+    about = "Check domain availability via authoritative DNS."
+)]
 struct Cli {
     /// Domains to check; '-' or no args reads stdin (one per line).
     #[arg(value_name = "DOMAIN")]
@@ -52,11 +55,16 @@ struct Cli {
     rules: Option<PathBuf>,
 
     // status filters - additive; none means "all"
-    #[arg(long)] available: bool,
-    #[arg(long)] registered: bool,
-    #[arg(long)] reserved: bool,
-    #[arg(long)] invalid: bool,
-    #[arg(long)] unknown: bool,
+    #[arg(long)]
+    available: bool,
+    #[arg(long)]
+    registered: bool,
+    #[arg(long)]
+    reserved: bool,
+    #[arg(long)]
+    invalid: bool,
+    #[arg(long)]
+    unknown: bool,
 }
 
 #[derive(Copy, Clone, Debug, ValueEnum)]
@@ -94,7 +102,10 @@ fn run(cli: Cli) -> Result<(), Box<dyn std::error::Error>> {
     let cache = if cli.no_cache {
         None
     } else {
-        let path = cli.cache_path.clone().unwrap_or_else(DiskCache::default_path);
+        let path = cli
+            .cache_path
+            .clone()
+            .unwrap_or_else(DiskCache::default_path);
         Some(DiskCache::open(&path)?)
     };
 
@@ -112,14 +123,15 @@ fn run(cli: Cli) -> Result<(), Box<dyn std::error::Error>> {
     );
 
     let filter = StatusFilter::from_cli(&cli);
-    let final_results: Vec<&CheckResult> = results
-        .iter()
-        .filter(|r| filter.allows(r.status))
-        .collect();
+    let final_results: Vec<&CheckResult> =
+        results.iter().filter(|r| filter.allows(r.status)).collect();
 
     emit(&final_results, cli.output, cli.detail)?;
 
-    if final_results.iter().any(|r| matches!(r.status, Status::Unknown)) {
+    if final_results
+        .iter()
+        .any(|r| matches!(r.status, Status::Unknown))
+    {
         std::process::exit(2);
     }
     Ok(())
@@ -132,11 +144,21 @@ struct StatusFilter {
 impl StatusFilter {
     fn from_cli(cli: &Cli) -> Self {
         let mut allowed = Vec::new();
-        if cli.available { allowed.push(Status::Available); }
-        if cli.registered { allowed.push(Status::Registered); }
-        if cli.reserved { allowed.push(Status::Reserved); }
-        if cli.invalid { allowed.push(Status::Invalid); }
-        if cli.unknown { allowed.push(Status::Unknown); }
+        if cli.available {
+            allowed.push(Status::Available);
+        }
+        if cli.registered {
+            allowed.push(Status::Registered);
+        }
+        if cli.reserved {
+            allowed.push(Status::Reserved);
+        }
+        if cli.invalid {
+            allowed.push(Status::Invalid);
+        }
+        if cli.unknown {
+            allowed.push(Status::Unknown);
+        }
         Self { allowed }
     }
     fn allows(&self, status: Status) -> bool {
@@ -151,7 +173,9 @@ fn collect_inputs(args: &[String]) -> io::Result<Vec<String>> {
         for line in stdin.lock().lines() {
             let line = line?;
             let s = line.trim();
-            if s.is_empty() || s.starts_with('#') { continue; }
+            if s.is_empty() || s.starts_with('#') {
+                continue;
+            }
             out.push(s.to_string());
         }
         return Ok(out);
@@ -186,20 +210,38 @@ fn emit(results: &[&CheckResult], format: OutputFormat, detail: bool) -> io::Res
         }
         OutputFormat::Text => {
             for r in results {
-                writeln!(out, "{}", if r.domain.is_empty() { &r.input } else { &r.domain })?;
+                writeln!(
+                    out,
+                    "{}",
+                    if r.domain.is_empty() {
+                        &r.input
+                    } else {
+                        &r.domain
+                    }
+                )?;
             }
         }
         OutputFormat::Table => {
             if detail {
-                writeln!(out, "{:<40} {:<10} {:<10} {:<6} {}", "domain", "zone", "status", "cache", "detail")?;
+                writeln!(
+                    out,
+                    "{:<40} {:<10} {:<10} {:<6} detail",
+                    "domain", "zone", "status", "cache"
+                )?;
                 writeln!(out, "{}", "-".repeat(100))?;
                 for r in results {
-                    writeln!(out, "{:<40} {:<10} {:<10} {:<6} {}",
-                        r.domain, r.zone, r.status.as_str(),
-                        if r.from_cache { "yes" } else { "" }, r.detail)?;
+                    writeln!(
+                        out,
+                        "{:<40} {:<10} {:<10} {:<6} {}",
+                        r.domain,
+                        r.zone,
+                        r.status.as_str(),
+                        if r.from_cache { "yes" } else { "" },
+                        r.detail
+                    )?;
                 }
             } else {
-                writeln!(out, "{:<40} {}", "domain", "status")?;
+                writeln!(out, "{:<40} status", "domain")?;
                 writeln!(out, "{}", "-".repeat(60))?;
                 for r in results {
                     writeln!(out, "{:<40} {}", r.domain, r.status.as_str())?;
