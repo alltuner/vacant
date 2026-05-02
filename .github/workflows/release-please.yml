@@ -1,0 +1,44 @@
+name: Release Please
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    outputs:
+      releases_created: ${{ steps.release.outputs.releases_created }}
+      paths_released: ${{ steps.release.outputs.paths_released }}
+    steps:
+      - name: Run Release Please
+        id: release
+        uses: googleapis/release-please-action@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          config-file: .release-please-config.json
+          manifest-file: .release-please-manifest.json
+
+  publish-crates:
+    needs: release-please
+    if: needs.release-please.outputs.releases_created == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: dtolnay/rust-toolchain@stable
+
+      - name: cargo publish vacant-core
+        if: contains(fromJson(needs.release-please.outputs.paths_released), 'crates/vacant-core')
+        run: cargo publish -p vacant-core --token ${{ secrets.CRATES_IO_TOKEN }}
+
+      - name: wait for crates.io to index vacant-core
+        if: contains(fromJson(needs.release-please.outputs.paths_released), 'crates/vacant-core')
+        run: sleep 30
+
+      - name: cargo publish vacant
+        if: contains(fromJson(needs.release-please.outputs.paths_released), 'crates/vacant-cli')
+        run: cargo publish -p vacant --token ${{ secrets.CRATES_IO_TOKEN }}

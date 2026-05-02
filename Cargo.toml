@@ -9,3 +9,8 @@ members = [
 edition = "2021"
 license = "MIT"
 authors = ["David Poblador i Garcia <david@poblador.com>"]
+
+# The profile that 'dist' will build with
+[profile.dist]
+inherits = "release"
+lto = "thin"
