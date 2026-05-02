@@ -13,18 +13,18 @@ run *args: build
 
 # Run all rust tests, parallel via nextest if available.
 test:
-    @cargo nextest run --workspace 2>/dev/null || cargo test --workspace
+    @cargo nextest run 2>/dev/null || cargo test
 
 # Format + clippy.
 check:
     cargo fmt --all -- --check
-    cargo clippy --workspace --all-targets -- -D warnings
+    cargo clippy --all-targets -- -D warnings
 
-# Refresh crates/vacant-cli/data/rules.toml from the Public Suffix List (writes the file).
+# Refresh data/rules.toml from the Public Suffix List (writes the file).
 ingest-psl *args:
     uv run ingest/psl.py {{args}}
 
-# Refresh crates/vacant-cli/data/rules.toml with RDAP bootstrap data (writes the file).
+# Refresh data/rules.toml with RDAP bootstrap data (writes the file).
 ingest-rdap *args:
     uv run ingest/rdap.py {{args}}
 

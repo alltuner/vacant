@@ -4,7 +4,7 @@
 use std::str::FromStr;
 
 use proptest::prelude::*;
-use vacant_core::{PreCheck, RuleSet, Status};
+use vacant::{PreCheck, RuleSet, Status};
 
 const FIXTURE: &str = r#"
 [default]
