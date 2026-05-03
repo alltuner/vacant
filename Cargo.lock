@@ -2091,7 +2091,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "vacant-py"
+name = "vacant-pyext"
 version = "0.0.0"
 dependencies = [
  "pyo3",
