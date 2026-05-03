@@ -1,6 +1,6 @@
 {
   "packages": {
-    ".": {
+    "crates/vacant": {
       "changelog-path": "CHANGELOG.md",
       "release-type": "rust",
       "include-component-in-tag": false,

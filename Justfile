@@ -5,7 +5,7 @@ default:
 
 # Build the release binary.
 build:
-    cargo build --release
+    cargo build --release -p vacant
 
 # Run the binary on stdin or args (after a fresh build).
 run *args: build
@@ -13,18 +13,18 @@ run *args: build
 
 # Run all rust tests, parallel via nextest if available.
 test:
-    @cargo nextest run 2>/dev/null || cargo test
+    @cargo nextest run --workspace 2>/dev/null || cargo test --workspace
 
 # Format + clippy.
 check:
     cargo fmt --all -- --check
-    cargo clippy --all-targets -- -D warnings
+    cargo clippy --workspace --all-targets -- -D warnings
 
-# Refresh data/rules.toml from the Public Suffix List (writes the file).
+# Refresh crates/vacant/data/rules.toml from the Public Suffix List (writes the file).
 ingest-psl *args:
     uv run ingest/psl.py {{args}}
 
-# Refresh data/rules.toml with RDAP bootstrap data (writes the file).
+# Refresh crates/vacant/data/rules.toml with RDAP bootstrap data (writes the file).
 ingest-rdap *args:
     uv run ingest/rdap.py {{args}}
 
