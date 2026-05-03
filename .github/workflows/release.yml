@@ -62,7 +62,7 @@ jobs:
       - uses: houseabsolute/actions-rust-cross@v1.0.7
         with:
           target: ${{ matrix.target }}
-          args: --release --locked --package vacant
+          args: --release --package vacant
           strip: true
 
       - name: Create archive
@@ -248,3 +248,5 @@ jobs:
           merge-multiple: true
 
       - uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          skip-existing: true
