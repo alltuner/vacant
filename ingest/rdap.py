@@ -3,7 +3,7 @@
 # requires-python = ">=3.11"
 # dependencies = ["httpx>=0.28", "tomlkit>=0.14"]
 # ///
-# ABOUTME: Refresh data/rules.toml with RDAP service URLs from the IANA bootstrap.
+# ABOUTME: Refresh crates/vacant/data/rules.toml with RDAP service URLs from the IANA bootstrap.
 # ABOUTME: Run via `uv run ingest/rdap.py [--dry-run] [--force]`. Bumps [meta] rdap_publication.
 from __future__ import annotations
 
@@ -19,7 +19,7 @@ from tomlkit import TOMLDocument
 from tomlkit.items import Table
 
 URL = "https://data.iana.org/rdap/dns.json"
-RULES = Path(__file__).resolve().parent.parent / "data" / "rules.toml"
+RULES = Path(__file__).resolve().parent.parent / "crates" / "vacant" / "data" / "rules.toml"
 
 
 def fetch() -> dict:
