@@ -1,5 +1,24 @@
 # Changelog
 
+## [0.3.2](https://github.com/alltuner/vacant/compare/v0.3.1...v0.3.2) (2026-05-03)
+
+
+### Features
+
+* add --version flag and tighten brew formula test ([#24](https://github.com/alltuner/vacant/issues/24)) ([9e7d1f5](https://github.com/alltuner/vacant/commit/9e7d1f52dd5be7cf90c69c9c577e97c1247d25f8))
+
+
+### Miscellaneous Chores
+
+* **deps:** update astral-sh/setup-uv action to v8 ([#22](https://github.com/alltuner/vacant/issues/22)) ([a687b41](https://github.com/alltuner/vacant/commit/a687b41ae2e07937ec6d864c8a8de5f282a5e335))
+* **deps:** update peter-evans/create-pull-request action to v8 ([#23](https://github.com/alltuner/vacant/issues/23)) ([fb2fa60](https://github.com/alltuner/vacant/commit/fb2fa60b3367bd8275ab2638c93ef449b3678e8d))
+
+
+### CI/CD Changes
+
+* validate PR titles as conventional commits ([#25](https://github.com/alltuner/vacant/issues/25)) ([6af0e5b](https://github.com/alltuner/vacant/commit/6af0e5b7dd8f40a3f57d7a53b74c7addb4d5a832)), closes [#20](https://github.com/alltuner/vacant/issues/20)
+* weekly workflow to refresh rules.toml from PSL + RDAP ([#19](https://github.com/alltuner/vacant/issues/19)) ([d352e98](https://github.com/alltuner/vacant/commit/d352e9893cda4aec1a4d83a1ccf2d5c2feb4bf39))
+
 ## [0.3.1](https://github.com/alltuner/vacant/compare/v0.3.0...v0.3.1) (2026-05-03)
 
 
