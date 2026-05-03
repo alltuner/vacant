@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.3.1](https://github.com/alltuner/vacant/compare/v0.3.0...v0.3.1) (2026-05-03)
+
+
+### Bug Fixes
+
+* **deps:** bump reqwest to 0.13 ([7a038fe](https://github.com/alltuner/vacant/commit/7a038fe7fa0aa4e487d65d94cc79bb8374fbdad4))
+* **deps:** bump rusqlite to 0.39 ([595cf6c](https://github.com/alltuner/vacant/commit/595cf6c3821dc8e2c433cf07f96fe31a70ae8f09))
+* **deps:** update rust crate thiserror to v2 ([#16](https://github.com/alltuner/vacant/issues/16)) ([df641ce](https://github.com/alltuner/vacant/commit/df641ce1814d0efb973fa405069e993173125837))
+* **deps:** update rust crate toml to v1 ([#17](https://github.com/alltuner/vacant/issues/17)) ([fdb248b](https://github.com/alltuner/vacant/commit/fdb248b7d8f3f97e36b1f54e534be40a4ef2a7e4))
+
 ## [0.3.0](https://github.com/alltuner/vacant/compare/v0.2.2...v0.3.0) (2026-05-02)
 
 
