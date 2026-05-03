@@ -2071,7 +2071,7 @@ dependencies = [
 
 [[package]]
 name = "vacant"
-version = "0.3.4"
+version = "0.3.5"
 dependencies = [
  "clap",
  "futures",
@@ -2092,7 +2092,7 @@ dependencies = [
 
 [[package]]
 name = "vacant-py"
-version = "0.0.0"
+version = "0.0.1"
 dependencies = [
  "pyo3",
  "vacant",

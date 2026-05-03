@@ -2,6 +2,13 @@
 
 <!-- Next release: 0.4.0, unified post-revamp baseline marking the monorepo migration complete. -->
 
+## [0.3.5](https://github.com/alltuner/vacant/compare/v0.3.4...v0.3.5) (2026-05-03)
+
+
+### Miscellaneous Chores
+
+* cut unified 0.4.0 baseline (engine + python) ([#47](https://github.com/alltuner/vacant/issues/47)) ([2db06b9](https://github.com/alltuner/vacant/commit/2db06b973b0e755e9674dafc1c74ca0833c97a8f))
+
 ## [0.3.4](https://github.com/alltuner/vacant/compare/v0.3.3...v0.3.4) (2026-05-03)
 
 

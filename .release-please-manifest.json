@@ -1,4 +1,5 @@
 {
-  "crates/vacant": "0.3.4",
-  "python": "0.3.6"
+  "crates/vacant": "0.3.5",
+  "python": "0.3.7",
+  "crates/vacant-py": "0.0.1"
 }

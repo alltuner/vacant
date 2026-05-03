@@ -2,6 +2,18 @@
 
 <!-- Next release: 0.4.0, unified post-revamp baseline marking the monorepo migration complete. -->
 
+## [0.3.7](https://github.com/alltuner/vacant/compare/vacant-py-v0.3.6...vacant-py-v0.3.7) (2026-05-03)
+
+
+### Features
+
+* **deps:** upgrade pyo3 0.22 to 0.28 ([#43](https://github.com/alltuner/vacant/issues/43)) ([50f8085](https://github.com/alltuner/vacant/commit/50f8085c1812ab4a17fbffd90706fbdbdacd7978))
+
+
+### Miscellaneous Chores
+
+* cut unified 0.4.0 baseline (engine + python) ([#47](https://github.com/alltuner/vacant/issues/47)) ([2db06b9](https://github.com/alltuner/vacant/commit/2db06b973b0e755e9674dafc1c74ca0833c97a8f))
+
 ## [0.3.6](https://github.com/alltuner/vacant/compare/vacant-py-v0.3.5...vacant-py-v0.3.6) (2026-05-03)
 
 
