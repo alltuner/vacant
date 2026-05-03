@@ -4,6 +4,15 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      engine_tag:
+        description: "Rebuild/republish the engine pipeline for this tag (e.g. v0.3.4). Leave blank to defer to release-please."
+        required: false
+        type: string
+      python_tag:
+        description: "Rebuild/republish the python pipeline for this tag (e.g. vacant-py-v0.3.6). Leave blank to defer to release-please."
+        required: false
+        type: string
 
 permissions:
   contents: write
@@ -19,26 +28,58 @@ jobs:
       python_release_created: ${{ steps.release.outputs['python--release_created'] }}
       python_tag_name: ${{ steps.release.outputs['python--tag_name'] }}
     steps:
-      - uses: googleapis/release-please-action@v5
-        id: release
+      - id: release
+        if: github.event_name != 'workflow_dispatch' || (inputs.engine_tag == '' && inputs.python_tag == '')
+        uses: googleapis/release-please-action@v5
         with:
           config-file: .release-please-config.json
           manifest-file: .release-please-manifest.json
 
-  publish-crate:
+  resolve-tags:
     needs: release-please
-    if: ${{ needs.release-please.outputs.engine_release_created }}
+    runs-on: ubuntu-latest
+    outputs:
+      engine_tag: ${{ steps.pick.outputs.engine_tag }}
+      engine_version: ${{ steps.pick.outputs.engine_version }}
+      python_tag: ${{ steps.pick.outputs.python_tag }}
+    steps:
+      - id: pick
+        env:
+          DISPATCH_ENGINE_TAG: ${{ inputs.engine_tag }}
+          DISPATCH_PYTHON_TAG: ${{ inputs.python_tag }}
+          RP_ENGINE_CREATED: ${{ needs.release-please.outputs.engine_release_created }}
+          RP_ENGINE_TAG: ${{ needs.release-please.outputs.engine_tag_name }}
+          RP_ENGINE_VERSION: ${{ needs.release-please.outputs.engine_version }}
+          RP_PYTHON_CREATED: ${{ needs.release-please.outputs.python_release_created }}
+          RP_PYTHON_TAG: ${{ needs.release-please.outputs.python_tag_name }}
+        run: |
+          if [ -n "$DISPATCH_ENGINE_TAG" ]; then
+            echo "engine_tag=$DISPATCH_ENGINE_TAG" >> "$GITHUB_OUTPUT"
+            echo "engine_version=${DISPATCH_ENGINE_TAG#v}" >> "$GITHUB_OUTPUT"
+          elif [ "$RP_ENGINE_CREATED" = "true" ]; then
+            echo "engine_tag=$RP_ENGINE_TAG" >> "$GITHUB_OUTPUT"
+            echo "engine_version=$RP_ENGINE_VERSION" >> "$GITHUB_OUTPUT"
+          fi
+          if [ -n "$DISPATCH_PYTHON_TAG" ]; then
+            echo "python_tag=$DISPATCH_PYTHON_TAG" >> "$GITHUB_OUTPUT"
+          elif [ "$RP_PYTHON_CREATED" = "true" ]; then
+            echo "python_tag=$RP_PYTHON_TAG" >> "$GITHUB_OUTPUT"
+          fi
+
+  publish-crate:
+    needs: [release-please, resolve-tags]
+    if: needs.resolve-tags.outputs.engine_tag != '' && needs.release-please.outputs.engine_release_created == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
         with:
-          ref: ${{ needs.release-please.outputs.engine_tag_name }}
+          ref: ${{ needs.resolve-tags.outputs.engine_tag }}
       - uses: dtolnay/rust-toolchain@stable
       - run: cargo publish -p vacant --token ${{ secrets.CRATES_IO_TOKEN }}
 
   build-binaries:
-    needs: release-please
-    if: ${{ needs.release-please.outputs.engine_release_created }}
+    needs: [release-please, resolve-tags]
+    if: needs.resolve-tags.outputs.engine_tag != ''
     permissions:
       contents: write
     strategy:
@@ -57,7 +98,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
         with:
-          ref: ${{ needs.release-please.outputs.engine_tag_name }}
+          ref: ${{ needs.resolve-tags.outputs.engine_tag }}
 
       - uses: houseabsolute/actions-rust-cross@v1.0.7
         with:
@@ -73,18 +114,18 @@ jobs:
       - name: Upload to release
         uses: softprops/action-gh-release@v3
         with:
-          tag_name: ${{ needs.release-please.outputs.engine_tag_name }}
+          tag_name: ${{ needs.resolve-tags.outputs.engine_tag }}
           files: vacant-${{ matrix.target }}.tar.gz
 
   brew-formula:
-    needs: [release-please, build-binaries]
-    if: ${{ needs.release-please.outputs.engine_release_created }}
+    needs: [resolve-tags, build-binaries]
+    if: needs.resolve-tags.outputs.engine_tag != ''
     runs-on: ubuntu-latest
     steps:
       - name: Download release tarballs
         env:
           GH_TOKEN: ${{ github.token }}
-          TAG: ${{ needs.release-please.outputs.engine_tag_name }}
+          TAG: ${{ needs.resolve-tags.outputs.engine_tag }}
         run: |
           for target in aarch64-apple-darwin x86_64-apple-darwin aarch64-unknown-linux-gnu x86_64-unknown-linux-gnu; do
             gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --pattern "vacant-$target.tar.gz"
@@ -93,7 +134,7 @@ jobs:
       - name: Generate and push formula
         env:
           GH_TOKEN: ${{ secrets.HOMEBREW_TAP_TOKEN }}
-          VERSION: ${{ needs.release-please.outputs.engine_version }}
+          VERSION: ${{ needs.resolve-tags.outputs.engine_version }}
         run: |
           MAC_ARM_SHA=$(sha256sum vacant-aarch64-apple-darwin.tar.gz | awk '{print $1}')
           MAC_INTEL_SHA=$(sha256sum vacant-x86_64-apple-darwin.tar.gz | awk '{print $1}')
@@ -157,8 +198,8 @@ jobs:
           fi
 
   build-wheels-linux:
-    needs: release-please
-    if: ${{ needs.release-please.outputs.python_release_created }}
+    needs: [release-please, resolve-tags]
+    if: needs.resolve-tags.outputs.python_tag != ''
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -167,7 +208,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
         with:
-          ref: ${{ needs.release-please.outputs.python_tag_name }}
+          ref: ${{ needs.resolve-tags.outputs.python_tag }}
 
       - name: Mirror canonical rules into python wheel layout
         run: cp rules/rules.toml python/vacant/rules.toml
@@ -185,8 +226,8 @@ jobs:
           path: python/dist
 
   build-wheels-macos:
-    needs: release-please
-    if: ${{ needs.release-please.outputs.python_release_created }}
+    needs: [release-please, resolve-tags]
+    if: needs.resolve-tags.outputs.python_tag != ''
     runs-on: macos-latest
     strategy:
       fail-fast: false
@@ -195,7 +236,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
         with:
-          ref: ${{ needs.release-please.outputs.python_tag_name }}
+          ref: ${{ needs.resolve-tags.outputs.python_tag }}
 
       - name: Mirror canonical rules into python wheel layout
         run: cp rules/rules.toml python/vacant/rules.toml
@@ -212,13 +253,13 @@ jobs:
           path: python/dist
 
   sdist:
-    needs: release-please
-    if: ${{ needs.release-please.outputs.python_release_created }}
+    needs: [release-please, resolve-tags]
+    if: needs.resolve-tags.outputs.python_tag != ''
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
         with:
-          ref: ${{ needs.release-please.outputs.python_tag_name }}
+          ref: ${{ needs.resolve-tags.outputs.python_tag }}
 
       - name: Mirror canonical rules into python wheel layout
         run: cp rules/rules.toml python/vacant/rules.toml
@@ -235,8 +276,8 @@ jobs:
           path: python/dist
 
   publish-pypi:
-    needs: [release-please, build-wheels-linux, build-wheels-macos, sdist]
-    if: ${{ needs.release-please.outputs.python_release_created }}
+    needs: [resolve-tags, build-wheels-linux, build-wheels-macos, sdist]
+    if: needs.resolve-tags.outputs.python_tag != ''
     runs-on: ubuntu-latest
     permissions:
       id-token: write
