@@ -68,14 +68,21 @@ jobs:
 
   publish-crate:
     needs: [release-please, resolve-tags]
-    if: needs.resolve-tags.outputs.engine_tag != '' && needs.release-please.outputs.engine_release_created == 'true'
+    if: needs.resolve-tags.outputs.engine_tag != ''
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
     steps:
       - uses: actions/checkout@v6
         with:
           ref: ${{ needs.resolve-tags.outputs.engine_tag }}
       - uses: dtolnay/rust-toolchain@stable
-      - run: cargo publish -p vacant --token ${{ secrets.CRATES_IO_TOKEN }}
+      - uses: rust-lang/crates-io-auth-action@v1
+        id: auth
+      - run: cargo publish -p vacant
+        env:
+          CARGO_REGISTRY_TOKEN: ${{ steps.auth.outputs.token }}
 
   build-binaries:
     needs: [release-please, resolve-tags]
