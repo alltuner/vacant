@@ -17,11 +17,16 @@ jobs:
 
       - uses: astral-sh/setup-uv@v8.1.0
 
+      - uses: extractions/setup-just@v3
+
       - name: Refresh PSL data
         run: uv run ingest/psl.py
 
       - name: Refresh RDAP bootstrap
         run: uv run ingest/rdap.py
+
+      - name: Mirror canonical rules into every package
+        run: just sync-rules
 
       - name: Open PR if rules changed
         uses: peter-evans/create-pull-request@v8
@@ -30,10 +35,14 @@ jobs:
           commit-message: "chore(deps): refresh rules.toml from PSL + RDAP"
           title: "chore(deps): refresh rules.toml from PSL + RDAP"
           body: |
-            Weekly refresh of `crates/vacant/data/rules.toml` from upstream sources:
+            Weekly refresh of `rules/rules.toml` from upstream sources:
             - Public Suffix List ICANN section (`ingest/psl.py`)
             - IANA RDAP bootstrap (`ingest/rdap.py`)
 
+            The canonical file plus every embedded mirror is included in this PR.
             Bumped automatically by `.github/workflows/refresh-rules.yml`. Merge if CI is green.
-          add-paths: crates/vacant/data/rules.toml
+          add-paths: |
+            rules/rules.toml
+            crates/vacant/data/rules.toml
+            python/vacant/rules.toml
           delete-branch: true

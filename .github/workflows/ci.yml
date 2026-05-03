@@ -10,7 +10,17 @@ env:
   CARGO_INCREMENTAL: 0
 
 jobs:
-  check:
+  rules-sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Verify embedded rules.toml mirrors match canonical
+        run: |
+          diff -q rules/rules.toml crates/vacant/data/rules.toml
+          diff -q rules/rules.toml python/vacant/rules.toml
+
+  rust:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -32,3 +42,34 @@ jobs:
 
       - name: Test
         run: cargo test --release --workspace
+
+  python:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: astral-sh/setup-uv@v7
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - uses: Swatinem/rust-cache@v2
+
+      - name: Sync (builds the PyO3 extension)
+        run: uv sync
+        working-directory: python
+
+      - name: Ruff format
+        run: uv run ruff format --check .
+        working-directory: python
+
+      - name: Ruff lint
+        run: uv run ruff check .
+        working-directory: python
+
+      - name: Pytest
+        run: uv run pytest
+        working-directory: python
+
+      - name: Smoke test the binding
+        run: uv run python -c "from vacant import check_many; r = check_many(['google.com'])[0]; assert r.status.value in {'registered','reserved'}, r"
+        working-directory: python
