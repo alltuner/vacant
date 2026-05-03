@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.4](https://github.com/alltuner/vacant/compare/v0.3.3...v0.3.4) (2026-05-03)
+
+
+### Miscellaneous Chores
+
+* convert repo to a Cargo workspace under crates/vacant ([#31](https://github.com/alltuner/vacant/issues/31)) ([ed1df6a](https://github.com/alltuner/vacant/commit/ed1df6ace80b002cff2b77381afc9404a6fc45d2))
+
 ## [0.3.3](https://github.com/alltuner/vacant/compare/v0.3.2...v0.3.3) (2026-05-03)
 
 
