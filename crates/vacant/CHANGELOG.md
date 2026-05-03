@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.4.0](https://github.com/alltuner/vacant/compare/v0.3.4...v0.4.0) (2026-05-03)
+
+
+### Miscellaneous Chores
+
+* cut unified 0.4.0 baseline (engine + python) ([#47](https://github.com/alltuner/vacant/issues/47)) ([2db06b9](https://github.com/alltuner/vacant/commit/2db06b973b0e755e9674dafc1c74ca0833c97a8f))
+* **engine:** cut 0.4.0 baseline ([a6c9257](https://github.com/alltuner/vacant/commit/a6c9257c89e220262793d68ccd8c0fdc5ed30739))
+* **py:** cut 0.4.0 baseline ([b1db11a](https://github.com/alltuner/vacant/commit/b1db11a90308aa071e21a64cb682889956de1e17))
+
 ## [0.3.4](https://github.com/alltuner/vacant/compare/v0.3.3...v0.3.4) (2026-05-03)
 
 
