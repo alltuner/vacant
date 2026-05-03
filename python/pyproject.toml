@@ -40,7 +40,7 @@ requires = ["maturin>=1.7"]
 build-backend = "maturin"
 
 [tool.maturin]
-manifest-path = "../crates/vacant-py/Cargo.toml"
+manifest-path = "../crates/vacant-pyext/Cargo.toml"
 python-source = "."
 module-name = "vacant._core"
 features = ["pyo3/extension-module"]
