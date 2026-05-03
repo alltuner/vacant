@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.3.3](https://github.com/alltuner/vacant/compare/v0.3.2...v0.3.3) (2026-05-03)
+
+
+### Bug Fixes
+
+* switch rustls crypto provider from aws-lc-rs to ring ([#30](https://github.com/alltuner/vacant/issues/30)) ([949ab9b](https://github.com/alltuner/vacant/commit/949ab9b1f3bff8f587c0f54f42e667ea829aeff4))
+
+
+### Miscellaneous Chores
+
+* **deps:** update amannn/action-semantic-pull-request action to v6 ([#28](https://github.com/alltuner/vacant/issues/28)) ([b662989](https://github.com/alltuner/vacant/commit/b662989ed6cf0162f894db65f2da9f5d46e0062b))
+* drop pypi-placeholder; vacant is published from alltuner/vacant-py ([#27](https://github.com/alltuner/vacant/issues/27)) ([9e4b45d](https://github.com/alltuner/vacant/commit/9e4b45d5919210fbd0ed89a2cc5ee0d492117f48))
+
 ## [0.3.2](https://github.com/alltuner/vacant/compare/v0.3.1...v0.3.2) (2026-05-03)
 
 
