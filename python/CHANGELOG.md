@@ -1,5 +1,7 @@
 # Changelog
 
+<!-- Next release: 0.4.0, unified post-revamp baseline marking the monorepo migration complete. -->
+
 ## [0.3.6](https://github.com/alltuner/vacant/compare/vacant-py-v0.3.5...vacant-py-v0.3.6) (2026-05-03)
 
 
