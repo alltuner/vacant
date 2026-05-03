@@ -15,6 +15,7 @@ const BUNDLED_RULES: &str = include_str!("../data/rules.toml");
 #[derive(Parser, Debug)]
 #[command(
     name = "vacant",
+    version,
     about = "Check domain availability via authoritative DNS."
 )]
 struct Cli {
