@@ -1,6 +1,5 @@
 // ABOUTME: PyO3 bindings exposing the vacant Rust engine to Python as `vacant._core`.
 // ABOUTME: Surface: load_rules(), check_many(), DiskCache. Lockstep-versioned with vacant.
-#![allow(clippy::useless_conversion)] // PyO3's `?` on PyResult triggers identity PyErr->PyErr conversion.
 
 use std::path::PathBuf;
 use std::str::FromStr;
@@ -57,7 +56,7 @@ fn check_many(
         .as_ref()
         .ok_or_else(|| PyRuntimeError::new_err("rules not loaded; call load_rules() first"))?;
 
-    let results: Vec<CheckResult> = py.allow_threads(|| {
+    let results: Vec<CheckResult> = py.detach(|| {
         core_check_many(
             rules,
             dns,
@@ -68,9 +67,9 @@ fn check_many(
         )
     });
 
-    let list = PyList::empty_bound(py);
+    let list = PyList::empty(py);
     for r in results {
-        let dict = PyDict::new_bound(py);
+        let dict = PyDict::new(py);
         dict.set_item("input", r.input)?;
         dict.set_item("domain", r.domain)?;
         dict.set_item("zone", r.zone)?;
@@ -109,7 +108,7 @@ impl PyDiskCache {
             .get(domain, ttl as i64)
             .map_err(|e| PyValueError::new_err(format!("{e}")))?;
         let Some(r) = row else { return Ok(None) };
-        let dict = PyDict::new_bound(py);
+        let dict = PyDict::new(py);
         dict.set_item("domain", r.domain)?;
         dict.set_item("zone", r.zone)?;
         dict.set_item("status", r.status)?;
