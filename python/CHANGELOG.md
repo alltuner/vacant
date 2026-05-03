@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.6](https://github.com/alltuner/vacant/compare/vacant-py-v0.3.5...vacant-py-v0.3.6) (2026-05-03)
+
+
+### Miscellaneous Chores
+
+* import vacant-py into the workspace; promote rules to top-level rules/ ([#33](https://github.com/alltuner/vacant/issues/33)) ([60b4bc3](https://github.com/alltuner/vacant/commit/60b4bc3e56d29229c995ab462412d0a7dfe7791b))
+
 ## [0.3.5](https://github.com/alltuner/vacant-py/compare/v0.3.4...v0.3.5) (2026-05-03)
 
 
