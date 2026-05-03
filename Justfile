@@ -28,11 +28,6 @@ ingest-psl *args:
 ingest-rdap *args:
     uv run ingest/rdap.py {{args}}
 
-# Build the PyPI placeholder wheel/sdist (does not publish).
-build-placeholder:
-    cd pypi-placeholder && uv build
-
-# Clean rust + python build outputs.
+# Clean build outputs.
 clean:
     cargo clean
-    rm -rf pypi-placeholder/dist pypi-placeholder/*.egg-info
