@@ -1,0 +1,39 @@
+name: Refresh rules
+
+on:
+  schedule:
+    - cron: '0 6 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: astral-sh/setup-uv@v7
+
+      - name: Refresh PSL data
+        run: uv run ingest/psl.py
+
+      - name: Refresh RDAP bootstrap
+        run: uv run ingest/rdap.py
+
+      - name: Open PR if rules changed
+        uses: peter-evans/create-pull-request@v7
+        with:
+          branch: refresh-rules
+          commit-message: "chore(deps): refresh rules.toml from PSL + RDAP"
+          title: "chore(deps): refresh rules.toml from PSL + RDAP"
+          body: |
+            Weekly refresh of `data/rules.toml` from upstream sources:
+            - Public Suffix List ICANN section (`ingest/psl.py`)
+            - IANA RDAP bootstrap (`ingest/rdap.py`)
+
+            Bumped automatically by `.github/workflows/refresh-rules.yml`. Merge if CI is green.
+          add-paths: data/rules.toml
+          delete-branch: true
