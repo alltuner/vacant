@@ -155,3 +155,96 @@ jobs:
               -f message="vacant: add formula at v${VERSION}" \
               -f content="$ENCODED"
           fi
+
+  build-wheels-linux:
+    needs: release-please
+    if: ${{ needs.release-please.outputs.python_release_created }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        target: [x86_64, aarch64]
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ needs.release-please.outputs.python_tag_name }}
+
+      - name: Mirror canonical rules into python wheel layout
+        run: cp rules/rules.toml python/vacant/rules.toml
+
+      - uses: PyO3/maturin-action@v1
+        with:
+          working-directory: python
+          target: ${{ matrix.target }}
+          manylinux: 2_28
+          args: --release --out dist
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: wheels-linux-${{ matrix.target }}
+          path: python/dist
+
+  build-wheels-macos:
+    needs: release-please
+    if: ${{ needs.release-please.outputs.python_release_created }}
+    runs-on: macos-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        target: [x86_64-apple-darwin, aarch64-apple-darwin]
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ needs.release-please.outputs.python_tag_name }}
+
+      - name: Mirror canonical rules into python wheel layout
+        run: cp rules/rules.toml python/vacant/rules.toml
+
+      - uses: PyO3/maturin-action@v1
+        with:
+          working-directory: python
+          target: ${{ matrix.target }}
+          args: --release --out dist
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: wheels-macos-${{ matrix.target }}
+          path: python/dist
+
+  sdist:
+    needs: release-please
+    if: ${{ needs.release-please.outputs.python_release_created }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ needs.release-please.outputs.python_tag_name }}
+
+      - name: Mirror canonical rules into python wheel layout
+        run: cp rules/rules.toml python/vacant/rules.toml
+
+      - uses: PyO3/maturin-action@v1
+        with:
+          working-directory: python
+          command: sdist
+          args: --out dist
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: wheels-sdist
+          path: python/dist
+
+  publish-pypi:
+    needs: [release-please, build-wheels-linux, build-wheels-macos, sdist]
+    if: ${{ needs.release-please.outputs.python_release_created }}
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: dist
+          pattern: wheels-*
+          merge-multiple: true
+
+      - uses: pypa/gh-action-pypi-publish@release/v1
