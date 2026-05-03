@@ -24,7 +24,7 @@ jobs:
         run: uv run ingest/rdap.py
 
       - name: Open PR if rules changed
-        uses: peter-evans/create-pull-request@v7
+        uses: peter-evans/create-pull-request@v8
         with:
           branch: refresh-rules
           commit-message: "chore(deps): refresh rules.toml from PSL + RDAP"
