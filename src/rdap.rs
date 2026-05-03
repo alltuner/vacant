@@ -12,6 +12,9 @@ pub enum RdapOutcome {
 }
 
 pub fn build_client(timeout: Duration) -> Result<Client, reqwest::Error> {
+    // rustls 0.23 with rustls-no-provider needs an explicit provider install.
+    // The call is idempotent across the process; ignoring Err lets repeated calls succeed.
+    let _ = rustls::crypto::ring::default_provider().install_default();
     Client::builder()
         .timeout(timeout)
         .user_agent("vacant/0.1")
