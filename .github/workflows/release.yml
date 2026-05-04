@@ -344,15 +344,20 @@ jobs:
         run: npm ci
         working-directory: js
 
-      - name: Build napi-rs binding (cross)
+      - name: Install aarch64 cross-toolchain
+        if: matrix.target == 'aarch64-unknown-linux-gnu'
+        run: sudo apt-get update && sudo apt-get install -y gcc-aarch64-linux-gnu g++-aarch64-linux-gnu
+
+      - name: Build napi-rs binding
         env:
-          # ring 0.17.x's ARM ASM headers require __ARM_ARCH; napi-rs's bundled
-          # cross-toolchain GCC doesn't define it implicitly, so set -march to
-          # make the assembler happy. Only affects the aarch64 target; harmless
-          # for x86_64 (env var name doesn't match).
-          CFLAGS_aarch64_unknown_linux_gnu: "-march=armv8-a"
-          CC_aarch64_unknown_linux_gnu_RING_CFLAGS: "-march=armv8-a"
-        run: npx napi build --release --target ${{ matrix.target }} --platform --manifest-path ../crates/vacant-js/Cargo.toml --output-dir . --package-json-path ./package.json --js index.cjs --use-napi-cross
+          # Standard ubuntu cross-toolchain for aarch64-linux (gcc-aarch64-linux-gnu)
+          # — well-tested with ring's ARM ASM. napi-rs's bundled cross-toolchain
+          # (--use-napi-cross) miscompiles ring 0.17 with a missing __ARM_ARCH define.
+          CC_aarch64_unknown_linux_gnu: aarch64-linux-gnu-gcc
+          CXX_aarch64_unknown_linux_gnu: aarch64-linux-gnu-g++
+          AR_aarch64_unknown_linux_gnu: aarch64-linux-gnu-ar
+          CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER: aarch64-linux-gnu-gcc
+        run: npx napi build --release --target ${{ matrix.target }} --platform --manifest-path ../crates/vacant-js/Cargo.toml --output-dir . --package-json-path ./package.json --js index.cjs
         working-directory: js
 
       - uses: actions/upload-artifact@v7
