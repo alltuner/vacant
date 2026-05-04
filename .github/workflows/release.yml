@@ -455,13 +455,9 @@ jobs:
         run: npm run build
         working-directory: js
 
-      - name: Publish per-platform stubs to npm
+      - name: Sync stub versions and publish per-platform stubs (napi prepublish)
         working-directory: js
-        run: |
-          for stub in npm/*/; do
-            echo "Publishing $stub"
-            (cd "$stub" && npm publish --provenance --access public)
-          done
+        run: npx napi prepublish -t npm
 
       - name: Publish main package to npm
         working-directory: js
