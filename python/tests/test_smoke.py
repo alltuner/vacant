@@ -36,3 +36,24 @@ def test_disk_cache_put_skips_invalid(tmp_path):
         )
     )
     assert cache.get("alltuner.com", ttl=86_400) is None
+
+
+def test_normalize_strips_url_scheme_and_path():
+    for raw in (
+        "https://google.com",
+        "https://google.com/",
+        "https://google.com/some/path?x=1#frag",
+        "  google.com  ",
+        "google.com.",
+        "GOOGLE.COM",
+    ):
+        r = check(raw)
+        assert r.domain == "google.com", raw
+        assert r.status in {Status.REGISTERED, Status.RESERVED}, raw
+
+
+def test_normalize_idn_collapses_to_punycode():
+    unicode = check("café.com")
+    punycode = check("xn--caf-dma.com")
+    assert unicode.domain == "xn--caf-dma.com"
+    assert unicode.status is punycode.status

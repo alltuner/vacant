@@ -1,7 +1,9 @@
 // ABOUTME: End-to-end check pipeline: normalize, cache, precheck, batch DNS+RDAP, write back.
 // ABOUTME: Single source of truth shared by the standalone binary and the PyO3 binding.
 
-use crate::{DiskCache, DnsClient, FullCheckJob, FullVerdict, PreCheck, RuleSet, Status};
+use crate::{
+    normalize_input, DiskCache, DnsClient, FullCheckJob, FullVerdict, PreCheck, RuleSet, Status,
+};
 
 #[derive(Debug, Clone)]
 pub struct CheckResult {
@@ -25,7 +27,17 @@ pub fn check_many(
     let mut pending: Vec<(usize, String, String, Option<String>)> = Vec::new();
 
     for (i, raw) in inputs.iter().enumerate() {
-        let cleaned = raw.trim().trim_end_matches('.').to_ascii_lowercase();
+        let Some(cleaned) = normalize_input(raw) else {
+            results[i] = Some(CheckResult {
+                input: raw.clone(),
+                domain: String::new(),
+                zone: String::new(),
+                status: Status::Invalid,
+                detail: "input is empty or not a recoverable host".to_string(),
+                from_cache: false,
+            });
+            continue;
+        };
 
         if !cleaned.contains('.') {
             results[i] = Some(CheckResult {
