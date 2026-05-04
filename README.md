@@ -21,20 +21,6 @@
 
 ---
 
-## Packages
-
-This repo is a monorepo. The same engine ships in three forms:
-
-| Package | Path | Registry |
-|---|---|---|
-| `vacant` (Rust library + CLI) | [`crates/vacant`](crates/vacant) | [crates.io](https://crates.io/crates/vacant) |
-| `vacant` (Python wheel) | [`python`](python) | [PyPI](https://pypi.org/project/vacant/) |
-| `@alltuner/vacant` (npm package) | [`js`](js) | [npm](https://www.npmjs.com/package/@alltuner/vacant) |
-
-See each package's README for usage. The Python wheel embeds the Rust engine via [PyO3](https://pyo3.rs), the npm package embeds it via [napi-rs](https://napi.rs), and all three share the on-disk SQLite cache with the CLI.
-
-The [PSL](https://publicsuffix.org/) + RDAP-derived rules every package consumes live at [`rules/rules.toml`](rules/) — see the [`rules/` README](rules/README.md) for the source-of-truth and mirror policy.
-
 ## Get Started
 
 ```bash
@@ -72,6 +58,20 @@ npx skills add alltuner/skills --skill vacant
 ```
 
 The skill wraps the CLI with usage hints, common patterns, exit-code semantics, and registry gotchas — see [`skills/vacant/SKILL.md`](https://github.com/alltuner/skills/blob/main/skills/vacant/SKILL.md).
+
+## Packages
+
+This repo is a monorepo. The same engine ships in three forms:
+
+| Package | Path | Registry |
+|---|---|---|
+| `vacant` (Rust library + CLI) | [`crates/vacant`](crates/vacant) | [crates.io](https://crates.io/crates/vacant) |
+| `vacant` (Python wheel) | [`python`](python) | [PyPI](https://pypi.org/project/vacant/) |
+| `@alltuner/vacant` (npm package) | [`js`](js) | [npm](https://www.npmjs.com/package/@alltuner/vacant) |
+
+See each package's README for usage. The Python wheel embeds the Rust engine via [PyO3](https://pyo3.rs), the npm package embeds it via [napi-rs](https://napi.rs), and all three share the on-disk SQLite cache with the CLI.
+
+The [PSL](https://publicsuffix.org/) + RDAP-derived rules every package consumes live at [`rules/rules.toml`](rules/) — see the [`rules/` README](rules/README.md) for the source-of-truth and mirror policy.
 
 ## Development
 
