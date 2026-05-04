@@ -6,7 +6,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/sponsors/alltuner">Sponsor</a>
+  <a href="https://alltuner.com/sponsor">Sponsor</a>
 </p>
 
 <p align="center">
@@ -63,15 +63,7 @@ just js-check        # tsc + node:test smoke
 
 vacant is an open source project built by [David Poblador i Garcia](https://davidpoblador.com/) through [All Tuner Labs](https://www.alltuner.com/).
 
-If this project saved you a registrar lookup, consider supporting its development.
-
-❤️ **Sponsor development**
-https://github.com/sponsors/alltuner
-
-☕ **One-time support**
-https://buymeacoffee.com/alltuner
-
-Your support helps fund the continued development of vacant and other open source developer tools such as [Factory Floor](https://github.com/alltuner/factoryfloor).
+If this project was useful to you, [consider supporting its development](https://alltuner.com/sponsor).
 
 ## License
 
