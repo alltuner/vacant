@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.2](https://github.com/alltuner/vacant/compare/vacant-js-v0.4.1...vacant-js-v0.4.2) (2026-05-04)
+
+
+### Bug Fixes
+
+* **ci:** use napi prepublish for stub versioning + publish ([#66](https://github.com/alltuner/vacant/issues/66)) ([e9e747b](https://github.com/alltuner/vacant/commit/e9e747bd0cbe5488852993b330171d94d8d317c8))
+
 ## [0.4.1](https://github.com/alltuner/vacant/compare/vacant-js-v0.4.0...vacant-js-v0.4.1) (2026-05-04)
 
 
