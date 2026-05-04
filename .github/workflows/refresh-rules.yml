@@ -45,4 +45,5 @@ jobs:
             rules/rules.toml
             crates/vacant/data/rules.toml
             python/vacant/rules.toml
+            js/vacant/rules.toml
           delete-branch: true

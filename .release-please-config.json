@@ -39,6 +39,27 @@
         { "type": "build",    "section": "Build System" },
         { "type": "test",     "section": "Tests" }
       ]
+    },
+    "js": {
+      "package-name": "@alltuner/vacant",
+      "release-type": "node",
+      "changelog-path": "CHANGELOG.md",
+      "include-component-in-tag": true,
+      "component": "vacant-js",
+      "bump-minor-pre-major": true,
+      "bump-patch-for-minor-pre-major": true,
+      "changelog-sections": [
+        { "type": "feat",     "section": "Features" },
+        { "type": "fix",      "section": "Bug Fixes" },
+        { "type": "refactor", "section": "Code Refactoring" },
+        { "type": "perf",     "section": "Performance Improvements" },
+        { "type": "chore",    "section": "Miscellaneous Chores" },
+        { "type": "docs",     "section": "Documentation Updates" },
+        { "type": "ci",       "section": "CI/CD Changes" },
+        { "type": "style",    "section": "Styling Changes" },
+        { "type": "build",    "section": "Build System" },
+        { "type": "test",     "section": "Tests" }
+      ]
     }
   },
   "plugins": ["cargo-workspace"]

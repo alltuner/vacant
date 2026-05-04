@@ -13,6 +13,10 @@ on:
         description: "Rebuild/republish the python pipeline for this tag (e.g. vacant-py-v0.3.6). Leave blank to defer to release-please."
         required: false
         type: string
+      js_tag:
+        description: "Rebuild/republish the js pipeline for this tag (e.g. vacant-js-v0.4.1). Leave blank to defer to release-please."
+        required: false
+        type: string
 
 permissions:
   contents: write
@@ -27,9 +31,11 @@ jobs:
       engine_version: ${{ steps.release.outputs['crates/vacant--version'] }}
       python_release_created: ${{ steps.release.outputs['python--release_created'] }}
       python_tag_name: ${{ steps.release.outputs['python--tag_name'] }}
+      js_release_created: ${{ steps.release.outputs['js--release_created'] }}
+      js_tag_name: ${{ steps.release.outputs['js--tag_name'] }}
     steps:
       - id: release
-        if: github.event_name != 'workflow_dispatch' || (inputs.engine_tag == '' && inputs.python_tag == '')
+        if: github.event_name != 'workflow_dispatch' || (inputs.engine_tag == '' && inputs.python_tag == '' && inputs.js_tag == '')
         uses: googleapis/release-please-action@v5
         with:
           config-file: .release-please-config.json
@@ -42,16 +48,20 @@ jobs:
       engine_tag: ${{ steps.pick.outputs.engine_tag }}
       engine_version: ${{ steps.pick.outputs.engine_version }}
       python_tag: ${{ steps.pick.outputs.python_tag }}
+      js_tag: ${{ steps.pick.outputs.js_tag }}
     steps:
       - id: pick
         env:
           DISPATCH_ENGINE_TAG: ${{ inputs.engine_tag }}
           DISPATCH_PYTHON_TAG: ${{ inputs.python_tag }}
+          DISPATCH_JS_TAG: ${{ inputs.js_tag }}
           RP_ENGINE_CREATED: ${{ needs.release-please.outputs.engine_release_created }}
           RP_ENGINE_TAG: ${{ needs.release-please.outputs.engine_tag_name }}
           RP_ENGINE_VERSION: ${{ needs.release-please.outputs.engine_version }}
           RP_PYTHON_CREATED: ${{ needs.release-please.outputs.python_release_created }}
           RP_PYTHON_TAG: ${{ needs.release-please.outputs.python_tag_name }}
+          RP_JS_CREATED: ${{ needs.release-please.outputs.js_release_created }}
+          RP_JS_TAG: ${{ needs.release-please.outputs.js_tag_name }}
         run: |
           if [ -n "$DISPATCH_ENGINE_TAG" ]; then
             echo "engine_tag=$DISPATCH_ENGINE_TAG" >> "$GITHUB_OUTPUT"
@@ -64,6 +74,11 @@ jobs:
             echo "python_tag=$DISPATCH_PYTHON_TAG" >> "$GITHUB_OUTPUT"
           elif [ "$RP_PYTHON_CREATED" = "true" ]; then
             echo "python_tag=$RP_PYTHON_TAG" >> "$GITHUB_OUTPUT"
+          fi
+          if [ -n "$DISPATCH_JS_TAG" ]; then
+            echo "js_tag=$DISPATCH_JS_TAG" >> "$GITHUB_OUTPUT"
+          elif [ "$RP_JS_CREATED" = "true" ]; then
+            echo "js_tag=$RP_JS_TAG" >> "$GITHUB_OUTPUT"
           fi
 
   publish-crate:
@@ -298,3 +313,144 @@ jobs:
       - uses: pypa/gh-action-pypi-publish@release/v1
         with:
           skip-existing: true
+
+  build-js-linux:
+    needs: [release-please, resolve-tags]
+    if: needs.resolve-tags.outputs.js_tag != ''
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        target: [x86_64-unknown-linux-gnu, aarch64-unknown-linux-gnu]
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ needs.resolve-tags.outputs.js_tag }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.target }}
+
+      - uses: Swatinem/rust-cache@v2
+
+      - name: Mirror canonical rules into the npm layout
+        run: cp rules/rules.toml js/vacant/rules.toml
+
+      - name: Install JS deps
+        run: npm ci
+        working-directory: js
+
+      - name: Build napi-rs binding (cross)
+        run: npx napi build --release --target ${{ matrix.target }} --platform --manifest-path ../crates/vacant-js/Cargo.toml --output-dir . --package-json-path ./package.json --js index.cjs --use-napi-cross
+        working-directory: js
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: js-${{ matrix.target }}
+          path: |
+            js/*.node
+            js/index.cjs
+            js/index.d.ts
+
+  build-js-macos:
+    needs: [release-please, resolve-tags]
+    if: needs.resolve-tags.outputs.js_tag != ''
+    runs-on: macos-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        target: [x86_64-apple-darwin, aarch64-apple-darwin]
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ needs.resolve-tags.outputs.js_tag }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.target }}
+
+      - uses: Swatinem/rust-cache@v2
+
+      - name: Mirror canonical rules into the npm layout
+        run: cp rules/rules.toml js/vacant/rules.toml
+
+      - name: Install JS deps
+        run: npm ci
+        working-directory: js
+
+      - name: Build napi-rs binding
+        run: npx napi build --release --target ${{ matrix.target }} --platform --manifest-path ../crates/vacant-js/Cargo.toml --output-dir . --package-json-path ./package.json --js index.cjs
+        working-directory: js
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: js-${{ matrix.target }}
+          path: |
+            js/*.node
+            js/index.cjs
+            js/index.d.ts
+
+  publish-npm:
+    needs: [resolve-tags, build-js-linux, build-js-macos]
+    if: needs.resolve-tags.outputs.js_tag != ''
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ needs.resolve-tags.outputs.js_tag }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Mirror canonical rules into the npm layout
+        run: cp rules/rules.toml js/vacant/rules.toml
+
+      - name: Install JS deps
+        run: npm ci
+        working-directory: js
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - name: Download all JS artifacts
+        uses: actions/download-artifact@v8
+        with:
+          path: js/artifacts
+          pattern: js-*
+          merge-multiple: true
+
+      - name: Move .node binaries into per-platform npm stubs
+        working-directory: js
+        run: npx napi artifacts --output-dir artifacts --npm-dir npm
+
+      - name: Generate napi loader (index.cjs / index.d.ts) for the main package
+        working-directory: js
+        run: npm run build:napi
+
+      - name: Build dist (tsup)
+        run: npm run build
+        working-directory: js
+
+      - name: Publish per-platform stubs to npm
+        working-directory: js
+        run: |
+          for stub in npm/*/; do
+            echo "Publishing $stub"
+            (cd "$stub" && npm publish --provenance --access public)
+          done
+
+      - name: Publish main package to npm
+        working-directory: js
+        run: npm publish --provenance --access public

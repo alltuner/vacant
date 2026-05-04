@@ -1,6 +1,6 @@
 [workspace]
 resolver = "2"
-members = ["crates/vacant", "crates/vacant-pyext"]
+members = ["crates/vacant", "crates/vacant-pyext", "crates/vacant-js"]
 
 [profile.release]
 lto = "thin"

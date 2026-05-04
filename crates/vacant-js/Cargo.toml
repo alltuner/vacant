@@ -1,0 +1,24 @@
+[package]
+name = "vacant-js"
+version = "0.0.1"
+edition = "2021"
+license = "MIT"
+authors = ["David Poblador i Garcia <david@poblador.com>"]
+description = "napi-rs bindings for the vacant Rust engine — domain availability via authoritative DNS."
+# Internal cdylib for the npm package; never published to crates.io. The npm
+# package's version comes from js/package.json. The cargo-workspace
+# release-please plugin will auto-bump this version on engine releases as
+# a side-effect; that's harmless because nothing reads it.
+publish = false
+
+[lib]
+name = "vacant_js"
+crate-type = ["cdylib"]
+
+[dependencies]
+vacant = { path = "../vacant" }
+napi = { version = "3", default-features = false, features = ["napi6"] }
+napi-derive = "3"
+
+[build-dependencies]
+napi-build = "2"
