@@ -48,7 +48,12 @@ export class DiskCache {
   }
 
   put(result: Result): void {
-    if (result.status === Status.UNKNOWN || !result.domain) return
+    if (
+      result.status === Status.UNKNOWN ||
+      result.status === Status.INVALID ||
+      !result.domain
+    )
+      return
     this._inner.put(result.domain, result.zone, result.status, result.detail)
   }
 }

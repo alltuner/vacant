@@ -41,6 +41,6 @@ class DiskCache:
         )
 
     def put(self, result: Result) -> None:
-        if result.status is Status.UNKNOWN or not result.domain:
+        if result.status in (Status.UNKNOWN, Status.INVALID) or not result.domain:
             return
         self._inner.put(result.domain, result.zone, result.status.value, result.detail)

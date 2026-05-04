@@ -90,7 +90,7 @@ wheels = [
 
 [[package]]
 name = "vacant"
-version = "0.3.6"
+version = "0.4.1"
 source = { editable = "." }
 
 [package.dev-dependencies]
