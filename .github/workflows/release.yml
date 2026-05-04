@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
     inputs:
       engine_tag:
-        description: "Rebuild/republish the engine pipeline for this tag (e.g. v0.3.4). Leave blank to defer to release-please."
+        description: "Rebuild/republish the engine pipeline for this tag (e.g. vacant-v0.4.3). Leave blank to defer to release-please."
         required: false
         type: string
       python_tag:
