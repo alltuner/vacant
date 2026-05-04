@@ -59,15 +59,15 @@ just js-develop      # build the napi-rs binding into js/
 just js-check        # tsc + node:test smoke
 ```
 
+## License
+
+[MIT](LICENSE)
+
 ## Support the project
 
 vacant is an open source project built by [David Poblador i Garcia](https://davidpoblador.com/) through [All Tuner Labs](https://www.alltuner.com/).
 
 If this project was useful to you, [consider supporting its development](https://alltuner.com/sponsor).
-
-## License
-
-[MIT](LICENSE)
 
 ---
 
