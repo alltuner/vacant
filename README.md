@@ -1,8 +1,29 @@
-# vacant
+<p align="center">
+  <img src="https://brand.alltuner.com/logos/vacant/horizontal.png" alt="vacant" width="500">
+</p>
 
-Fast domain availability checker. Asks authoritative TLD nameservers directly instead of WHOIS.
+<p align="center">
+  <strong>Fast domain availability checker.</strong><br>
+  Asks authoritative TLD nameservers directly instead of WHOIS.
+</p>
 
-This repository hosts the engine and its language bindings:
+<p align="center">
+  <a href="https://alltuner.com/sponsor">Sponsor</a>
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/crates/v/vacant?color=5B2333" alt="crates.io">
+  <img src="https://img.shields.io/pypi/v/vacant?color=5B2333" alt="PyPI">
+  <img src="https://img.shields.io/npm/v/@alltuner/vacant?color=5B2333" alt="npm">
+  <img src="https://img.shields.io/github/license/alltuner/vacant?color=5B2333" alt="License">
+  <img src="https://img.shields.io/github/stars/alltuner/vacant?color=5B2333" alt="Stars">
+</p>
+
+---
+
+## Packages
+
+This repo is a monorepo. The same engine ships in three forms:
 
 | Package | Path | Registry |
 |---|---|---|
@@ -10,11 +31,25 @@ This repository hosts the engine and its language bindings:
 | `vacant` (Python wheel) | [`python`](python) | [PyPI](https://pypi.org/project/vacant/) |
 | `@alltuner/vacant` (npm package) | [`js`](js) | [npm](https://www.npmjs.com/package/@alltuner/vacant) |
 
-See each package's README for usage. The Python wheel embeds the Rust engine via PyO3, the npm package embeds it via napi-rs, and all three share the on-disk SQLite cache with the CLI.
+See each package's README for usage. The Python wheel embeds the Rust engine via [PyO3](https://pyo3.rs), the npm package embeds it via [napi-rs](https://napi.rs), and all three share the on-disk SQLite cache with the CLI.
 
-The PSL + RDAP-derived rules every package consumes live at [`rules/rules.toml`](rules/) — see the [`rules/` README](rules/README.md) for the source-of-truth and mirror policy.
+The [PSL](https://publicsuffix.org/) + RDAP-derived rules every package consumes live at [`rules/rules.toml`](rules/) — see the [`rules/` README](rules/README.md) for the source-of-truth and mirror policy.
 
-## Develop
+## Get Started
+
+```bash
+# Rust / CLI
+brew install alltuner/tap/vacant
+cargo install vacant
+
+# Python
+uv add vacant
+
+# JavaScript / TypeScript
+npm install @alltuner/vacant
+```
+
+## Development
 
 ```bash
 just                 # menu of all dev tasks
@@ -28,4 +63,17 @@ just js-check        # tsc + node:test smoke
 
 ## License
 
-MIT — see [`LICENSE`](LICENSE).
+[MIT](LICENSE)
+
+## Support the project
+
+vacant is an open source project built by [David Poblador i Garcia](https://davidpoblador.com/) through [All Tuner Labs](https://www.alltuner.com/).
+
+If this project was useful to you, [consider supporting its development](https://alltuner.com/sponsor).
+
+---
+
+<p align="center">
+  Built by <a href="https://davidpoblador.com">David Poblador i Garcia</a> with the support of <a href="https://alltuner.com">All Tuner Labs</a>.<br>
+  Made with ❤️ in Poblenou, Barcelona.
+</p>
