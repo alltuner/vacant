@@ -69,7 +69,7 @@
     "typescript": "^6.0.0"
   },
   "optionalDependencies": {
-    "@alltuner/vacant-darwin-arm64": "0.4.0",
+    "@alltuner/vacant-darwin-arm64": "0.4.1",
     "@alltuner/vacant-darwin-x64": "0.4.0",
     "@alltuner/vacant-linux-arm64-gnu": "0.4.0",
     "@alltuner/vacant-linux-x64-gnu": "0.4.0"
