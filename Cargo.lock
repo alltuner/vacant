@@ -2171,7 +2171,7 @@ dependencies = [
 
 [[package]]
 name = "vacant"
-version = "0.4.1"
+version = "0.4.2"
 dependencies = [
  "clap",
  "futures",
@@ -2194,7 +2194,7 @@ dependencies = [
 
 [[package]]
 name = "vacant-js"
-version = "0.0.2"
+version = "0.0.3"
 dependencies = [
  "napi",
  "napi-build",
@@ -2204,7 +2204,7 @@ dependencies = [
 
 [[package]]
 name = "vacant-pyext"
-version = "0.0.2"
+version = "0.0.3"
 dependencies = [
  "pyo3",
  "vacant",
