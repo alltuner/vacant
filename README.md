@@ -49,6 +49,30 @@ uv add vacant
 npm install @alltuner/vacant
 ```
 
+## Try it without installing
+
+The CLI also runs straight from any package runner — no install, no global state:
+
+```bash
+uvx vacant example.com                    # PyPI wheel via uv
+pipx run vacant example.com               # PyPI wheel via pipx
+npx -y @alltuner/vacant example.com       # npm package via npx
+bunx @alltuner/vacant example.com         # npm package via bun
+pnpm dlx @alltuner/vacant example.com     # npm package via pnpm
+```
+
+All variants share the same Rust engine, so results and flags are identical. The native binary (`brew` / `cargo`) is fastest to start; the runner variants are perfect for one-shots and CI.
+
+## For agents
+
+There's a ready-made agent skill at [`alltuner/skills`](https://github.com/alltuner/skills) so coding agents (Claude Code, etc.) can use `vacant` directly when checking domain availability:
+
+```bash
+npx skills add alltuner/skills --skill vacant
+```
+
+The skill wraps the CLI with usage hints, common patterns, exit-code semantics, and registry gotchas — see [`skills/vacant/SKILL.md`](https://github.com/alltuner/skills/blob/main/skills/vacant/SKILL.md).
+
 ## Development
 
 ```bash
