@@ -2177,6 +2177,7 @@ dependencies = [
  "futures",
  "hickory-proto",
  "hickory-resolver",
+ "idna",
  "proptest",
  "rand 0.10.1",
  "regex",

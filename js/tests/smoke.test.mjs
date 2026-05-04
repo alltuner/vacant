@@ -25,3 +25,25 @@ test('check on a single invalid input', () => {
   const r = check('nope')
   assert.equal(r.status, Status.INVALID)
 })
+
+test('normalizes URL-shaped and IDN inputs to a canonical domain', () => {
+  for (const raw of [
+    'https://google.com',
+    'https://google.com/',
+    'https://google.com/some/path?x=1#frag',
+    '  google.com  ',
+    'google.com.',
+    'GOOGLE.COM',
+  ]) {
+    const r = check(raw)
+    assert.equal(r.domain, 'google.com', `raw=${raw}`)
+    assert.ok(
+      r.status === Status.REGISTERED || r.status === Status.RESERVED,
+      `raw=${raw} got ${r.status}`,
+    )
+  }
+  const unicode = check('café.com')
+  const punycode = check('xn--caf-dma.com')
+  assert.equal(unicode.domain, 'xn--caf-dma.com')
+  assert.equal(unicode.status, punycode.status)
+})
