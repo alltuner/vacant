@@ -1,4 +1,6 @@
-<h1 align="center">vacant</h1>
+<p align="center">
+  <img src="https://brand.alltuner.com/logos/vacant/horizontal.png" alt="vacant" width="500">
+</p>
 
 <p align="center">
   <strong>Fast domain availability checker.</strong><br>
