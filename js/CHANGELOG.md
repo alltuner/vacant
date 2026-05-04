@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.4.3](https://github.com/alltuner/vacant/compare/vacant-js-v0.4.2...vacant-js-v0.4.3) (2026-05-04)
+
+
+### Bug Fixes
+
+* normalize URL-shaped, IDN, and dirty inputs before zone analysis ([#79](https://github.com/alltuner/vacant/issues/79)) ([12e2f5c](https://github.com/alltuner/vacant/commit/12e2f5ca5b3d0782008e1433699c5696af7e1815))
+* stop caching INVALID results to prevent input-shape poisoning ([#77](https://github.com/alltuner/vacant/issues/77)) ([f3bcd39](https://github.com/alltuner/vacant/commit/f3bcd395170f94b8bde53182bf9bf4e95bcbe43c))
+
 ## [0.4.2](https://github.com/alltuner/vacant/compare/vacant-js-v0.4.1...vacant-js-v0.4.2) (2026-05-04)
 
 
