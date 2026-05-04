@@ -1,5 +1,25 @@
 # Changelog
 
+## [0.4.0](https://github.com/alltuner/vacant/compare/vacant-v0.4.2...vacant-v0.4.0) (2026-05-04)
+
+
+### Bug Fixes
+
+* normalize URL-shaped, IDN, and dirty inputs before zone analysis ([#79](https://github.com/alltuner/vacant/issues/79)) ([12e2f5c](https://github.com/alltuner/vacant/commit/12e2f5ca5b3d0782008e1433699c5696af7e1815))
+* stop caching INVALID results to prevent input-shape poisoning ([#77](https://github.com/alltuner/vacant/issues/77)) ([f3bcd39](https://github.com/alltuner/vacant/commit/f3bcd395170f94b8bde53182bf9bf4e95bcbe43c))
+
+
+### Miscellaneous Chores
+
+* convert repo to a Cargo workspace under crates/vacant ([#31](https://github.com/alltuner/vacant/issues/31)) ([ed1df6a](https://github.com/alltuner/vacant/commit/ed1df6ace80b002cff2b77381afc9404a6fc45d2))
+* cut unified 0.4.0 baseline (engine + python) ([#47](https://github.com/alltuner/vacant/issues/47)) ([2db06b9](https://github.com/alltuner/vacant/commit/2db06b973b0e755e9674dafc1c74ca0833c97a8f))
+* **deps:** refresh rules.toml from PSL + RDAP ([#71](https://github.com/alltuner/vacant/issues/71)) ([2c32f89](https://github.com/alltuner/vacant/commit/2c32f89407c335a81a26cbfd49d9da2376940dc4))
+* **engine:** cut 0.4.0 baseline ([a6c9257](https://github.com/alltuner/vacant/commit/a6c9257c89e220262793d68ccd8c0fdc5ed30739))
+* release main ([#38](https://github.com/alltuner/vacant/issues/38)) ([92cc2d8](https://github.com/alltuner/vacant/commit/92cc2d853d3bc4727f0dd85dd898e3c4945f0721))
+* release main ([#49](https://github.com/alltuner/vacant/issues/49)) ([9f75f3d](https://github.com/alltuner/vacant/commit/9f75f3daf361192be2e2a4aa6ac5336f3f1a0f84))
+* release main ([#72](https://github.com/alltuner/vacant/issues/72)) ([f88739d](https://github.com/alltuner/vacant/commit/f88739d424325a6f076da0c4094dc9673336a27a))
+* release main ([#78](https://github.com/alltuner/vacant/issues/78)) ([69203ee](https://github.com/alltuner/vacant/commit/69203ee86bc802ab1d704d62cba85aa5daeb415c))
+
 ## [0.4.2](https://github.com/alltuner/vacant/compare/v0.4.1...v0.4.2) (2026-05-04)
 
 
