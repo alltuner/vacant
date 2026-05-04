@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.4.1](https://github.com/alltuner/vacant/compare/vacant-js-v0.4.0...vacant-js-v0.4.1) (2026-05-04)
+
+
+### Bug Fixes
+
+* **js:** drop --skip-gh-release flag (removed in napi-rs v3) ([#64](https://github.com/alltuner/vacant/issues/64)) ([6482cfe](https://github.com/alltuner/vacant/commit/6482cfedaa55654a98348dce02b670555f1e786d))
+* **js:** regenerate lock with --include=optional to record stub versions ([#65](https://github.com/alltuner/vacant/issues/65)) ([2a8f2f0](https://github.com/alltuner/vacant/commit/2a8f2f0f704da1ee683dda1aca5d41d43bc899c1))
+
+
+### Miscellaneous Chores
+
+* **deps:** update dependency typescript to v6 ([#60](https://github.com/alltuner/vacant/issues/60)) ([f7eec5b](https://github.com/alltuner/vacant/commit/f7eec5b0fb1713e7fe0654bbfd7d98b25a29403b))
+
 ## [0.4.0](https://github.com/alltuner/vacant/compare/vacant-js-v0.4.0...vacant-js-v0.4.0) (2026-05-04)
 
 
