@@ -98,7 +98,7 @@ pub fn check_many(
 
     if let Some(c) = cache {
         for r in results.iter().flatten() {
-            if r.from_cache || matches!(r.status, Status::Unknown) {
+            if r.from_cache || matches!(r.status, Status::Unknown | Status::Invalid) {
                 continue;
             }
             let _ = c.put(&r.domain, &r.zone, r.status.as_str(), &r.detail);
