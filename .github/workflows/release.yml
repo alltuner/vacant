@@ -329,7 +329,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 24
 
       - uses: dtolnay/rust-toolchain@stable
         with:
@@ -371,7 +371,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 24
 
       - uses: dtolnay/rust-toolchain@stable
         with:
@@ -412,7 +412,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 24
           registry-url: 'https://registry.npmjs.org'
 
       - name: Mirror canonical rules into the npm layout
