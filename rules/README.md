@@ -12,6 +12,7 @@ The following files are **build-time mirrors** of `rules/rules.toml`. Do not edi
 
 - `crates/vacant/data/rules.toml` — embedded into the Rust binary via `include_str!`
 - `python/vacant/rules.toml` — bundled into the Python wheel; loaded at runtime by `vacant.checker`
+- `js/vacant/rules.toml` — bundled into the npm package; loaded at runtime by the napi-rs binding
 
 `just sync-rules` overwrites every mirror from the canonical file. CI runs `just check-rules-sync`, which fails the build on any drift.
 

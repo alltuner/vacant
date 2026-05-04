@@ -19,6 +19,7 @@ jobs:
         run: |
           diff -q rules/rules.toml crates/vacant/data/rules.toml
           diff -q rules/rules.toml python/vacant/rules.toml
+          diff -q rules/rules.toml js/vacant/rules.toml
 
   rust:
     runs-on: ubuntu-latest
@@ -73,3 +74,44 @@ jobs:
       - name: Smoke test the binding
         run: uv run python -c "from vacant import check_many; r = check_many(['google.com'])[0]; assert r.status.value in {'registered','reserved'}, r"
         working-directory: python
+
+  javascript:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: 'https://registry.npmjs.org'
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - uses: Swatinem/rust-cache@v2
+
+      - name: Mirror canonical rules into the npm layout
+        run: cp rules/rules.toml js/vacant/rules.toml
+
+      - name: Install JS deps
+        run: npm ci
+        working-directory: js
+
+      - name: Build napi-rs binding
+        run: npm run build:napi
+        working-directory: js
+
+      - name: tsup build
+        run: npm run build
+        working-directory: js
+
+      - name: Typecheck
+        run: npm run typecheck
+        working-directory: js
+
+      - name: Smoke test
+        run: npm test
+        working-directory: js
+
+      - name: CLI smoke
+        run: node dist/bin/vacant.cjs google.com
+        working-directory: js

@@ -32,11 +32,13 @@ ingest-rdap *args:
 sync-rules:
     cp rules/rules.toml crates/vacant/data/rules.toml
     cp rules/rules.toml python/vacant/rules.toml
+    cp rules/rules.toml js/vacant/rules.toml
 
 # Fail if any embedded copy of rules.toml has drifted from the canonical.
 check-rules-sync:
     @diff -q rules/rules.toml crates/vacant/data/rules.toml >/dev/null || (echo "crates/vacant/data/rules.toml drifted from rules/rules.toml — run 'just sync-rules'" >&2; exit 1)
     @diff -q rules/rules.toml python/vacant/rules.toml >/dev/null || (echo "python/vacant/rules.toml drifted from rules/rules.toml — run 'just sync-rules'" >&2; exit 1)
+    @diff -q rules/rules.toml js/vacant/rules.toml >/dev/null || (echo "js/vacant/rules.toml drifted from rules/rules.toml — run 'just sync-rules'" >&2; exit 1)
 
 # Build the maturin extension into the local venv.
 py-develop: sync-rules
@@ -55,6 +57,21 @@ py-wheel: sync-rules
 # Build a source distribution.
 py-sdist: sync-rules
     cd python && uv run --with maturin maturin sdist
+
+# Build the napi-rs binding into js/.
+js-develop: sync-rules
+    cd js && npm ci
+    cd js && npm run build:napi
+
+# Typecheck + tsup + node:test smoke for the JS package.
+js-check: js-develop
+    cd js && npm run typecheck
+    cd js && npm run build
+    cd js && npm test
+
+# Produce a publishable npm tarball (main package only; per-platform stubs build separately).
+js-pack: js-check
+    cd js && npm pack
 
 # Clean build outputs.
 clean:

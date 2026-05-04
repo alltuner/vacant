@@ -8,8 +8,9 @@ This repository hosts the engine and its language bindings:
 |---|---|---|
 | `vacant` (Rust library + CLI) | [`crates/vacant`](crates/vacant) | [crates.io](https://crates.io/crates/vacant) |
 | `vacant` (Python wheel) | [`python`](python) | [PyPI](https://pypi.org/project/vacant/) |
+| `@alltuner/vacant` (npm package) | [`js`](js) | [npm](https://www.npmjs.com/package/@alltuner/vacant) |
 
-See each package's README for usage. The Python wheel embeds the Rust engine via PyO3 and shares the on-disk SQLite cache with the CLI.
+See each package's README for usage. The Python wheel embeds the Rust engine via PyO3, the npm package embeds it via napi-rs, and all three share the on-disk SQLite cache with the CLI.
 
 The PSL + RDAP-derived rules every package consumes live at [`rules/rules.toml`](rules/) — see the [`rules/` README](rules/README.md) for the source-of-truth and mirror policy.
 
@@ -21,6 +22,8 @@ just build           # build the rust binary
 just test            # run rust workspace tests
 just py-develop      # build the python extension into a local venv
 just py-check        # ruff + pytest
+just js-develop      # build the napi-rs binding into js/
+just js-check        # tsc + node:test smoke
 ```
 
 ## License

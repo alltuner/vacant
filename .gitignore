@@ -6,6 +6,7 @@ __pycache__/
 *.so
 *.dylib
 *.pyd
+*.node
 .ruff_cache/
 .pytest_cache/
 dist/
