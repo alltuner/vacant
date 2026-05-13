@@ -6,9 +6,10 @@ license = "MIT"
 authors = ["David Poblador i Garcia <david@poblador.com>"]
 description = "napi-rs bindings for the vacant Rust engine — domain availability via authoritative DNS."
 # Internal cdylib for the npm package; never published to crates.io. The npm
-# package's version comes from js/package.json. The cargo-workspace
-# release-please plugin will auto-bump this version on engine releases as
-# a side-effect; that's harmless because nothing reads it.
+# package's version comes from js/package.json — this version field is
+# unused at runtime and intentionally frozen, so the release pipeline does
+# not create stray vacant-js-v0.0.* tags that collide with real npm
+# release tags.
 publish = false
 
 [lib]

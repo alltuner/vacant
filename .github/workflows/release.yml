@@ -52,7 +52,6 @@ jobs:
     steps:
       - id: pick
         env:
-          GH_TOKEN: ${{ github.token }}
           DISPATCH_ENGINE_TAG: ${{ inputs.engine_tag }}
           DISPATCH_PYTHON_TAG: ${{ inputs.python_tag }}
           DISPATCH_JS_TAG: ${{ inputs.js_tag }}
@@ -79,21 +78,7 @@ jobs:
           if [ -n "$DISPATCH_JS_TAG" ]; then
             echo "js_tag=$DISPATCH_JS_TAG" >> "$GITHUB_OUTPUT"
           elif [ "$RP_JS_CREATED" = "true" ]; then
-            # The `vacant-js-` tag prefix is shared between the npm package
-            # (component=vacant-js in release-please) and the internal
-            # crates/vacant-js cdylib (workspace member with the same Cargo
-            # name). When the cargo-workspace plugin auto-bumps the cdylib
-            # on an engine release, release-please reports a "js" release
-            # for that workspace tag — but js/package.json is unchanged.
-            # Filter those out by requiring the tag's version to match
-            # js/package.json at the tagged commit.
-            RP_JS_VERSION="${RP_JS_TAG#vacant-js-v}"
-            PKG_VERSION=$(gh api "repos/$GITHUB_REPOSITORY/contents/js/package.json?ref=$RP_JS_TAG" --jq '.content' | base64 -d | jq -r '.version')
-            if [ "$RP_JS_VERSION" = "$PKG_VERSION" ]; then
-              echo "js_tag=$RP_JS_TAG" >> "$GITHUB_OUTPUT"
-            else
-              echo "::notice::Skipping JS pipeline: $RP_JS_TAG is a workspace-crate bump (js/package.json says $PKG_VERSION)"
-            fi
+            echo "js_tag=$RP_JS_TAG" >> "$GITHUB_OUTPUT"
           fi
 
   publish-crate:
