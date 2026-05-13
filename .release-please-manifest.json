@@ -1,5 +1,5 @@
 {
-  "crates/vacant": "0.4.1",
+  "crates/vacant": "0.4.2",
   "python": "0.4.3",
   "js": "0.4.4",
   "crates/vacant-pyext": "0.0.5",

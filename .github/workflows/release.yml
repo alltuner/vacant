@@ -156,6 +156,7 @@ jobs:
       - name: Generate and push formula
         env:
           GH_TOKEN: ${{ secrets.HOMEBREW_TAP_TOKEN }}
+          TAG: ${{ needs.resolve-tags.outputs.engine_tag }}
           VERSION: ${{ needs.resolve-tags.outputs.engine_version }}
         run: |
           MAC_ARM_SHA=$(sha256sum vacant-aarch64-apple-darwin.tar.gz | awk '{print $1}')
@@ -163,7 +164,7 @@ jobs:
           LINUX_ARM_SHA=$(sha256sum vacant-aarch64-unknown-linux-gnu.tar.gz | awk '{print $1}')
           LINUX_INTEL_SHA=$(sha256sum vacant-x86_64-unknown-linux-gnu.tar.gz | awk '{print $1}')
 
-          BASE_URL="https://github.com/alltuner/vacant/releases/download/v${VERSION}"
+          BASE_URL="https://github.com/alltuner/vacant/releases/download/${TAG}"
 
           FORMULA_CONTENT=$(cat <<RUBY
           class Vacant < Formula
