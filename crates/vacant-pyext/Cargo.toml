@@ -6,9 +6,8 @@ license = "MIT"
 authors = ["David Poblador i Garcia <david@poblador.com>"]
 description = "PyO3 bindings for the vacant Rust engine — domain availability via authoritative DNS."
 # Internal cdylib for the python wheel; never published to crates.io. The
-# wheel's version comes from python/pyproject.toml. The cargo-workspace
-# release-please plugin will auto-bump this version on engine releases as
-# a side-effect; that's harmless because nothing reads it.
+# wheel's version comes from python/pyproject.toml — this version field is
+# unused at runtime and intentionally frozen by release-please config.
 publish = false
 
 [lib]
