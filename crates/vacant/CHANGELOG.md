@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.3](https://github.com/alltuner/vacant/compare/vacant-v0.4.1...vacant-v0.4.3) (2026-05-13)
+
+
+### Bug Fixes
+
+* **vacant:** bump to 0.4.3 to skip past crates.io collisions ([#95](https://github.com/alltuner/vacant/issues/95)) ([130c79d](https://github.com/alltuner/vacant/commit/130c79da0be8284576555ffba87b888b6276ec84))
+
 ## [0.4.1](https://github.com/alltuner/vacant/compare/vacant-v0.4.0...vacant-v0.4.1) (2026-05-13)
 
 
