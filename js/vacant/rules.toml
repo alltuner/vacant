@@ -6,9 +6,9 @@
 
 [meta]
 # Refreshed by `uv run ingest/psl.py` (in CI weekly).
-psl_version = "2026-05-01_02-51-25_UTC"
-psl_commit = "8b4345f9a2513011b21e6fc7b8a7197a849be52c"
-psl_imported_at = "2026-05-04T08:44:26Z"
+psl_version = "2026-05-07_00-57-25_UTC"
+psl_commit = "ee780bcf233174cb23ba8575d54c4154d47508e1"
+psl_imported_at = "2026-05-11T09:51:29Z"
 # Refreshed by `uv run ingest/rdap.py` (in CI weekly).
 rdap_publication = "2026-04-18T17:52:34Z"
 rdap_imported_at = "2026-04-30T16:46:33Z"
