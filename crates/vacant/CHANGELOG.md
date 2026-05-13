@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.1](https://github.com/alltuner/vacant/compare/vacant-v0.4.0...vacant-v0.4.1) (2026-05-13)
+
+
+### Miscellaneous Chores
+
+* **deps:** refresh rules.toml from PSL + RDAP ([#87](https://github.com/alltuner/vacant/issues/87)) ([aaabec7](https://github.com/alltuner/vacant/commit/aaabec718c9195a909fefe4bdd5b0bed2f533377))
+
 ## [0.4.0](https://github.com/alltuner/vacant/compare/vacant-v0.4.2...vacant-v0.4.0) (2026-05-04)
 
 
