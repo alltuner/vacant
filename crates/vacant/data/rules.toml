@@ -6,12 +6,12 @@
 
 [meta]
 # Refreshed by `uv run ingest/psl.py` (in CI weekly).
-psl_version = "2026-05-07_00-57-25_UTC"
-psl_commit = "ee780bcf233174cb23ba8575d54c4154d47508e1"
-psl_imported_at = "2026-05-11T09:51:29Z"
+psl_version = "2026-05-14_08-35-31_UTC"
+psl_commit = "e452c7058d6946bd76952b128c12f5ce87a5acb8"
+psl_imported_at = "2026-05-25T10:17:03Z"
 # Refreshed by `uv run ingest/rdap.py` (in CI weekly).
-rdap_publication = "2026-04-18T17:52:34Z"
-rdap_imported_at = "2026-04-30T16:46:33Z"
+rdap_publication = "2026-05-20T18:00:01Z"
+rdap_imported_at = "2026-05-25T10:40:39Z"
 #
 # Each zone inherits [default] and overrides what it cares about.
 # Recognised keys:
@@ -13579,7 +13579,7 @@ rdap = "https://rdap.nic.airtel"
 rdap = "https://rdap.identitydigital.services/rdap"
 
 [zone.alibaba]
-rdap = "https://rdap.identitydigital.services/rdap"
+rdap = "https://rdap.aliregistry.cn/rdap"
 
 [zone.alipay]
 rdap = "https://rdap.identitydigital.services/rdap"
