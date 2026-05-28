@@ -14,6 +14,7 @@ class Status(enum.Enum):
     REGISTERED = "registered"
     RESERVED = "reserved"
     INVALID = "invalid"
+    UNCONFIRMED = "unconfirmed"
     UNKNOWN = "unknown"
 
 
@@ -57,6 +58,7 @@ def check_many(
     concurrency: int = 64,
     cache: "DiskCache | str | None" = None,
     cache_ttl: float = 86_400.0,
+    verify: bool = False,
 ) -> list[Result]:
     """Check a batch of domains end-to-end via the vacant engine. Order preserved."""
     _ensure_rules_loaded()
@@ -67,6 +69,7 @@ def check_many(
         timeout=timeout,
         cache=rust_cache,
         cache_ttl=cache_ttl,
+        verify=verify,
     )
     return [_to_result(r) for r in rows]
 
@@ -77,6 +80,7 @@ def check(
     timeout: float = 4.0,
     cache: "DiskCache | str | None" = None,
     cache_ttl: float = 86_400.0,
+    verify: bool = False,
 ) -> Result:
     return check_many(
         [domain],
@@ -84,6 +88,7 @@ def check(
         concurrency=1,
         cache=cache,
         cache_ttl=cache_ttl,
+        verify=verify,
     )[0]
 
 

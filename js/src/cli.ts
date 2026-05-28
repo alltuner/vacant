@@ -10,10 +10,11 @@ interface ParsedArgs {
   output: 'jsonl' | 'text'
   concurrency: number
   timeout: number
+  verify: boolean
   showHelp: boolean
 }
 
-const HELP = `usage: vacant [-h] [-o {jsonl,text}] [--concurrency N] [--timeout SECONDS] [domains ...]
+const HELP = `usage: vacant [-h] [-o {jsonl,text}] [--concurrency N] [--timeout SECONDS] [--verify] [domains ...]
 
 Check domain availability via authoritative DNS.
 
@@ -26,6 +27,7 @@ options:
                         Output format (default: jsonl).
   --concurrency N       (default: 64)
   --timeout SECONDS     (default: 4.0)
+  --verify              Confirm undelegated names against the registry's RDAP endpoint.
 `
 
 function parseArgs(argv: string[]): ParsedArgs {
@@ -34,6 +36,7 @@ function parseArgs(argv: string[]): ParsedArgs {
     output: 'jsonl',
     concurrency: 64,
     timeout: 4.0,
+    verify: false,
     showHelp: false,
   }
   for (let i = 0; i < argv.length; i++) {
@@ -70,6 +73,8 @@ function parseArgs(argv: string[]): ParsedArgs {
       const n = Number.parseFloat(arg.slice('--timeout='.length))
       if (!Number.isFinite(n) || n <= 0) throw new Error(`--timeout requires a positive number`)
       out.timeout = n
+    } else if (arg === '--verify') {
+      out.verify = true
     } else if (arg.startsWith('-')) {
       throw new Error(`unknown option: ${arg}`)
     } else {
@@ -126,6 +131,7 @@ export async function main(argv: string[] = process.argv.slice(2)): Promise<numb
   const results = checkMany(inputs, {
     concurrency: parsed.concurrency,
     timeout: parsed.timeout,
+    verify: parsed.verify,
   })
   emit(results, parsed.output)
 

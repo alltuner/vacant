@@ -36,7 +36,7 @@ fn invalid_below_registrable_does_not_poison_cache() {
     // 1) Seed the cache by checking a subdomain — precheck returns Invalid
     //    ("below the registrable level"). No DNS is needed for the verdict.
     let inputs = vec!["vacant.alltuner.com".to_string()];
-    let results = check_many(&rs, &dc, Some(&cache), &inputs, 86_400, 1);
+    let results = check_many(&rs, &dc, Some(&cache), &inputs, 86_400, 1, false);
     assert_eq!(results[0].status.as_str(), "invalid");
     assert_eq!(results[0].domain, "alltuner.com");
 

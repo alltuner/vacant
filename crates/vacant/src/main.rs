@@ -39,6 +39,12 @@ struct Cli {
     #[arg(long)]
     detail: bool,
 
+    /// Confirm undelegated names against the registry's RDAP endpoint. Without
+    /// this, names with no delegation report "unconfirmed" (probably free but
+    /// unverified); with it, they resolve to "available" or "registered".
+    #[arg(long)]
+    verify: bool,
+
     /// Disable on-disk result cache.
     #[arg(long)]
     no_cache: bool,
@@ -64,6 +70,8 @@ struct Cli {
     reserved: bool,
     #[arg(long)]
     invalid: bool,
+    #[arg(long)]
+    unconfirmed: bool,
     #[arg(long)]
     unknown: bool,
 }
@@ -121,6 +129,7 @@ fn run(cli: Cli) -> Result<(), Box<dyn std::error::Error>> {
         &inputs,
         cli.cache_ttl as i64,
         cli.concurrency,
+        cli.verify,
     );
 
     let filter = StatusFilter::from_cli(&cli);
@@ -156,6 +165,9 @@ impl StatusFilter {
         }
         if cli.invalid {
             allowed.push(Status::Invalid);
+        }
+        if cli.unconfirmed {
+            allowed.push(Status::Unconfirmed);
         }
         if cli.unknown {
             allowed.push(Status::Unknown);

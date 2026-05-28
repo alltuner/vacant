@@ -37,6 +37,7 @@ export interface NativeBinding {
     timeout?: number,
     cache?: NativeDiskCache | null,
     cacheTtl?: number,
+    verify?: boolean,
   ): CheckRowNative[]
   DiskCache: {
     new (path?: string | null): NativeDiskCache

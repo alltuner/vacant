@@ -13,6 +13,7 @@ pub enum Status {
     Registered,
     Reserved,
     Invalid,
+    Unconfirmed,
     Unknown,
 }
 
@@ -23,6 +24,7 @@ impl Status {
             Status::Registered => "registered",
             Status::Reserved => "reserved",
             Status::Invalid => "invalid",
+            Status::Unconfirmed => "unconfirmed",
             Status::Unknown => "unknown",
         }
     }

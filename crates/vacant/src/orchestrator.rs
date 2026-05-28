@@ -22,6 +22,7 @@ pub fn check_many(
     inputs: &[String],
     cache_ttl_secs: i64,
     concurrency: usize,
+    verify: bool,
 ) -> Vec<CheckResult> {
     let mut results: Vec<Option<CheckResult>> = vec![None; inputs.len()];
     let mut pending: Vec<(usize, String, String, Option<String>)> = Vec::new();
@@ -102,7 +103,7 @@ pub fn check_many(
                 rdap_url: rdap.clone(),
             })
             .collect();
-        let verdicts = dns.check_full_batch(jobs, concurrency);
+        let verdicts = dns.check_full_batch(jobs, concurrency, verify);
         for ((i, zone, registered, _), v) in pending.into_iter().zip(verdicts) {
             results[i] = Some(verdict_to_result(&inputs[i], zone, registered, v));
         }
@@ -110,7 +111,12 @@ pub fn check_many(
 
     if let Some(c) = cache {
         for r in results.iter().flatten() {
-            if r.from_cache || matches!(r.status, Status::Unknown | Status::Invalid) {
+            if r.from_cache
+                || matches!(
+                    r.status,
+                    Status::Unknown | Status::Invalid | Status::Unconfirmed
+                )
+            {
                 continue;
             }
             let _ = c.put(&r.domain, &r.zone, r.status.as_str(), &r.detail);
@@ -124,6 +130,7 @@ fn verdict_to_result(input: &str, zone: String, registered: String, v: FullVerdi
     let status = match v.kind {
         "registered" => Status::Registered,
         "available" => Status::Available,
+        "unconfirmed" => Status::Unconfirmed,
         _ => Status::Unknown,
     };
     CheckResult {
@@ -142,6 +149,7 @@ fn parse_status(s: &str) -> Status {
         "registered" => Status::Registered,
         "reserved" => Status::Reserved,
         "invalid" => Status::Invalid,
+        "unconfirmed" => Status::Unconfirmed,
         _ => Status::Unknown,
     }
 }
