@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.4.4](https://github.com/alltuner/vacant/compare/vacant-v0.4.3...vacant-v0.4.4) (2026-05-28)
+
+
+### Bug Fixes
+
+* **deps:** update rust crate rusqlite to 0.40 ([#101](https://github.com/alltuner/vacant/issues/101)) ([071308a](https://github.com/alltuner/vacant/commit/071308adfc7f21cf046b218c4f11333157e1a2e4))
+
+
+### Miscellaneous Chores
+
+* **deps:** refresh rules.toml from PSL + RDAP ([#98](https://github.com/alltuner/vacant/issues/98)) ([457d62b](https://github.com/alltuner/vacant/commit/457d62bea83d00c770905ef11514f6ce03c75ee5))
+
 ## [0.4.3](https://github.com/alltuner/vacant/compare/vacant-v0.4.1...vacant-v0.4.3) (2026-05-13)
 
 

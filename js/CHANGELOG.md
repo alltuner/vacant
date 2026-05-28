@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.4.5](https://github.com/alltuner/vacant/compare/vacant-js-v0.4.4...vacant-js-v0.4.5) (2026-05-28)
+
+
+### Miscellaneous Chores
+
+* **deps:** refresh rules.toml from PSL + RDAP ([#98](https://github.com/alltuner/vacant/issues/98)) ([457d62b](https://github.com/alltuner/vacant/commit/457d62bea83d00c770905ef11514f6ce03c75ee5))
+* **deps:** update dependency @napi-rs/cli to v3.7.0 ([#102](https://github.com/alltuner/vacant/issues/102)) ([64344c3](https://github.com/alltuner/vacant/commit/64344c36357e7c15ceaf3b88b1f5bbd8233d0f6c))
+
 ## [0.4.4](https://github.com/alltuner/vacant/compare/vacant-js-v0.4.3...vacant-js-v0.4.4) (2026-05-13)
 
 
