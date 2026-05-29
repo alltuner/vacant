@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.4.6](https://github.com/alltuner/vacant/compare/vacant-js-v0.4.5...vacant-js-v0.4.6) (2026-05-29)
+
+
+### Bug Fixes
+
+* stop reporting held domains as available; add --verify ([#104](https://github.com/alltuner/vacant/issues/104)) ([426666f](https://github.com/alltuner/vacant/commit/426666f956cd12a116037556215a77a06cb1302b))
+
+
+### Miscellaneous Chores
+
+* **deps:** harvest RDAP endpoints omitted by the IANA bootstrap ([#108](https://github.com/alltuner/vacant/issues/108)) ([06cb546](https://github.com/alltuner/vacant/commit/06cb5465d379bcfa25e69432c81a5455150e99d1))
+
 ## [0.4.5](https://github.com/alltuner/vacant/compare/vacant-js-v0.4.4...vacant-js-v0.4.5) (2026-05-28)
 
 
