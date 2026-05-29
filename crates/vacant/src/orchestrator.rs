@@ -103,7 +103,15 @@ pub fn check_many(
                 rdap_url: rdap.clone(),
             })
             .collect();
-        let verdicts = dns.check_full_batch(jobs, concurrency, verify);
+        let blocked = cache
+            .and_then(|c| c.blocked_rdap_hosts().ok())
+            .unwrap_or_default();
+        let (verdicts, new_cooldowns) = dns.check_full_batch(jobs, concurrency, verify, blocked);
+        if let Some(c) = cache {
+            for (host, cooldown_secs) in new_cooldowns {
+                let _ = c.block_rdap_host(&host, cooldown_secs);
+            }
+        }
         for ((i, zone, registered, _), v) in pending.into_iter().zip(verdicts) {
             results[i] = Some(verdict_to_result(&inputs[i], zone, registered, v));
         }
