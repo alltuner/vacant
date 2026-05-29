@@ -180,6 +180,7 @@ impl DnsClient {
         &self,
         jobs: Vec<FullCheckJob>,
         concurrency: usize,
+        verify: bool,
     ) -> Vec<FullVerdict> {
         let resolver = self.resolver.clone();
         let http = self.http.clone();
@@ -198,7 +199,7 @@ impl DnsClient {
                     let h = health.clone();
                     tokio::spawn(async move {
                         let _permit = sem.acquire_owned().await.expect("semaphore not closed");
-                        run_full_job(&res, &http, &throttle, &h, job, timeout).await
+                        run_full_job(&res, &http, &throttle, &h, job, timeout, verify).await
                     })
                 })
                 .collect();
@@ -214,6 +215,54 @@ impl DnsClient {
     }
 }
 
+/// What to do with a DNS verdict before any RDAP network call.
+///
+/// A delegation is a hard "registered". A DNS failure is a hard "failure". But
+/// "not in the zone" (NXDOMAIN) and "in the zone, no NS" (NODATA) only tell us a
+/// name isn't *delegated* — not whether it's *registrable*. Held, suspended, and
+/// pending-delete domains are registered yet answer NXDOMAIN, so we never call
+/// those "available" on DNS alone. Without `--verify` they stay `unconfirmed`;
+/// with `--verify` and an RDAP endpoint we confirm against the registry.
+#[derive(Debug, PartialEq, Eq)]
+enum Decision {
+    Report(&'static str),
+    Confirm,
+}
+
+fn decide(verdict: &DnsVerdict, verify: bool, has_rdap: bool) -> Decision {
+    match verdict {
+        DnsVerdict::Registered { .. } => Decision::Report("registered"),
+        DnsVerdict::Failure { .. } => Decision::Report("failure"),
+        DnsVerdict::Available { .. } | DnsVerdict::Nodata { .. } => {
+            if verify && has_rdap {
+                Decision::Confirm
+            } else {
+                Decision::Report("unconfirmed")
+            }
+        }
+    }
+}
+
+/// Fold an RDAP probe result into a final verdict. Only the registry can promote
+/// an undelegated name to `available` (404) or `registered` (200); an inconclusive
+/// probe leaves it `unconfirmed`.
+fn combine_rdap(base_detail: &str, outcome: Option<RdapOutcome>) -> FullVerdict {
+    match outcome {
+        Some(RdapOutcome::Registered { detail }) => FullVerdict {
+            kind: "registered",
+            detail: format!("{base_detail}; {detail}"),
+        },
+        Some(RdapOutcome::Available { detail }) => FullVerdict {
+            kind: "available",
+            detail: format!("{base_detail}; {detail}"),
+        },
+        None => FullVerdict {
+            kind: "unconfirmed",
+            detail: format!("{base_detail}; RDAP inconclusive"),
+        },
+    }
+}
+
 async fn run_full_job(
     resolver: &TokioResolver,
     http: &reqwest::Client,
@@ -221,52 +270,49 @@ async fn run_full_job(
     health: &HostHealth,
     job: FullCheckJob,
     timeout: Duration,
+    verify: bool,
 ) -> FullVerdict {
     let dns =
         check_authoritative_async(resolver, health, &job.zone, &job.registered, timeout).await;
-    match dns {
-        DnsVerdict::Registered { detail } => FullVerdict {
+    let detail = match &dns {
+        DnsVerdict::Registered { detail }
+        | DnsVerdict::Available { detail }
+        | DnsVerdict::Failure { detail }
+        | DnsVerdict::Nodata { detail } => detail.clone(),
+    };
+    match decide(&dns, verify, job.rdap_url.is_some()) {
+        Decision::Report("registered") => FullVerdict {
             kind: "registered",
             detail,
         },
-        DnsVerdict::Available { detail } => FullVerdict {
-            kind: "available",
-            detail,
-        },
-        DnsVerdict::Failure { detail } => FullVerdict {
+        Decision::Report("failure") => FullVerdict {
             kind: "failure",
             detail,
         },
-        DnsVerdict::Nodata { detail } => match job.rdap_url {
-            Some(base) => {
-                let host = rdap_host(&base).unwrap_or_else(|| base.clone());
-                let semaphore = throttle.permit_for(&host);
-                let permit = semaphore.acquire_owned().await.expect("rdap permit");
-                let outcome = rdap::lookup(http, &job.registered, &base).await;
-                // Hold the permit for a short cool-down so back-to-back tasks don't
-                // race the same host. drop(permit) happens after the sleep.
-                tokio::time::sleep(RDAP_PER_HOST_MIN_GAP).await;
-                drop(permit);
-                match outcome {
-                    Some(RdapOutcome::Registered { detail: rdetail }) => FullVerdict {
-                        kind: "registered",
-                        detail: format!("{detail}; {rdetail}"),
-                    },
-                    Some(RdapOutcome::Available { detail: rdetail }) => FullVerdict {
-                        kind: "available",
-                        detail: format!("{detail}; {rdetail}"),
-                    },
-                    None => FullVerdict {
-                        kind: "available",
-                        detail: format!("{detail}; RDAP inconclusive"),
-                    },
-                }
+        Decision::Report(_) => {
+            // Undelegated and not confirmed: probably free, but unverified.
+            let detail = if verify {
+                format!("{detail} (no RDAP endpoint for zone '{}')", job.zone)
+            } else {
+                detail
+            };
+            FullVerdict {
+                kind: "unconfirmed",
+                detail,
             }
-            None => FullVerdict {
-                kind: "available",
-                detail: format!("{detail} (no RDAP configured for zone '{}')", job.zone),
-            },
-        },
+        }
+        Decision::Confirm => {
+            let base = job.rdap_url.expect("confirm implies an rdap endpoint");
+            let host = rdap_host(&base).unwrap_or_else(|| base.clone());
+            let semaphore = throttle.permit_for(&host);
+            let permit = semaphore.acquire_owned().await.expect("rdap permit");
+            let outcome = rdap::lookup(http, &job.registered, &base).await;
+            // Hold the permit for a short cool-down so back-to-back tasks don't
+            // race the same host. drop(permit) happens after the sleep.
+            tokio::time::sleep(RDAP_PER_HOST_MIN_GAP).await;
+            drop(permit);
+            combine_rdap(&detail, outcome)
+        }
     }
 }
 
@@ -424,5 +470,124 @@ fn classify(response: &Message, ns: &str) -> Option<DnsVerdict> {
             }
         }
         _ => None,
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    fn available() -> DnsVerdict {
+        DnsVerdict::Available {
+            detail: "NXDOMAIN via ns1".to_string(),
+        }
+    }
+    fn nodata() -> DnsVerdict {
+        DnsVerdict::Nodata {
+            detail: "NODATA via ns1".to_string(),
+        }
+    }
+    fn registered() -> DnsVerdict {
+        DnsVerdict::Registered {
+            detail: "delegation via ns1".to_string(),
+        }
+    }
+    fn failure() -> DnsVerdict {
+        DnsVerdict::Failure {
+            detail: "all nameservers failed".to_string(),
+        }
+    }
+
+    #[test]
+    fn delegation_is_always_registered() {
+        for verify in [false, true] {
+            for has_rdap in [false, true] {
+                assert_eq!(
+                    decide(&registered(), verify, has_rdap),
+                    Decision::Report("registered")
+                );
+            }
+        }
+    }
+
+    #[test]
+    fn failure_is_always_failure() {
+        for verify in [false, true] {
+            for has_rdap in [false, true] {
+                assert_eq!(
+                    decide(&failure(), verify, has_rdap),
+                    Decision::Report("failure")
+                );
+            }
+        }
+    }
+
+    #[test]
+    fn nxdomain_is_unconfirmed_without_verify() {
+        // The bug: a held domain answers NXDOMAIN. We must not call it available.
+        assert_eq!(
+            decide(&available(), false, true),
+            Decision::Report("unconfirmed")
+        );
+        assert_eq!(
+            decide(&available(), false, false),
+            Decision::Report("unconfirmed")
+        );
+    }
+
+    #[test]
+    fn nodata_is_unconfirmed_without_verify() {
+        assert_eq!(
+            decide(&nodata(), false, true),
+            Decision::Report("unconfirmed")
+        );
+        assert_eq!(
+            decide(&nodata(), false, false),
+            Decision::Report("unconfirmed")
+        );
+    }
+
+    #[test]
+    fn verify_confirms_only_when_rdap_available() {
+        assert_eq!(decide(&available(), true, true), Decision::Confirm);
+        assert_eq!(decide(&nodata(), true, true), Decision::Confirm);
+        // No RDAP endpoint for the zone: nothing to confirm against.
+        assert_eq!(
+            decide(&available(), true, false),
+            Decision::Report("unconfirmed")
+        );
+        assert_eq!(
+            decide(&nodata(), true, false),
+            Decision::Report("unconfirmed")
+        );
+    }
+
+    #[test]
+    fn rdap_404_is_the_only_path_to_available() {
+        let v = combine_rdap(
+            "NXDOMAIN via ns1",
+            Some(RdapOutcome::Available {
+                detail: "RDAP 404 via https://r".to_string(),
+            }),
+        );
+        assert_eq!(v.kind, "available");
+    }
+
+    #[test]
+    fn rdap_200_catches_held_domains_as_registered() {
+        let v = combine_rdap(
+            "NXDOMAIN via ns1",
+            Some(RdapOutcome::Registered {
+                detail: "RDAP 200 via https://r".to_string(),
+            }),
+        );
+        assert_eq!(v.kind, "registered");
+    }
+
+    #[test]
+    fn rdap_inconclusive_stays_unconfirmed() {
+        let v = combine_rdap("NXDOMAIN via ns1", None);
+        assert_eq!(v.kind, "unconfirmed");
+        assert!(v.detail.contains("RDAP inconclusive"));
     }
 }

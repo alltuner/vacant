@@ -36,7 +36,7 @@ fn load_rules(path: PathBuf) -> PyResult<()> {
 }
 
 #[pyfunction]
-#[pyo3(signature = (domains, concurrency=64, timeout=4.0, cache=None, cache_ttl=86_400.0))]
+#[pyo3(signature = (domains, concurrency=64, timeout=4.0, cache=None, cache_ttl=86_400.0, verify=false))]
 fn check_many(
     py: Python<'_>,
     domains: Vec<String>,
@@ -44,6 +44,7 @@ fn check_many(
     timeout: f64,
     cache: Option<&PyDiskCache>,
     cache_ttl: f64,
+    verify: bool,
 ) -> PyResult<Py<PyList>> {
     let dur = Duration::from_secs_f64(timeout.max(0.05));
     let dns = dns_client(dur)?;
@@ -64,6 +65,7 @@ fn check_many(
             &domains,
             cache_ttl as i64,
             concurrency,
+            verify,
         )
     });
 

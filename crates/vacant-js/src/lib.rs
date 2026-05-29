@@ -67,10 +67,12 @@ pub fn check_many(
     timeout: Option<f64>,
     cache: Option<&JsDiskCache>,
     cache_ttl: Option<f64>,
+    verify: Option<bool>,
 ) -> Result<Vec<CheckRow>> {
     let concurrency = concurrency.unwrap_or(64) as usize;
     let timeout = timeout.unwrap_or(4.0);
     let cache_ttl = cache_ttl.unwrap_or(86_400.0);
+    let verify = verify.unwrap_or(false);
 
     let dur = Duration::from_secs_f64(timeout.max(0.05));
     let dns = dns_client(dur)?;
@@ -93,6 +95,7 @@ pub fn check_many(
         &domains,
         cache_ttl as i64,
         concurrency,
+        verify,
     );
 
     Ok(results.into_iter().map(CheckRow::from).collect())

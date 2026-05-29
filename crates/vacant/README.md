@@ -35,15 +35,26 @@ vacant -o table example.com
 # include zone, raw input, detail, cache hit
 vacant --detail example.com
 
-# only show available results
-vacant --available a.com b.com c.com
+# confirm undelegated names against the registry (RDAP)
+vacant --verify example.com
+
+# only show available results (implies you want the truth — pair with --verify)
+vacant --verify --available a.com b.com c.com
 
 # tighten timeout, raise concurrency for large batches
 vacant --timeout 2 --concurrency 256 < big-list.txt
 ```
 
+A name with no delegation reports `unconfirmed`, not `available`: the DNS
+answer for a free name and a held/suspended/pending-delete one is identical
+(both NXDOMAIN), so "not delegated" isn't the same claim as "registrable". Pass
+`--verify` to confirm those names against the registry's RDAP endpoint, which
+promotes them to `available` (RDAP 404) or `registered` (RDAP 200, e.g. a domain
+on hold). `available` therefore only ever means RDAP-confirmed registrable.
+
 Exit codes: `0` on success, `2` if any result has `status=unknown` (transport
-failure, ambiguous registry response).
+failure, ambiguous registry response). `unconfirmed` is a normal result and does
+not affect the exit code.
 
 ## How it works
 
@@ -54,9 +65,12 @@ For each input:
    (e.g. `.eu` minimum 3 characters), and registry suffixes used as inputs
    (`co.uk` is not a registrable name).
 2. **Authoritative NS query** against the parent zone's nameservers, with
-   `+norecurse`. NS delegation present → `registered`. NXDOMAIN → `available`.
-3. **RDAP fallback** for registries that use compact denial of existence
-   (Nominet `.uk`, several others) where step 2 returns NODATA.
+   `+norecurse`. NS delegation present → `registered` (a hard fact). NXDOMAIN or
+   NODATA → `unconfirmed`: not delegated, probably free, but not verified.
+3. **RDAP confirmation** (only with `--verify`) for the `unconfirmed` names, when
+   the zone has an RDAP endpoint: 404 → `available`, 200 → `registered`,
+   inconclusive → stays `unconfirmed`. Without `--verify` no RDAP traffic happens
+   at all, so delegated (taken) names cost zero RDAP either way.
 
 Per-host nameserver cooldowns (5 min after a transport failure) and per-RDAP-host
 throttling (2 concurrent + 100ms gap) keep things polite under heavy use.

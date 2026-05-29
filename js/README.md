@@ -55,7 +55,7 @@ const results = checkMany(['example.com'], { cache })
 1. Normalizes the input.
 2. Looks up cache; returns hits immediately.
 3. Runs a per-zone precheck (length, charset, reserved labels) from the bundled `rules.toml`.
-4. For inputs that pass, asks the parent zone's NS directly. NXDOMAIN → available; delegation → registered; ambiguous answers fall back to RDAP.
+4. For inputs that pass, asks the parent zone's NS directly. Delegation → `registered`; NXDOMAIN/NODATA → `unconfirmed` (not delegated, not verified). Pass `{ verify: true }` to confirm `unconfirmed` names against the registry's RDAP endpoint, promoting them to `available` (404) or `registered` (200, e.g. a held domain). `available` only ever means RDAP-confirmed.
 
 Cache shape, rules format, and verdict semantics are all the engine's — see [alltuner/vacant](https://github.com/alltuner/vacant) for the source of truth.
 

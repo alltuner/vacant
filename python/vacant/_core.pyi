@@ -14,6 +14,7 @@ def check_many(
     timeout: float = 4.0,
     cache: DiskCache | None = None,
     cache_ttl: float = 86_400.0,
+    verify: bool = False,
 ) -> list[dict[str, Any]]: ...
 
 class DiskCache:

@@ -27,6 +27,11 @@ def main() -> None:
     )
     parser.add_argument("--concurrency", type=int, default=64)
     parser.add_argument("--timeout", type=float, default=4.0)
+    parser.add_argument(
+        "--verify",
+        action="store_true",
+        help="Confirm undelegated names against the registry's RDAP endpoint.",
+    )
     args = parser.parse_args()
 
     inputs = list(args.domains) or [
@@ -37,7 +42,9 @@ def main() -> None:
         parser.print_help(sys.stderr)
         sys.exit(2)
 
-    results = check_many(inputs, concurrency=args.concurrency, timeout=args.timeout)
+    results = check_many(
+        inputs, concurrency=args.concurrency, timeout=args.timeout, verify=args.verify
+    )
 
     if args.output == "jsonl":
         for r in results:

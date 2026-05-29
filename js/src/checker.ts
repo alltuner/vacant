@@ -10,6 +10,7 @@ export const Status = {
   REGISTERED: 'registered',
   RESERVED: 'reserved',
   INVALID: 'invalid',
+  UNCONFIRMED: 'unconfirmed',
   UNKNOWN: 'unknown',
 } as const
 
@@ -28,6 +29,7 @@ export interface CheckOptions {
   timeout?: number
   cache?: DiskCache | string | null
   cacheTtl?: number
+  verify?: boolean
 }
 
 export interface CheckManyOptions extends CheckOptions {
@@ -75,9 +77,16 @@ export function checkMany(
   options: CheckManyOptions = {},
 ): Result[] {
   ensureRulesLoaded()
-  const { timeout = 4.0, concurrency = 64, cache, cacheTtl = 86_400.0 } = options
+  const { timeout = 4.0, concurrency = 64, cache, cacheTtl = 86_400.0, verify = false } = options
   const rustCache = coerceCache(cache)
-  const rows = binding.checkMany(domains, concurrency, timeout, rustCache as never, cacheTtl)
+  const rows = binding.checkMany(
+    domains,
+    concurrency,
+    timeout,
+    rustCache as never,
+    cacheTtl,
+    verify,
+  )
   return rows.map(toResult)
 }
 

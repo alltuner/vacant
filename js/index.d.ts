@@ -16,7 +16,7 @@ export interface CachedRowJs {
   checkedAt: number
 }
 
-export declare function checkMany(domains: Array<string>, concurrency?: number | undefined | null, timeout?: number | undefined | null, cache?: JsDiskCache | undefined | null, cacheTtl?: number | undefined | null): Array<CheckRow>
+export declare function checkMany(domains: Array<string>, concurrency?: number | undefined | null, timeout?: number | undefined | null, cache?: JsDiskCache | undefined | null, cacheTtl?: number | undefined | null, verify?: boolean | undefined | null): Array<CheckRow>
 
 export interface CheckRow {
   input: string
