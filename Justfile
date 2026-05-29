@@ -28,6 +28,10 @@ ingest-psl *args:
 ingest-rdap *args:
     uv run ingest/rdap.py {{args}}
 
+# Discover RDAP endpoints for TLDs the IANA bootstrap omits (writes canonical file).
+ingest-rdap-probe *args:
+    uv run ingest/rdap.py --probe {{args}}
+
 # Mirror rules/rules.toml into every package's embedded copy.
 sync-rules:
     cp rules/rules.toml crates/vacant/data/rules.toml
