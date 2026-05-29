@@ -1,10 +1,8 @@
 #!/usr/bin/env -S uv run --script
 # /// script
 # requires-python = ">=3.11"
-# dependencies = ["httpx>=0.28", "tomlkit>=0.14"]
+# dependencies = ["httpx>=0.28"]
 # ///
-# Note: tomlkit preserves comments/formatting but is slow (~minute on a 14k-line file).
-# We pre-check `[meta]` with stdlib tomllib so a no-op dry-run is instant.
 # ABOUTME: Refresh rules/rules.toml from the Public Suffix List ICANN section.
 # ABOUTME: Run via `uv run ingest/psl.py [--dry-run] [--force]`. Bumps [meta] psl_version + psl_commit.
 from __future__ import annotations
@@ -12,14 +10,11 @@ from __future__ import annotations
 import argparse
 import re
 import sys
-import tomllib
 from datetime import datetime, timezone
 from pathlib import Path
 
 import httpx
-import tomlkit
-from tomlkit import TOMLDocument, table
-from tomlkit.items import Table
+import rules_io
 
 URL = "https://publicsuffix.org/list/public_suffix_list.dat"
 RULES = Path(__file__).resolve().parent.parent / "rules" / "rules.toml"
@@ -65,30 +60,13 @@ def parse_icann(text: str) -> list[str]:
     return out
 
 
-def apply_suffixes(doc: TOMLDocument, suffixes: list[str]) -> list[str]:
-    zones = doc.get("zone")
-    if zones is None or not isinstance(zones, Table):
-        zones = table()
-        doc["zone"] = zones
-    existing = set(zones.keys())
-    added: list[str] = []
-    for suffix in suffixes:
-        if suffix in existing:
-            continue
-        zones[suffix] = table()
-        added.append(suffix)
-    return added
+def new_suffixes(zones: dict, suffixes: list[str]) -> list[str]:
+    """Suffixes from the PSL not already present as zones, in PSL order."""
+    return [suffix for suffix in suffixes if suffix not in zones]
 
 
-def update_meta(doc: TOMLDocument, version: str, commit: str) -> None:
-    meta = doc.setdefault("meta", {})
-    meta["psl_version"] = version
-    meta["psl_commit"] = commit
-    meta["psl_imported_at"] = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
-
-
-def already_current(doc: dict | TOMLDocument, version: str, commit: str) -> bool:
-    meta = doc.get("meta")
+def already_current(data: dict, version: str, commit: str) -> bool:
+    meta = data.get("meta")
     if meta is None:
         return False
     return (
@@ -107,13 +85,13 @@ def main() -> int:
     version, commit = parse_header(text)
 
     raw = RULES.read_text(encoding="utf-8")
-    if not args.force and already_current(tomllib.loads(raw), version, commit):
+    data = rules_io.load(raw)
+    if not args.force and already_current(data, version, commit):
         sys.stdout.write(f"already at PSL version {version} ({commit[:8]})\n")
         return 0
 
-    doc = tomlkit.parse(raw)
     suffixes = parse_icann(text)
-    added = apply_suffixes(doc, suffixes)
+    added = new_suffixes(data.get("zone", {}), suffixes)
     for suffix in added[:20]:
         sys.stdout.write(f"+ {suffix}\n")
     if len(added) > 20:
@@ -123,8 +101,10 @@ def main() -> int:
         f"{'; dry-run, not writing' if args.dry_run else ''}\n"
     )
     if not args.dry_run:
-        update_meta(doc, version, commit)
-        RULES.write_text(tomlkit.dumps(doc), encoding="utf-8")
+        now = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+        meta = {"psl_version": version, "psl_commit": commit, "psl_imported_at": now}
+        text_out = rules_io.apply_edits(raw, meta=meta, new_zones=added)
+        RULES.write_text(text_out, encoding="utf-8")
     return 0
 
 
