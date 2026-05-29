@@ -22,8 +22,8 @@ jobs:
       - name: Refresh PSL data
         run: uv run ingest/psl.py
 
-      - name: Refresh RDAP bootstrap
-        run: uv run ingest/rdap.py
+      - name: Refresh RDAP bootstrap and probe for omitted endpoints
+        run: uv run ingest/rdap.py --probe
 
       - name: Mirror canonical rules into every package
         run: just sync-rules
@@ -37,7 +37,7 @@ jobs:
           body: |
             Weekly refresh of `rules/rules.toml` from upstream sources:
             - Public Suffix List ICANN section (`ingest/psl.py`)
-            - IANA RDAP bootstrap (`ingest/rdap.py`)
+            - IANA RDAP bootstrap, plus probed endpoints for TLDs it omits (`ingest/rdap.py --probe`)
 
             The canonical file plus every embedded mirror is included in this PR.
             Bumped automatically by `.github/workflows/refresh-rules.yml`. Merge if CI is green.
