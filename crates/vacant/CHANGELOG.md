@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.6](https://github.com/alltuner/vacant/compare/vacant-v0.4.5...vacant-v0.4.6) (2026-05-29)
+
+
+### Bug Fixes
+
+* **rdap:** retry 429s with Retry-After + backoff, surface status in detail ([#110](https://github.com/alltuner/vacant/issues/110)) ([c413f56](https://github.com/alltuner/vacant/commit/c413f568777e4bc1e5dc51d507f2e2f3629a27cf))
+
 ## [0.4.5](https://github.com/alltuner/vacant/compare/vacant-v0.4.4...vacant-v0.4.5) (2026-05-29)
 
 
