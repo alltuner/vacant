@@ -246,19 +246,19 @@ fn decide(verdict: &DnsVerdict, verify: bool, has_rdap: bool) -> Decision {
 /// Fold an RDAP probe result into a final verdict. Only the registry can promote
 /// an undelegated name to `available` (404) or `registered` (200); an inconclusive
 /// probe leaves it `unconfirmed`.
-fn combine_rdap(base_detail: &str, outcome: Option<RdapOutcome>) -> FullVerdict {
+fn combine_rdap(base_detail: &str, outcome: RdapOutcome) -> FullVerdict {
     match outcome {
-        Some(RdapOutcome::Registered { detail }) => FullVerdict {
+        RdapOutcome::Registered { detail } => FullVerdict {
             kind: "registered",
             detail: format!("{base_detail}; {detail}"),
         },
-        Some(RdapOutcome::Available { detail }) => FullVerdict {
+        RdapOutcome::Available { detail } => FullVerdict {
             kind: "available",
             detail: format!("{base_detail}; {detail}"),
         },
-        None => FullVerdict {
+        RdapOutcome::Inconclusive { detail } => FullVerdict {
             kind: "unconfirmed",
-            detail: format!("{base_detail}; RDAP inconclusive"),
+            detail: format!("{base_detail}; {detail}"),
         },
     }
 }
@@ -566,9 +566,9 @@ mod tests {
     fn rdap_404_is_the_only_path_to_available() {
         let v = combine_rdap(
             "NXDOMAIN via ns1",
-            Some(RdapOutcome::Available {
+            RdapOutcome::Available {
                 detail: "RDAP 404 via https://r".to_string(),
-            }),
+            },
         );
         assert_eq!(v.kind, "available");
     }
@@ -577,17 +577,22 @@ mod tests {
     fn rdap_200_catches_held_domains_as_registered() {
         let v = combine_rdap(
             "NXDOMAIN via ns1",
-            Some(RdapOutcome::Registered {
+            RdapOutcome::Registered {
                 detail: "RDAP 200 via https://r".to_string(),
-            }),
+            },
         );
         assert_eq!(v.kind, "registered");
     }
 
     #[test]
-    fn rdap_inconclusive_stays_unconfirmed() {
-        let v = combine_rdap("NXDOMAIN via ns1", None);
+    fn rdap_429_stays_unconfirmed_and_is_legible() {
+        let v = combine_rdap(
+            "NXDOMAIN via ns1",
+            RdapOutcome::Inconclusive {
+                detail: "RDAP 429 via https://r".to_string(),
+            },
+        );
         assert_eq!(v.kind, "unconfirmed");
-        assert!(v.detail.contains("RDAP inconclusive"));
+        assert!(v.detail.contains("RDAP 429"));
     }
 }

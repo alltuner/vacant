@@ -1,15 +1,23 @@
 // ABOUTME: Async RDAP probe used to disambiguate NODATA responses from compact-answer registries.
-// ABOUTME: 200 means registered; 404 means available; anything else is inconclusive (None).
+// ABOUTME: 200 means registered; 404 means available; 429 is retried politely; anything else is inconclusive.
 
 use std::time::Duration;
 
-use reqwest::Client;
+use reqwest::{Client, StatusCode};
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum RdapOutcome {
     Registered { detail: String },
     Available { detail: String },
+    Inconclusive { detail: String },
 }
+
+/// Retry budget for RDAP 429s. Each retry waits for the server's `Retry-After`
+/// when present, otherwise an exponentially backed-off, jittered delay. The cap
+/// keeps a rate-limited host from stalling a whole batch.
+const MAX_RETRIES: u32 = 3;
+const BACKOFF_BASE: Duration = Duration::from_millis(500);
+const BACKOFF_CAP: Duration = Duration::from_secs(8);
 
 pub fn build_client(timeout: Duration) -> Result<Client, reqwest::Error> {
     // rustls 0.23 with rustls-no-provider needs an explicit provider install.
@@ -21,24 +29,105 @@ pub fn build_client(timeout: Duration) -> Result<Client, reqwest::Error> {
         .build()
 }
 
-pub async fn lookup(client: &Client, registered: &str, base_url: &str) -> Option<RdapOutcome> {
-    let url = format!("{}/domain/{}", base_url.trim_end_matches('/'), registered);
-    let response = client
-        .get(&url)
-        .header(reqwest::header::ACCEPT, "application/rdap+json")
-        .send()
-        .await
-        .ok()?;
-    let status = response.status();
-    if status.is_success() {
-        return Some(RdapOutcome::Registered {
-            detail: format!("RDAP {} via {}", status.as_u16(), base_url),
-        });
+pub async fn lookup(client: &Client, registered: &str, base_url: &str) -> RdapOutcome {
+    let base = base_url.trim_end_matches('/');
+    let url = format!("{base}/domain/{registered}");
+    let mut attempt = 0;
+    loop {
+        let response = match client
+            .get(&url)
+            .header(reqwest::header::ACCEPT, "application/rdap+json")
+            .send()
+            .await
+        {
+            Ok(r) => r,
+            Err(e) => {
+                return RdapOutcome::Inconclusive {
+                    detail: format!("RDAP request failed via {base_url}: {e}"),
+                }
+            }
+        };
+        let status = response.status();
+        if status.is_success() {
+            return RdapOutcome::Registered {
+                detail: format!("RDAP {} via {base_url}", status.as_u16()),
+            };
+        }
+        if status == StatusCode::NOT_FOUND {
+            return RdapOutcome::Available {
+                detail: format!("RDAP 404 via {base_url}"),
+            };
+        }
+        if status == StatusCode::TOO_MANY_REQUESTS && attempt < MAX_RETRIES {
+            let retry_after = response
+                .headers()
+                .get(reqwest::header::RETRY_AFTER)
+                .and_then(|v| v.to_str().ok())
+                .and_then(parse_retry_after);
+            tokio::time::sleep(retry_delay(attempt, retry_after)).await;
+            attempt += 1;
+            continue;
+        }
+        return RdapOutcome::Inconclusive {
+            detail: format!("RDAP {} via {base_url}", status.as_u16()),
+        };
     }
-    if status.as_u16() == 404 {
-        return Some(RdapOutcome::Available {
-            detail: format!("RDAP 404 via {}", base_url),
-        });
+}
+
+/// Parse the delta-seconds form of `Retry-After`. The HTTP-date form is rare for
+/// RDAP and falls through to plain backoff.
+fn parse_retry_after(value: &str) -> Option<Duration> {
+    value.trim().parse::<u64>().ok().map(Duration::from_secs)
+}
+
+/// How long to wait before the next retry. Honour `Retry-After` when the server
+/// sent one (capped), otherwise exponential backoff with half-window jitter.
+fn retry_delay(attempt: u32, retry_after: Option<Duration>) -> Duration {
+    if let Some(after) = retry_after {
+        return after.min(BACKOFF_CAP);
     }
-    None
+    let bounded = BACKOFF_BASE
+        .saturating_mul(1u32 << attempt)
+        .min(BACKOFF_CAP);
+    bounded.mul_f64(0.5 + 0.5 * rand::random::<f64>())
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn parses_delta_seconds_retry_after() {
+        assert_eq!(parse_retry_after("5"), Some(Duration::from_secs(5)));
+        assert_eq!(parse_retry_after("  12 "), Some(Duration::from_secs(12)));
+    }
+
+    #[test]
+    fn ignores_http_date_retry_after() {
+        assert_eq!(parse_retry_after("Wed, 21 Oct 2015 07:28:00 GMT"), None);
+        assert_eq!(parse_retry_after(""), None);
+    }
+
+    #[test]
+    fn retry_after_is_honoured_and_capped() {
+        assert_eq!(
+            retry_delay(0, Some(Duration::from_secs(3))),
+            Duration::from_secs(3)
+        );
+        // A huge Retry-After is clamped so one rude host can't stall the batch.
+        assert_eq!(retry_delay(0, Some(Duration::from_secs(600))), BACKOFF_CAP);
+    }
+
+    #[test]
+    fn backoff_grows_but_stays_within_bounds() {
+        for attempt in 0..MAX_RETRIES {
+            let window = BACKOFF_BASE
+                .saturating_mul(1u32 << attempt)
+                .min(BACKOFF_CAP);
+            let d = retry_delay(attempt, None);
+            // Half-window jitter: at least half the window, never more than it.
+            assert!(d >= window.mul_f64(0.5));
+            assert!(d <= window);
+        }
+    }
 }
