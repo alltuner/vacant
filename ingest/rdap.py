@@ -1,7 +1,7 @@
 #!/usr/bin/env -S uv run --script
 # /// script
 # requires-python = ">=3.11"
-# dependencies = ["httpx>=0.28", "tomlkit>=0.14"]
+# dependencies = ["httpx>=0.28"]
 # ///
 # ABOUTME: Refresh rules/rules.toml with RDAP service URLs from the IANA bootstrap.
 # ABOUTME: With --probe, also discovers RDAP endpoints for TLDs the bootstrap omits.
@@ -11,14 +11,11 @@ import argparse
 import asyncio
 import socket
 import sys
-import tomllib
 from datetime import datetime, timezone
 from pathlib import Path
 
 import httpx
-import tomlkit
-from tomlkit import TOMLDocument
-from tomlkit.items import Table
+import rules_io
 
 URL = "https://data.iana.org/rdap/dns.json"
 RULES = Path(__file__).resolve().parent.parent / "rules" / "rules.toml"
@@ -53,46 +50,37 @@ def build_map(payload: dict) -> dict[str, str]:
     return out
 
 
-def apply_map(doc: TOMLDocument, mapping: dict[str, str]) -> list[tuple[str, str | None, str]]:
+def compute_changes(
+    zones: dict, mapping: dict[str, str]
+) -> list[tuple[str, str | None, str]]:
+    """Zones whose RDAP endpoint should change, as (zone, old, new)."""
     changes: list[tuple[str, str | None, str]] = []
-    zones = doc.get("zone")
-    if zones is None:
-        return changes
     for zone_name, zone_table in zones.items():
-        if not isinstance(zone_table, Table):
-            continue
         tld = zone_name.lower().split(".")[-1]
         target = mapping.get(tld)
         if target is None:
             continue
         current = zone_table.get("rdap")
-        current_str = str(current) if current is not None else None
-        if current_str == target:
+        if current == target:
             continue
-        zone_table["rdap"] = target
-        changes.append((zone_name, current_str, target))
+        changes.append((zone_name, current, target))
     return changes
 
 
-def missing_tlds(doc: TOMLDocument, mapping: dict[str, str]) -> list[str]:
+def missing_tlds(zones: dict, mapping: dict[str, str]) -> list[str]:
     """Top-level zones with no RDAP endpoint, from the bootstrap or already set.
 
     Only TLDs are probed; multi-level suffixes (e.g. `co.uk`) inherit their
-    parent TLD's endpoint through `apply_map`. IDN TLDs are skipped — the
-    `rdap.nic.<punycode>` convention does not hold for them.
+    parent TLD's endpoint. IDN TLDs are skipped — the `rdap.nic.<punycode>`
+    convention does not hold for them.
     """
     out: list[str] = []
-    seen: set[str] = set()
-    zones = doc.get("zone")
-    if zones is None:
-        return out
     for zone_name, zone_table in zones.items():
-        if not isinstance(zone_table, Table) or "." in zone_name:
+        if "." in zone_name:
             continue
         tld = zone_name.lower()
-        if tld in seen or tld.startswith("xn--"):
+        if tld.startswith("xn--"):
             continue
-        seen.add(tld)
         if mapping.get(tld) is None and zone_table.get("rdap") is None:
             out.append(tld)
     return out
@@ -166,14 +154,8 @@ async def probe(tlds: list[str], concurrency: int, budget: float) -> tuple[dict[
     return discovered, len(pending)
 
 
-def update_meta(doc: TOMLDocument, payload: dict) -> None:
-    meta = doc.setdefault("meta", {})
-    meta["rdap_publication"] = payload.get("publication", "")
-    meta["rdap_imported_at"] = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
-
-
-def already_current(doc: dict | TOMLDocument, payload: dict) -> bool:
-    meta = doc.get("meta")
+def already_current(data: dict, payload: dict) -> bool:
+    meta = data.get("meta")
     if meta is None:
         return False
     return str(meta.get("rdap_publication", "")) == payload.get("publication", "__missing__")
@@ -201,15 +183,16 @@ def main() -> int:
 
     payload = fetch()
     raw = RULES.read_text(encoding="utf-8")
-    if not args.force and not args.probe and already_current(tomllib.loads(raw), payload):
+    data = rules_io.load(raw)
+    if not args.force and not args.probe and already_current(data, payload):
         sys.stdout.write(f"already at publication {payload.get('publication', '?')}\n")
         return 0
 
-    doc = tomlkit.parse(raw)
+    zones = data.get("zone", {})
     mapping = build_map(payload)
 
     if args.probe:
-        targets = missing_tlds(doc, mapping)
+        targets = missing_tlds(zones, mapping)
         sys.stdout.write(f"probing {len(targets)} TLD(s) without a bootstrap RDAP endpoint...\n")
         sys.stdout.flush()
         discovered, timed_out = asyncio.run(
@@ -221,7 +204,7 @@ def main() -> int:
         sys.stdout.write(f"{len(discovered)} endpoint(s) discovered by probing{note}\n")
         mapping.update(discovered)
 
-    changes = apply_map(doc, mapping)
+    changes = compute_changes(zones, mapping)
     for zone, old, new in changes:
         sys.stdout.write(f"{zone}: {old or '(unset)'} -> {new}\n")
     sys.stdout.write(
@@ -229,12 +212,14 @@ def main() -> int:
         f"{'; dry-run, not writing' if args.dry_run else ''}\n"
     )
     if not args.dry_run:
-        update_meta(doc, payload)
+        now = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+        meta = {"rdap_publication": payload.get("publication", ""), "rdap_imported_at": now}
         if args.probe:
-            doc["meta"]["rdap_probed_at"] = datetime.now(timezone.utc).strftime(
-                "%Y-%m-%dT%H:%M:%SZ"
-            )
-        RULES.write_text(tomlkit.dumps(doc), encoding="utf-8")
+            meta["rdap_probed_at"] = now
+        text = rules_io.apply_edits(
+            raw, meta=meta, zone_rdap={zone: new for zone, _, new in changes}
+        )
+        RULES.write_text(text, encoding="utf-8")
     return 0
 
 
