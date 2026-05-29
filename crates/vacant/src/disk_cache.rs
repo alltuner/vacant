@@ -1,6 +1,7 @@
 // ABOUTME: SQLite-backed cache for check results.
 // ABOUTME: WAL + NORMAL synchronous so concurrent tokio tasks can read/write without blocking each other.
 
+use std::collections::HashSet;
 use std::path::{Path, PathBuf};
 use std::sync::Mutex;
 use std::time::{SystemTime, UNIX_EPOCH};
@@ -17,6 +18,10 @@ CREATE TABLE IF NOT EXISTS results (
     checked_at INTEGER NOT NULL
 );
 CREATE INDEX IF NOT EXISTS idx_results_checked_at ON results(checked_at);
+CREATE TABLE IF NOT EXISTS rdap_cooldown (
+    host TEXT PRIMARY KEY,
+    blocked_until INTEGER NOT NULL
+);
 "#;
 
 #[derive(Debug, Error)]
@@ -103,6 +108,30 @@ impl DiskCache {
              VALUES (?1, ?2, ?3, ?4, ?5)",
         )?;
         stmt.execute(params![domain, zone, status, detail, current_unix()])?;
+        Ok(())
+    }
+
+    /// RDAP hosts whose cooldown has not yet expired. Probing these again risks
+    /// deepening a registry's rate-limit, so callers skip them.
+    pub fn blocked_rdap_hosts(&self) -> Result<HashSet<String>, CacheError> {
+        let conn = self.conn.lock().expect("disk cache lock");
+        let mut stmt =
+            conn.prepare_cached("SELECT host FROM rdap_cooldown WHERE blocked_until > ?1")?;
+        let rows = stmt.query_map(params![current_unix()], |row| row.get::<_, String>(0))?;
+        let mut hosts = HashSet::new();
+        for host in rows {
+            hosts.insert(host?);
+        }
+        Ok(hosts)
+    }
+
+    /// Leave an RDAP host alone for `cooldown_secs` from now after it rate-limited us.
+    pub fn block_rdap_host(&self, host: &str, cooldown_secs: i64) -> Result<(), CacheError> {
+        let conn = self.conn.lock().expect("disk cache lock");
+        let mut stmt = conn.prepare_cached(
+            "INSERT OR REPLACE INTO rdap_cooldown(host, blocked_until) VALUES (?1, ?2)",
+        )?;
+        stmt.execute(params![host, current_unix() + cooldown_secs])?;
         Ok(())
     }
 }

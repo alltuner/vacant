@@ -1,7 +1,7 @@
 // ABOUTME: Async DNS path: parent-zone NS via hickory's async resolver, AA query via tokio UDP.
 // ABOUTME: Sync entry points block on the same code; batch entry runs N queries concurrently.
 
-use std::collections::HashMap;
+use std::collections::{HashMap, HashSet};
 use std::net::{IpAddr, SocketAddr};
 use std::str::FromStr;
 use std::sync::{Arc, Mutex};
@@ -55,6 +55,12 @@ pub enum DnsError {
 /// Identity Digital tolerate before returning 429.
 const RDAP_PER_HOST_CONCURRENCY: usize = 1;
 const RDAP_PER_HOST_MIN_GAP: Duration = Duration::from_millis(500);
+
+/// How long to leave a 429'd RDAP host alone on later runs. We honour the
+/// server's `Retry-After` when it sent one, falling back to a short default,
+/// and cap it so a multi-hour block doesn't lock the host out for a whole day.
+const RDAP_COOLDOWN_DEFAULT: Duration = Duration::from_secs(300);
+const RDAP_COOLDOWN_CAP: Duration = Duration::from_secs(3600);
 
 /// How long an unresponsive nameserver stays in the penalty box.
 /// Matches Python NameserverCache.host_cooldown.
@@ -177,12 +183,18 @@ impl DnsClient {
     }
 
     /// Run DNS + RDAP-on-NODATA concurrently for each job. Order preserved.
+    ///
+    /// `blocked_hosts` are RDAP hosts in a persisted cooldown: their probes are
+    /// skipped so a rate-limited registry isn't re-hammered across runs. Returns
+    /// the verdicts plus the hosts that rate-limited us this run, mapped to how
+    /// long (seconds) they should be left alone, for the caller to persist.
     pub fn check_full_batch(
         &self,
         jobs: Vec<FullCheckJob>,
         concurrency: usize,
         verify: bool,
-    ) -> Vec<FullVerdict> {
+        blocked_hosts: HashSet<String>,
+    ) -> (Vec<FullVerdict>, HashMap<String, i64>) {
         let resolver = self.resolver.clone();
         let http = self.http.clone();
         let throttle = self.rdap_throttle.clone();
@@ -190,6 +202,8 @@ impl DnsClient {
         let timeout = self.timeout;
         self.runtime.block_on(async move {
             let semaphore = Arc::new(Semaphore::new(concurrency.max(1)));
+            let skip = Arc::new(Mutex::new(blocked_hosts));
+            let cooldowns = Arc::new(Mutex::new(HashMap::new()));
             let tasks: Vec<_> = jobs
                 .into_iter()
                 .map(|job| {
@@ -198,9 +212,14 @@ impl DnsClient {
                     let http = http.clone();
                     let throttle = throttle.clone();
                     let h = health.clone();
+                    let skip = skip.clone();
+                    let cooldowns = cooldowns.clone();
                     tokio::spawn(async move {
                         let _permit = sem.acquire_owned().await.expect("semaphore not closed");
-                        run_full_job(&res, &http, &throttle, &h, job, timeout, verify).await
+                        run_full_job(
+                            &res, &http, &throttle, &h, &skip, &cooldowns, job, timeout, verify,
+                        )
+                        .await
                     })
                 })
                 .collect();
@@ -211,7 +230,8 @@ impl DnsClient {
                     detail: format!("task join: {e}"),
                 }));
             }
-            out
+            let cooldowns = cooldowns.lock().expect("rdap cooldown lock").clone();
+            (out, cooldowns)
         })
     }
 }
@@ -257,18 +277,23 @@ fn combine_rdap(base_detail: &str, outcome: RdapOutcome) -> FullVerdict {
             kind: "available",
             detail: format!("{base_detail}; {detail}"),
         },
-        RdapOutcome::Inconclusive { detail } => FullVerdict {
-            kind: "unconfirmed",
-            detail: format!("{base_detail}; {detail}"),
-        },
+        RdapOutcome::RateLimited { detail, .. } | RdapOutcome::Inconclusive { detail } => {
+            FullVerdict {
+                kind: "unconfirmed",
+                detail: format!("{base_detail}; {detail}"),
+            }
+        }
     }
 }
 
+#[allow(clippy::too_many_arguments)]
 async fn run_full_job(
     resolver: &TokioResolver,
     http: &reqwest::Client,
     throttle: &RdapThrottle,
     health: &HostHealth,
+    skip: &Mutex<HashSet<String>>,
+    cooldowns: &Mutex<HashMap<String, i64>>,
     job: FullCheckJob,
     timeout: Duration,
     verify: bool,
@@ -307,11 +332,32 @@ async fn run_full_job(
             let host = rdap_host(&base).unwrap_or_else(|| base.clone());
             let semaphore = throttle.permit_for(&host);
             let permit = semaphore.acquire_owned().await.expect("rdap permit");
+            // Re-check under the per-host permit: a host that rate-limited an
+            // earlier task this run (or is in a persisted cooldown) is skipped
+            // rather than probed again.
+            if skip.lock().expect("rdap skip lock").contains(&host) {
+                drop(permit);
+                return FullVerdict {
+                    kind: "unconfirmed",
+                    detail: format!("{detail}; RDAP skipped: {host} in cooldown"),
+                };
+            }
             let outcome = rdap::lookup(http, &job.registered, &base).await;
             // Hold the permit for a short cool-down so back-to-back tasks don't
             // race the same host. drop(permit) happens after the sleep.
             tokio::time::sleep(RDAP_PER_HOST_MIN_GAP).await;
             drop(permit);
+            if let RdapOutcome::RateLimited { retry_after, .. } = &outcome {
+                let secs = retry_after
+                    .unwrap_or(RDAP_COOLDOWN_DEFAULT)
+                    .min(RDAP_COOLDOWN_CAP)
+                    .as_secs() as i64;
+                skip.lock().expect("rdap skip lock").insert(host.clone());
+                cooldowns
+                    .lock()
+                    .expect("rdap cooldown lock")
+                    .insert(host, secs);
+            }
             combine_rdap(&detail, outcome)
         }
     }
@@ -589,11 +635,23 @@ mod tests {
     fn rdap_429_stays_unconfirmed_and_is_legible() {
         let v = combine_rdap(
             "NXDOMAIN via ns1",
-            RdapOutcome::Inconclusive {
-                detail: "RDAP 429 via https://r".to_string(),
+            RdapOutcome::RateLimited {
+                detail: "RDAP 429 (retry-after 60s) via https://r".to_string(),
+                retry_after: Some(Duration::from_secs(60)),
             },
         );
         assert_eq!(v.kind, "unconfirmed");
         assert!(v.detail.contains("RDAP 429"));
+    }
+
+    #[test]
+    fn rdap_network_error_stays_unconfirmed() {
+        let v = combine_rdap(
+            "NXDOMAIN via ns1",
+            RdapOutcome::Inconclusive {
+                detail: "RDAP request failed via https://r: timed out".to_string(),
+            },
+        );
+        assert_eq!(v.kind, "unconfirmed");
     }
 }

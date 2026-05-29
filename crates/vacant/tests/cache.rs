@@ -53,3 +53,21 @@ fn invalid_below_registrable_does_not_poison_cache() {
     let row = cache.get("vacant.alltuner.com", 86_400).expect("cache get");
     assert!(row.is_none());
 }
+
+#[test]
+fn rdap_cooldown_round_trips_and_expires() {
+    let tmp = TempDir::new().expect("tempdir");
+    let cache = DiskCache::open(&tmp.path().join("results.db")).expect("open cache");
+
+    cache
+        .block_rdap_host("rdap.example.test", 300)
+        .expect("block host");
+    // An already-elapsed cooldown must not come back as blocked.
+    cache
+        .block_rdap_host("rdap.expired.test", -10)
+        .expect("block host");
+
+    let blocked = cache.blocked_rdap_hosts().expect("read blocked");
+    assert!(blocked.contains("rdap.example.test"));
+    assert!(!blocked.contains("rdap.expired.test"));
+}

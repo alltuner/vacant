@@ -7,9 +7,21 @@ use reqwest::{Client, StatusCode};
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum RdapOutcome {
-    Registered { detail: String },
-    Available { detail: String },
-    Inconclusive { detail: String },
+    Registered {
+        detail: String,
+    },
+    Available {
+        detail: String,
+    },
+    /// Still 429 after our retry effort. `retry_after` is the server's hint, if
+    /// any, used to size how long the host is left alone on subsequent runs.
+    RateLimited {
+        detail: String,
+        retry_after: Option<Duration>,
+    },
+    Inconclusive {
+        detail: String,
+    },
 }
 
 /// Retry budget for RDAP 429s. Each retry waits for the server's `Retry-After`
@@ -72,13 +84,14 @@ pub async fn lookup(client: &Client, registered: &str, base_url: &str) -> RdapOu
             // Out of budget, or the host shut us out for far longer than we'd
             // wait (e.g. a Cloudflare bot block with an hours-long Retry-After):
             // retrying in-run is futile, so surface the block and move on.
-            return RdapOutcome::Inconclusive {
+            return RdapOutcome::RateLimited {
                 detail: match retry_after {
                     Some(after) => {
                         format!("RDAP 429 (retry-after {}s) via {base_url}", after.as_secs())
                     }
                     None => format!("RDAP 429 via {base_url}"),
                 },
+                retry_after,
             };
         }
         return RdapOutcome::Inconclusive {
