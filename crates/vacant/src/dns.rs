@@ -50,10 +50,11 @@ pub enum DnsError {
     Name(#[from] ProtoError),
 }
 
-/// Per-host RDAP semaphore: keeps each registry from being hammered.
-/// 2 in flight per host plus a small minimum gap between dispatches.
-const RDAP_PER_HOST_CONCURRENCY: usize = 2;
-const RDAP_PER_HOST_MIN_GAP: Duration = Duration::from_millis(100);
+/// Per-host RDAP rate: one request in flight per host with a deliberate gap
+/// between dispatches, landing near the ~1-2 req/s that registries like
+/// Identity Digital tolerate before returning 429.
+const RDAP_PER_HOST_CONCURRENCY: usize = 1;
+const RDAP_PER_HOST_MIN_GAP: Duration = Duration::from_millis(500);
 
 /// How long an unresponsive nameserver stays in the penalty box.
 /// Matches Python NameserverCache.host_cooldown.

@@ -58,20 +58,41 @@ pub async fn lookup(client: &Client, registered: &str, base_url: &str) -> RdapOu
                 detail: format!("RDAP 404 via {base_url}"),
             };
         }
-        if status == StatusCode::TOO_MANY_REQUESTS && attempt < MAX_RETRIES {
+        if status == StatusCode::TOO_MANY_REQUESTS {
             let retry_after = response
                 .headers()
                 .get(reqwest::header::RETRY_AFTER)
                 .and_then(|v| v.to_str().ok())
                 .and_then(parse_retry_after);
-            tokio::time::sleep(retry_delay(attempt, retry_after)).await;
-            attempt += 1;
-            continue;
+            if should_retry_429(attempt, retry_after) {
+                tokio::time::sleep(retry_delay(attempt, retry_after)).await;
+                attempt += 1;
+                continue;
+            }
+            // Out of budget, or the host shut us out for far longer than we'd
+            // wait (e.g. a Cloudflare bot block with an hours-long Retry-After):
+            // retrying in-run is futile, so surface the block and move on.
+            return RdapOutcome::Inconclusive {
+                detail: match retry_after {
+                    Some(after) => {
+                        format!("RDAP 429 (retry-after {}s) via {base_url}", after.as_secs())
+                    }
+                    None => format!("RDAP 429 via {base_url}"),
+                },
+            };
         }
         return RdapOutcome::Inconclusive {
             detail: format!("RDAP {} via {base_url}", status.as_u16()),
         };
     }
+}
+
+/// Whether a 429 is worth retrying: we still have budget, and the server hasn't
+/// told us to wait far longer than we will. An hours-long `Retry-After` means
+/// we've been shut out (e.g. a Cloudflare bot block), not throttled — retrying
+/// in-run can't recover it.
+fn should_retry_429(attempt: u32, retry_after: Option<Duration>) -> bool {
+    attempt < MAX_RETRIES && retry_after.is_none_or(|after| after <= BACKOFF_CAP)
 }
 
 /// Parse the delta-seconds form of `Retry-After`. The HTTP-date form is rare for
@@ -106,6 +127,16 @@ mod tests {
     fn ignores_http_date_retry_after() {
         assert_eq!(parse_retry_after("Wed, 21 Oct 2015 07:28:00 GMT"), None);
         assert_eq!(parse_retry_after(""), None);
+    }
+
+    #[test]
+    fn retries_429_within_budget_but_not_when_shut_out() {
+        assert!(should_retry_429(0, None));
+        assert!(should_retry_429(0, Some(Duration::from_secs(2))));
+        // Budget spent.
+        assert!(!should_retry_429(MAX_RETRIES, None));
+        // Hours-long Retry-After: blocked, not throttled — don't bother.
+        assert!(!should_retry_429(0, Some(Duration::from_secs(81_381))));
     }
 
     #[test]
