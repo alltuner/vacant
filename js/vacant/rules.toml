@@ -11,7 +11,8 @@ psl_commit = "e452c7058d6946bd76952b128c12f5ce87a5acb8"
 psl_imported_at = "2026-05-25T10:17:03Z"
 # Refreshed by `uv run ingest/rdap.py` (in CI weekly).
 rdap_publication = "2026-05-20T18:00:01Z"
-rdap_imported_at = "2026-05-25T10:40:39Z"
+rdap_imported_at = "2026-05-29T08:35:50Z"
+rdap_probed_at = "2026-05-29T08:35:50Z"
 #
 # Each zone inherits [default] and overrides what it cares about.
 # Recognised keys:
@@ -375,16 +376,22 @@ rdap = "https://rdap.identitydigital.services/rdap"
 rdap = "https://rdap.identitydigital.services/rdap"
 
 [zone.af]
+rdap = "https://rdap.nic.af"
 
 [zone."com.af"]
+rdap = "https://rdap.nic.af"
 
 [zone."edu.af"]
+rdap = "https://rdap.nic.af"
 
 [zone."gov.af"]
+rdap = "https://rdap.nic.af"
 
 [zone."net.af"]
+rdap = "https://rdap.nic.af"
 
 [zone."org.af"]
+rdap = "https://rdap.nic.af"
 
 [zone.ag]
 
@@ -643,8 +650,10 @@ rdap = "https://rdap.cctld.au/rdap"
 rdap = "https://rdap.cctld.au/rdap"
 
 [zone.aw]
+rdap = "https://rdap.nic.aw"
 
 [zone."com.aw"]
+rdap = "https://rdap.nic.aw"
 
 [zone.ax]
 
@@ -1651,34 +1660,49 @@ rdap = "https://tld-rdap.verisign.com/cc/v1"
 [zone.cg]
 
 [zone.ch]
+rdap = "https://rdap.nic.ch"
 
 [zone.ci]
+rdap = "https://rdap.nic.ci"
 
 [zone."ac.ci"]
+rdap = "https://rdap.nic.ci"
 
 [zone."aéroport.ci"]
+rdap = "https://rdap.nic.ci"
 
 [zone."asso.ci"]
+rdap = "https://rdap.nic.ci"
 
 [zone."co.ci"]
+rdap = "https://rdap.nic.ci"
 
 [zone."com.ci"]
+rdap = "https://rdap.nic.ci"
 
 [zone."ed.ci"]
+rdap = "https://rdap.nic.ci"
 
 [zone."edu.ci"]
+rdap = "https://rdap.nic.ci"
 
 [zone."go.ci"]
+rdap = "https://rdap.nic.ci"
 
 [zone."gouv.ci"]
+rdap = "https://rdap.nic.ci"
 
 [zone."int.ci"]
+rdap = "https://rdap.nic.ci"
 
 [zone."net.ci"]
+rdap = "https://rdap.nic.ci"
 
 [zone."or.ci"]
+rdap = "https://rdap.nic.ci"
 
 [zone."org.ci"]
+rdap = "https://rdap.nic.ci"
 
 [zone.cl]
 
@@ -2330,6 +2354,7 @@ rdap = "https://rdap.nic.fr"
 rdap = "https://rdap.nic.fr"
 
 [zone.ga]
+rdap = "https://rdap.nic.ga"
 
 [zone.gb]
 
@@ -7476,20 +7501,28 @@ rdap = "http://rdap.cctld.kg"
 [zone."org.kh"]
 
 [zone.ki]
+rdap = "https://rdap.nic.ki"
 
 [zone."biz.ki"]
+rdap = "https://rdap.nic.ki"
 
 [zone."com.ki"]
+rdap = "https://rdap.nic.ki"
 
 [zone."edu.ki"]
+rdap = "https://rdap.nic.ki"
 
 [zone."gov.ki"]
+rdap = "https://rdap.nic.ki"
 
 [zone."info.ki"]
+rdap = "https://rdap.nic.ki"
 
 [zone."net.ki"]
+rdap = "https://rdap.nic.ki"
 
 [zone."org.ki"]
+rdap = "https://rdap.nic.ki"
 
 [zone.km]
 
@@ -7528,14 +7561,19 @@ rdap = "http://rdap.cctld.kg"
 [zone."veterinaire.km"]
 
 [zone.kn]
+rdap = "https://rdap.nic.kn"
 
 [zone."edu.kn"]
+rdap = "https://rdap.nic.kn"
 
 [zone."gov.kn"]
+rdap = "https://rdap.nic.kn"
 
 [zone."net.kn"]
+rdap = "https://rdap.nic.kn"
 
 [zone."org.kn"]
+rdap = "https://rdap.nic.kn"
 
 [zone.kp]
 
@@ -7651,18 +7689,25 @@ rdap = "https://whois.kyregistry.ky/rdap"
 rdap = "https://whois.kyregistry.ky/rdap"
 
 [zone.kz]
+rdap = "https://rdap.nic.kz"
 
 [zone."com.kz"]
+rdap = "https://rdap.nic.kz"
 
 [zone."edu.kz"]
+rdap = "https://rdap.nic.kz"
 
 [zone."gov.kz"]
+rdap = "https://rdap.nic.kz"
 
 [zone."mil.kz"]
+rdap = "https://rdap.nic.kz"
 
 [zone."net.kz"]
+rdap = "https://rdap.nic.kz"
 
 [zone."org.kz"]
+rdap = "https://rdap.nic.kz"
 
 [zone.la]
 
@@ -7715,6 +7760,7 @@ rdap = "https://rdap.lbdr.org.lb"
 [zone."org.lc"]
 
 [zone.li]
+rdap = "https://rdap.nic.li"
 
 [zone.lk]
 
@@ -7993,8 +8039,10 @@ rdap = "https://rdap.identitydigital.services/rdap"
 [zone.mq]
 
 [zone.mr]
+rdap = "https://rdap.nic.mr"
 
 [zone."gov.mr"]
+rdap = "https://rdap.nic.mr"
 
 [zone.ms]
 rdap = "https://rdap.nic.ms"
@@ -8134,22 +8182,31 @@ rdap = "https://rdap.nic.museum"
 [zone."org.my"]
 
 [zone.mz]
+rdap = "https://rdap.nic.mz"
 
 [zone."ac.mz"]
+rdap = "https://rdap.nic.mz"
 
 [zone."adv.mz"]
+rdap = "https://rdap.nic.mz"
 
 [zone."co.mz"]
+rdap = "https://rdap.nic.mz"
 
 [zone."edu.mz"]
+rdap = "https://rdap.nic.mz"
 
 [zone."gov.mz"]
+rdap = "https://rdap.nic.mz"
 
 [zone."mil.mz"]
+rdap = "https://rdap.nic.mz"
 
 [zone."net.mz"]
+rdap = "https://rdap.nic.mz"
 
 [zone."org.mz"]
+rdap = "https://rdap.nic.mz"
 
 [zone.na]
 rdap = "https://keetmans.omadhina.co.na"
@@ -11588,16 +11645,22 @@ rdap = "https://rdap.ricta.org.rw"
 [zone."sch.sa"]
 
 [zone.sb]
+rdap = "https://rdap.nic.sb"
 
 [zone."com.sb"]
+rdap = "https://rdap.nic.sb"
 
 [zone."edu.sb"]
+rdap = "https://rdap.nic.sb"
 
 [zone."gov.sb"]
+rdap = "https://rdap.nic.sb"
 
 [zone."net.sb"]
+rdap = "https://rdap.nic.sb"
 
 [zone."org.sb"]
+rdap = "https://rdap.nic.sb"
 
 [zone.sc]
 
@@ -11793,18 +11856,25 @@ rdap = "https://rdap.nic.sn/whois43"
 rdap = "https://rdap.nic.sn/whois43"
 
 [zone.so]
+rdap = "https://rdap.nic.so"
 
 [zone."com.so"]
+rdap = "https://rdap.nic.so"
 
 [zone."edu.so"]
+rdap = "https://rdap.nic.so"
 
 [zone."gov.so"]
+rdap = "https://rdap.nic.so"
 
 [zone."me.so"]
+rdap = "https://rdap.nic.so"
 
 [zone."net.so"]
+rdap = "https://rdap.nic.so"
 
 [zone."org.so"]
+rdap = "https://rdap.nic.so"
 
 [zone.sr]
 rdap = "https://whois.sr/rdap"
@@ -11906,6 +11976,7 @@ rdap = "https://rdap.nic.ss"
 [zone.tc]
 
 [zone.td]
+rdap = "https://rdap.nic.td"
 
 [zone.tel]
 rdap = "https://rdap.nic.tel"
@@ -11974,8 +12045,10 @@ rdap = "https://rdap.thains.co.th"
 [zone.tk]
 
 [zone.tl]
+rdap = "https://rdap.nic.tl"
 
 [zone."gov.tl"]
+rdap = "https://rdap.nic.tl"
 
 [zone.tm]
 
@@ -12458,456 +12531,682 @@ rdap = "https://rdap.hostmaster.ua"
 [zone."us.ug"]
 
 [zone.us]
+rdap = "https://rdap.nic.us"
 
 [zone."dni.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."isa.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."nsn.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."ak.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."al.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."ar.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."as.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."az.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."ca.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."co.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."ct.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."dc.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."de.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."fl.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."ga.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."gu.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."hi.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."ia.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."id.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."il.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."in.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."ks.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."ky.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."la.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."ma.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."md.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."me.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."mi.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."mn.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."mo.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."ms.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."mt.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."nc.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."nd.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."ne.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."nh.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."nj.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."nm.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."nv.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."ny.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."oh.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."ok.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."or.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."pa.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."pr.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."ri.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."sc.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."sd.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."tn.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."tx.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."ut.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."va.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."vi.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."vt.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."wa.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."wi.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."wv.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."wy.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."k12.ak.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."k12.al.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."k12.ar.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."k12.as.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."k12.az.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."k12.ca.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."k12.co.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."k12.ct.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."k12.dc.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."k12.fl.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."k12.ga.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."k12.gu.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."k12.ia.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."k12.id.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."k12.il.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."k12.in.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."k12.ks.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."k12.ky.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."k12.la.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."k12.ma.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."k12.md.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."k12.me.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."k12.mi.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."k12.mn.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."k12.mo.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."k12.ms.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."k12.mt.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."k12.nc.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."k12.ne.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."k12.nh.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."k12.nj.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."k12.nm.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."k12.nv.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."k12.ny.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."k12.oh.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."k12.ok.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."k12.or.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."k12.pa.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."k12.pr.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."k12.sc.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."k12.tn.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."k12.tx.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."k12.ut.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."k12.va.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."k12.vi.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."k12.vt.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."k12.wa.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."k12.wi.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."cc.ak.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."lib.ak.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."cc.al.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."lib.al.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."cc.ar.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."lib.ar.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."cc.as.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."lib.as.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."cc.az.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."lib.az.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."cc.ca.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."lib.ca.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."cc.co.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."lib.co.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."cc.ct.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."lib.ct.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."cc.dc.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."lib.dc.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."cc.de.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."cc.fl.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."lib.fl.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."cc.ga.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."lib.ga.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."cc.gu.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."lib.gu.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."cc.hi.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."lib.hi.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."cc.ia.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."lib.ia.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."cc.id.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."lib.id.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."cc.il.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."lib.il.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."cc.in.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."lib.in.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."cc.ks.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."lib.ks.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."cc.ky.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."lib.ky.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."cc.la.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."lib.la.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."cc.ma.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."lib.ma.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."cc.md.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."lib.md.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."cc.me.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."lib.me.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."cc.mi.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."lib.mi.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."cc.mn.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."lib.mn.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."cc.mo.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."lib.mo.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."cc.ms.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."cc.mt.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."lib.mt.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."cc.nc.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."lib.nc.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."cc.nd.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."lib.nd.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."cc.ne.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."lib.ne.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."cc.nh.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."lib.nh.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."cc.nj.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."lib.nj.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."cc.nm.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."lib.nm.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."cc.nv.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."lib.nv.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."cc.ny.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."lib.ny.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."cc.oh.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."lib.oh.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."cc.ok.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."lib.ok.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."cc.or.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."lib.or.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."cc.pa.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."lib.pa.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."cc.pr.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."lib.pr.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."cc.ri.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."lib.ri.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."cc.sc.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."lib.sc.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."cc.sd.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."lib.sd.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."cc.tn.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."lib.tn.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."cc.tx.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."lib.tx.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."cc.ut.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."lib.ut.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."cc.va.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."lib.va.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."cc.vi.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."lib.vi.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."cc.vt.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."lib.vt.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."cc.wa.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."lib.wa.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."cc.wi.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."lib.wi.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."cc.wv.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."cc.wy.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."k12.wy.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."lib.wy.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."chtr.k12.ma.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."paroch.k12.ma.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."pvt.k12.ma.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."ann-arbor.mi.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."cog.mi.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."dst.mi.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."eaton.mi.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."gen.mi.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."mus.mi.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."tec.mi.us"]
+rdap = "https://rdap.nic.us"
 
 [zone."washtenaw.mi.us"]
+rdap = "https://rdap.nic.us"
 
 [zone.uy]
 
