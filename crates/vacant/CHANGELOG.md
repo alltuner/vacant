@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.8](https://github.com/alltuner/vacant/compare/vacant-v0.4.7...vacant-v0.4.8) (2026-06-09)
+
+
+### Documentation Updates
+
+* link the hosted web UI (vacant.alltuner.com) from the READMEs ([#121](https://github.com/alltuner/vacant/issues/121)) ([250d375](https://github.com/alltuner/vacant/commit/250d3750d9b2396ef738eb7ad7e646afa81b5ad4))
+
 ## [0.4.7](https://github.com/alltuner/vacant/compare/vacant-v0.4.6...vacant-v0.4.7) (2026-06-09)
 
 
