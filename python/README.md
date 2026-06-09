@@ -1,3 +1,5 @@
+<!-- mcp-name: io.github.alltuner/vacant -->
+
 # vacant — domain availability via authoritative DNS
 
 [![PyPI](https://img.shields.io/pypi/v/vacant.svg)](https://pypi.org/project/vacant/)
