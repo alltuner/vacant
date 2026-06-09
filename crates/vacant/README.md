@@ -65,6 +65,16 @@ Exit codes: `0` on success, `2` if any result has `status=unknown` (transport
 failure, ambiguous registry response). `unconfirmed` is a normal result and does
 not affect the exit code.
 
+## MCP server
+
+`vacant mcp` starts a Model Context Protocol server over stdio, exposing one
+read-only tool — `check_domains(domains, verify=false)` — that returns a
+`{domain, status}` per input. Point any MCP client at it:
+
+```jsonc
+{ "mcpServers": { "vacant": { "command": "vacant", "args": ["mcp"] } } }
+```
+
 ## How it works
 
 For each input:

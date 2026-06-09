@@ -24,6 +24,20 @@ npx -y @alltuner/vacant google.com # one-shot, no install (Node wheel)
 
 The brew / cargo paths give you the native Rust binary (instant startup, ideal for daily use). `npx` runs the Node package — convenient when you don't want a global install, slightly slower to start because it boots Node.
 
+### MCP server
+
+Expose vacant to AI agents over the Model Context Protocol (stdio):
+
+```bash
+npx -y @alltuner/vacant mcp
+```
+
+It registers one tool — `check_domains(domains, verify=false)` — returning a `{domain, status}` per input. Point any MCP client at it:
+
+```jsonc
+{ "mcpServers": { "vacant": { "command": "npx", "args": ["-y", "@alltuner/vacant", "mcp"] } } }
+```
+
 ### Library
 
 ```bash

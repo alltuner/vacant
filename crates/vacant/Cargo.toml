@@ -21,7 +21,9 @@ thiserror = "2"
 hickory-resolver = { version = "0.26", features = ["tokio"] }
 hickory-proto = "0.26"
 rand = "0.10"
-tokio = { version = "1", features = ["rt-multi-thread", "net", "time", "sync", "macros"] }
+tokio = { version = "1", features = ["rt-multi-thread", "net", "time", "sync", "macros", "io-std"] }
+rmcp = { version = "1.7.0", features = ["server", "macros", "transport-io", "schemars"] }
+schemars = "1"
 futures = "0.3"
 reqwest = { version = "0.13", default-features = false, features = ["rustls-no-provider", "http2"] }
 rustls = { version = "0.23", default-features = false, features = ["ring", "logging", "std", "tls12"] }

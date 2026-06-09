@@ -44,6 +44,10 @@
   "engines": {
     "node": ">=18"
   },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "zod": "^3.25.0 || ^4.0.0"
+  },
   "napi": {
     "binaryName": "vacant",
     "packageName": "@alltuner/vacant",
