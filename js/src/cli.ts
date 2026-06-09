@@ -28,6 +28,8 @@ options:
   --concurrency N       (default: 64)
   --timeout SECONDS     (default: 4.0)
   --verify              Confirm undelegated names against the registry's RDAP endpoint.
+
+Run \`vacant mcp\` to start a Model Context Protocol server over stdio.
 `
 
 function parseArgs(argv: string[]): ParsedArgs {
@@ -108,6 +110,12 @@ function emit(results: Result[], output: 'jsonl' | 'text'): void {
 }
 
 export async function main(argv: string[] = process.argv.slice(2)): Promise<number> {
+  if (argv[0] === 'mcp') {
+    const { serve } = await import('./mcp.js')
+    await serve()
+    return 0
+  }
+
   let parsed: ParsedArgs
   try {
     parsed = parseArgs(argv)

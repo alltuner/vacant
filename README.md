@@ -61,6 +61,14 @@ npx skills add alltuner/skills --skill vacant
 
 The skill wraps the CLI with usage hints, common patterns, exit-code semantics, and registry gotchas — see [`skills/vacant/SKILL.md`](https://github.com/alltuner/skills/blob/main/skills/vacant/SKILL.md).
 
+Every package also ships a `vacant mcp` subcommand — a Model Context Protocol server over stdio exposing one read-only tool, `check_domains(domains, verify=false)`. Run it from whichever channel you've installed:
+
+```bash
+vacant mcp                                 # native binary (brew / cargo)
+npx -y @alltuner/vacant mcp                # npm package
+uvx --from 'vacant[mcp]' vacant mcp        # PyPI wheel (needs the mcp extra)
+```
+
 ## Packages
 
 This repo is a monorepo. The same engine ships in three forms:

@@ -6,9 +6,11 @@ use std::path::PathBuf;
 use std::str::FromStr;
 use std::time::Duration;
 
-use clap::{Parser, ValueEnum};
+use clap::{Args, Parser, Subcommand, ValueEnum};
 use serde::Serialize;
 use vacant::{check_many, CheckResult, DiskCache, DnsClient, RuleSet, Status};
+
+mod mcp;
 
 const BUNDLED_RULES: &str = include_str!("../data/rules.toml");
 
@@ -16,9 +18,25 @@ const BUNDLED_RULES: &str = include_str!("../data/rules.toml");
 #[command(
     name = "vacant",
     version,
-    about = "Check domain availability via authoritative DNS."
+    about = "Check domain availability via authoritative DNS.",
+    args_conflicts_with_subcommands = true
 )]
 struct Cli {
+    #[command(subcommand)]
+    command: Option<Command>,
+
+    #[command(flatten)]
+    check: CheckArgs,
+}
+
+#[derive(Subcommand, Debug)]
+enum Command {
+    /// Serve a Model Context Protocol server over stdio.
+    Mcp,
+}
+
+#[derive(Args, Debug)]
+struct CheckArgs {
     /// Domains to check; '-' or no args reads stdin (one per line).
     #[arg(value_name = "DOMAIN")]
     domains: Vec<String>,
@@ -95,13 +113,22 @@ struct OutResult<'a> {
 
 fn main() {
     let cli = Cli::parse();
-    if let Err(e) = run(cli) {
+    let result = match cli.command {
+        Some(Command::Mcp) => run_mcp(),
+        None => run(cli.check),
+    };
+    if let Err(e) = result {
         eprintln!("error: {e}");
         std::process::exit(2);
     }
 }
 
-fn run(cli: Cli) -> Result<(), Box<dyn std::error::Error>> {
+fn run_mcp() -> Result<(), Box<dyn std::error::Error>> {
+    let rules = RuleSet::from_str(BUNDLED_RULES)?;
+    mcp::serve(rules)
+}
+
+fn run(cli: CheckArgs) -> Result<(), Box<dyn std::error::Error>> {
     let rules_text = match &cli.rules {
         Some(path) => std::fs::read_to_string(path)?,
         None => BUNDLED_RULES.to_string(),
@@ -152,7 +179,7 @@ struct StatusFilter {
 }
 
 impl StatusFilter {
-    fn from_cli(cli: &Cli) -> Self {
+    fn from_cli(cli: &CheckArgs) -> Self {
         let mut allowed = Vec::new();
         if cli.available {
             allowed.push(Status::Available);
