@@ -7,6 +7,8 @@ Python bindings for the [vacant](https://github.com/alltuner/vacant) Rust engine
 
 The wheel ships the same Rust engine compiled in, with a small Python facade and a `vacant` CLI entry point. Lockstep-versioned with the `vacant` crate: `vacant 0.3.x` (Python) wraps `vacant 0.3.x` (Rust) exactly.
 
+> **Prefer a browser?** [vacant.alltuner.com](https://vacant.alltuner.com) is a hosted web UI built on vacant — a separate app that uses this package, not something it installs.
+
 ## Install
 
 Pick the path that matches how you'll use it:
