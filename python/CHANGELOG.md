@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.7](https://github.com/alltuner/vacant/compare/vacant-py-v0.4.6...vacant-py-v0.4.7) (2026-06-09)
+
+
+### Features
+
+* **python:** add mcp stdio server subcommand ([#118](https://github.com/alltuner/vacant/issues/118)) ([b673e54](https://github.com/alltuner/vacant/commit/b673e54b770cec41775ff0cd3780cb67910e0ec2))
+
 ## [0.4.6](https://github.com/alltuner/vacant/compare/vacant-py-v0.4.5...vacant-py-v0.4.6) (2026-06-09)
 
 
