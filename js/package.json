@@ -1,6 +1,6 @@
 {
   "name": "@alltuner/vacant",
-  "version": "0.4.6",
+  "version": "0.4.7",
   "description": "Fast domain availability checker — asks authoritative TLD nameservers directly instead of WHOIS.",
   "license": "MIT",
   "author": "David Poblador i Garcia <david@poblador.com>",
