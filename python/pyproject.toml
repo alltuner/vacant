@@ -24,7 +24,7 @@ classifiers = [
 [project.urls]
 Homepage = "https://github.com/alltuner/vacant"
 Repository = "https://github.com/alltuner/vacant"
-Engine = "https://github.com/alltuner/vacant"
+"Hosted web UI" = "https://vacant.alltuner.com"
 
 [project.optional-dependencies]
 mcp = ["mcp>=1.27"]

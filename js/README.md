@@ -8,6 +8,8 @@ JavaScript / TypeScript bindings for the [vacant](https://github.com/alltuner/va
 
 The package ships the same Rust engine compiled in via [napi-rs](https://napi.rs), with a small TypeScript facade and a `vacant` CLI entry point. Lockstep-versioned with the `vacant` crate: `@alltuner/vacant 0.4.x` wraps `vacant 0.4.x` (Rust) exactly.
 
+> **Prefer a browser?** [vacant.alltuner.com](https://vacant.alltuner.com) is a hosted web UI built on vacant — a separate app that uses this package, not something it installs.
+
 ## Install
 
 Pick the path that matches how you'll use it:

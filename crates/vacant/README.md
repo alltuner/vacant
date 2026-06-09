@@ -11,6 +11,8 @@ $ vacant anthropic.com testdomain.com3d ab.eu
 {"domain":"ab.eu","status":"reserved"}
 ```
 
+> **Prefer a browser?** [vacant.alltuner.com](https://vacant.alltuner.com) is a hosted web UI built on vacant — a separate app that uses this crate, not something it installs.
+
 ## Install
 
 ```bash
