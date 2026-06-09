@@ -1,0 +1,35 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.alltuner/vacant",
+  "description": "Fast domain-availability checker — queries authoritative TLD nameservers directly (no WHOIS, no rate limits), with optional RDAP confirmation. One tool: check_domains.",
+  "repository": {
+    "url": "https://github.com/alltuner/vacant",
+    "source": "github"
+  },
+  "version": "0.4.7",
+  "packages": [
+    {
+      "registryType": "pypi",
+      "registryBaseUrl": "https://pypi.org",
+      "identifier": "vacant",
+      "version": "0.4.7",
+      "runtimeHint": "uvx",
+      "transport": {
+        "type": "stdio"
+      },
+      "runtimeArguments": [
+        {
+          "type": "named",
+          "name": "--from",
+          "value": "vacant[mcp]"
+        }
+      ],
+      "packageArguments": [
+        {
+          "type": "positional",
+          "value": "mcp"
+        }
+      ]
+    }
+  ]
+}
