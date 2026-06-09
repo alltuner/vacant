@@ -21,6 +21,20 @@ uvx vacant google.com              # one-shot, no install (Python wheel)
 
 The brew / cargo paths give you the native Rust binary (instant startup, ideal for daily use). `uvx` runs the Python wheel — convenient when you don't want to install anything, slightly slower to start because it boots a Python interpreter.
 
+### MCP server
+
+Expose vacant to AI agents over the Model Context Protocol (stdio). Needs the `mcp` extra:
+
+```bash
+uvx --from 'vacant[mcp]' vacant mcp
+```
+
+It registers one tool — `check_domains(domains, verify=false)` — returning a `{domain, status}` per input. Point any MCP client at it:
+
+```jsonc
+{ "mcpServers": { "vacant": { "command": "uvx", "args": ["--from", "vacant[mcp]", "vacant", "mcp"] } } }
+```
+
 ### Library
 
 ```bash

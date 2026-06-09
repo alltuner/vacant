@@ -26,11 +26,15 @@ Homepage = "https://github.com/alltuner/vacant"
 Repository = "https://github.com/alltuner/vacant"
 Engine = "https://github.com/alltuner/vacant"
 
+[project.optional-dependencies]
+mcp = ["mcp>=1.27"]
+
 [project.scripts]
 vacant = "vacant.cli:main"
 
 [dependency-groups]
 dev = [
+    "mcp>=1.27",
     "pytest>=9.0",
     "ruff>=0.14",
 ]

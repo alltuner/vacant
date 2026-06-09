@@ -12,10 +12,26 @@ import sys
 from vacant import Status, check_many
 
 
+def _run_mcp() -> None:
+    try:
+        from vacant.mcp import serve
+    except ImportError:
+        sys.exit(
+            "The MCP server needs the 'mcp' extra. Run it with:\n"
+            "  uvx --from 'vacant[mcp]' vacant mcp"
+        )
+    serve()
+
+
 def main() -> None:
+    if sys.argv[1:2] == ["mcp"]:
+        _run_mcp()
+        return
+
     parser = argparse.ArgumentParser(
         prog="vacant",
         description="Check domain availability via authoritative DNS.",
+        epilog="Run `vacant mcp` to start a Model Context Protocol server over stdio.",
     )
     parser.add_argument("domains", nargs="*", help="Domains to check; reads stdin if empty.")
     parser.add_argument(
