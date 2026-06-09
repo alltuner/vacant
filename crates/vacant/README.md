@@ -52,6 +52,13 @@ answer for a free name and a held/suspended/pending-delete one is identical
 promotes them to `available` (RDAP 404) or `registered` (RDAP 200, e.g. a domain
 on hold). `available` therefore only ever means RDAP-confirmed registrable.
 
+One caveat: RDAP-confirmed registrable is not a registrability guarantee. New
+gTLD registries — especially community/city zones like `.barcelona`, `.cat`,
+`.amsterdam`, `.berlin` — keep reservation and premium lists that aren't visible
+via DNS, WHOIS, or RDAP, so a name can read `available` here yet still be refused
+at checkout (e.g. `radio.barcelona`). Tracked for an in-engine fix in
+[#26](https://github.com/alltuner/vacant/issues/26).
+
 Exit codes: `0` on success, `2` if any result has `status=unknown` (transport
 failure, ambiguous registry response). `unconfirmed` is a normal result and does
 not affect the exit code.

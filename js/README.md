@@ -57,6 +57,8 @@ const results = checkMany(['example.com'], { cache })
 3. Runs a per-zone precheck (length, charset, reserved labels) from the bundled `rules.toml`.
 4. For inputs that pass, asks the parent zone's NS directly. Delegation → `registered`; NXDOMAIN/NODATA → `unconfirmed` (not delegated, not verified). Pass `{ verify: true }` to confirm `unconfirmed` names against the registry's RDAP endpoint, promoting them to `available` (404) or `registered` (200, e.g. a held domain). `available` only ever means RDAP-confirmed.
 
+`available` is not a registrability guarantee, though: new gTLD registries (especially community/city zones like `.barcelona`, `.cat`, `.amsterdam`, `.berlin`) keep reservation and premium lists invisible to DNS, WHOIS, and RDAP, so a name can read `available` yet still be refused at checkout (e.g. `radio.barcelona`). Tracked for an in-engine fix in [#26](https://github.com/alltuner/vacant/issues/26).
+
 Cache shape, rules format, and verdict semantics are all the engine's — see [alltuner/vacant](https://github.com/alltuner/vacant) for the source of truth.
 
 ## Supported platforms
