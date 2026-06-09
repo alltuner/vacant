@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.9](https://github.com/alltuner/vacant/compare/vacant-v0.4.8...vacant-v0.4.9) (2026-06-09)
+
+
+### Features
+
+* **rust,js:** add mcp stdio server subcommand ([#124](https://github.com/alltuner/vacant/issues/124)) ([a1df176](https://github.com/alltuner/vacant/commit/a1df1769f91c244cb9e5cd8fae8472e3c3e13f00))
+
 ## [0.4.8](https://github.com/alltuner/vacant/compare/vacant-v0.4.7...vacant-v0.4.8) (2026-06-09)
 
 
