@@ -22,6 +22,13 @@ permissions:
   contents: write
   pull-requests: write
 
+# Serialize release runs so back-to-back releases queue instead of contending
+# for the runner pool. cancel-in-progress stays false: an in-flight publish must
+# never be cancelled, or a version gets skipped (npm 0.4.8 was lost this way).
+concurrency:
+  group: release
+  cancel-in-progress: false
+
 jobs:
   release-please:
     runs-on: ubuntu-latest
