@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.4.6](https://github.com/alltuner/vacant/compare/vacant-py-v0.4.5...vacant-py-v0.4.6) (2026-06-09)
+
+
+### Miscellaneous Chores
+
+* **deps:** refresh rules.toml from PSL + RDAP ([#112](https://github.com/alltuner/vacant/issues/112)) ([6db88e9](https://github.com/alltuner/vacant/commit/6db88e97d38aae6dc60e83a6023f47004d64d724))
+
+
+### Documentation Updates
+
+* caveat that available isn't a registrability guarantee ([#117](https://github.com/alltuner/vacant/issues/117)) ([ca6d1e6](https://github.com/alltuner/vacant/commit/ca6d1e62cf218aedc97e6528786f2a57f2e0368f)), closes [#84](https://github.com/alltuner/vacant/issues/84)
+
 ## [0.4.5](https://github.com/alltuner/vacant/compare/vacant-py-v0.4.4...vacant-py-v0.4.5) (2026-05-29)
 
 
