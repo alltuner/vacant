@@ -6,13 +6,13 @@
 
 [meta]
 # Refreshed by `uv run ingest/psl.py` (in CI weekly).
-psl_version = "2026-05-14_08-35-31_UTC"
-psl_commit = "e452c7058d6946bd76952b128c12f5ce87a5acb8"
-psl_imported_at = "2026-05-25T10:17:03Z"
+psl_version = "2026-05-28_06-25-58_UTC"
+psl_commit = "e596036bde712ffb073b948eb8b884c72c94c6e1"
+psl_imported_at = "2026-06-08T10:22:02Z"
 # Refreshed by `uv run ingest/rdap.py` (in CI weekly).
-rdap_publication = "2026-05-20T18:00:01Z"
-rdap_imported_at = "2026-05-29T08:35:50Z"
-rdap_probed_at = "2026-05-29T08:35:50Z"
+rdap_publication = "2026-06-02T21:00:01Z"
+rdap_imported_at = "2026-06-08T10:22:48Z"
+rdap_probed_at = "2026-06-08T10:22:48Z"
 #
 # Each zone inherits [default] and overrides what it cares about.
 # Recognised keys:
@@ -8274,37 +8274,37 @@ rdap = "https://rdap.nic.nf"
 rdap = "https://rdap.nic.nf"
 
 [zone.ng]
-rdap = "http://rdap.nic.net.ng"
+rdap = "https://rdap.nic.net.ng"
 
 [zone."com.ng"]
-rdap = "http://rdap.nic.net.ng"
+rdap = "https://rdap.nic.net.ng"
 
 [zone."edu.ng"]
-rdap = "http://rdap.nic.net.ng"
+rdap = "https://rdap.nic.net.ng"
 
 [zone."gov.ng"]
-rdap = "http://rdap.nic.net.ng"
+rdap = "https://rdap.nic.net.ng"
 
 [zone."i.ng"]
-rdap = "http://rdap.nic.net.ng"
+rdap = "https://rdap.nic.net.ng"
 
 [zone."mil.ng"]
-rdap = "http://rdap.nic.net.ng"
+rdap = "https://rdap.nic.net.ng"
 
 [zone."mobi.ng"]
-rdap = "http://rdap.nic.net.ng"
+rdap = "https://rdap.nic.net.ng"
 
 [zone."name.ng"]
-rdap = "http://rdap.nic.net.ng"
+rdap = "https://rdap.nic.net.ng"
 
 [zone."net.ng"]
-rdap = "http://rdap.nic.net.ng"
+rdap = "https://rdap.nic.net.ng"
 
 [zone."org.ng"]
-rdap = "http://rdap.nic.net.ng"
+rdap = "https://rdap.nic.net.ng"
 
 [zone."sch.ng"]
-rdap = "http://rdap.nic.net.ng"
+rdap = "https://rdap.nic.net.ng"
 
 [zone.ni]
 
@@ -17019,3 +17019,6 @@ rdap = "https://rdap.identitydigital.services/rdap"
 
 [zone.zuerich]
 rdap = "https://rdap.centralnic.com/zuerich"
+
+[zone."ai.id"]
+rdap = "https://rdap.pandi.id/rdap"
