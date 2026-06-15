@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.4.10](https://github.com/alltuner/vacant/compare/vacant-js-v0.4.9...vacant-js-v0.4.10) (2026-06-15)
+
+
+### Miscellaneous Chores
+
+* **deps:** update dependency @napi-rs/cli to v3.7.2 ([#129](https://github.com/alltuner/vacant/issues/129)) ([248723c](https://github.com/alltuner/vacant/commit/248723c096be795dd47020adddbc3d8308a5b00d))
+* **deps:** update dependency @types/node to v22.19.21 ([#131](https://github.com/alltuner/vacant/issues/131)) ([1d38605](https://github.com/alltuner/vacant/commit/1d38605fd7fe6b982faf340e094177130348e831))
+
 ## [0.4.9](https://github.com/alltuner/vacant/compare/vacant-js-v0.4.8...vacant-js-v0.4.9) (2026-06-09)
 
 
