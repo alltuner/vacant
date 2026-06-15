@@ -52,21 +52,9 @@ pub fn check_many(
             continue;
         }
 
-        if let Some(c) = cache {
-            if let Ok(Some(row)) = c.get(&cleaned, cache_ttl_secs) {
-                let status = parse_status(&row.status);
-                results[i] = Some(CheckResult {
-                    input: raw.clone(),
-                    domain: row.domain,
-                    zone: row.zone,
-                    status,
-                    detail: row.detail,
-                    from_cache: true,
-                });
-                continue;
-            }
-        }
-
+        // Precheck is a pure in-memory verdict (Invalid/Reserved), so it is
+        // authoritative and runs before the cache: a deterministic policy
+        // verdict must never be masked by a stale network-derived cache row.
         match rules.precheck(&cleaned) {
             PreCheck::Verdict {
                 status,
@@ -89,6 +77,19 @@ pub fn check_many(
                 rdap,
                 ..
             } => {
+                if let Some(c) = cache {
+                    if let Ok(Some(row)) = c.get(&registered, cache_ttl_secs) {
+                        results[i] = Some(CheckResult {
+                            input: raw.clone(),
+                            domain: row.domain,
+                            zone: row.zone,
+                            status: parse_status(&row.status),
+                            detail: row.detail,
+                            from_cache: true,
+                        });
+                        continue;
+                    }
+                }
                 pending.push((i, zone, registered, rdap));
             }
         }
@@ -122,7 +123,7 @@ pub fn check_many(
             if r.from_cache
                 || matches!(
                     r.status,
-                    Status::Unknown | Status::Invalid | Status::Unconfirmed
+                    Status::Unknown | Status::Invalid | Status::Unconfirmed | Status::Reserved
                 )
             {
                 continue;
