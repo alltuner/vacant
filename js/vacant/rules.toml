@@ -13,6 +13,9 @@ psl_imported_at = "2026-06-08T10:22:02Z"
 rdap_publication = "2026-06-02T21:00:01Z"
 rdap_imported_at = "2026-06-08T10:22:48Z"
 rdap_probed_at = "2026-06-08T10:22:48Z"
+forbidden_nominet_count = 64
+forbidden_nominet_hash = "aa793b4828af623c"
+forbidden_nominet_fetched_at = "2026-06-15T09:07:18Z"
 #
 # Each zone inherits [default] and overrides what it cares about.
 # Recognised keys:
@@ -56,16 +59,20 @@ rdap = "https://pubapi.registry.google/rdap"
 [zone.uk]
 rdap = "https://rdap.nominet.uk/uk"
 [zone."co.uk"]
+forbidden_labels = ["ac", "co", "com", "gov", "ltd", "me", "mil", "mod", "net", "nhs", "nic", "org", "plc", "police", "sch", "uk"]
 rdap = "https://rdap.nominet.uk/uk"
 [zone."org.uk"]
+forbidden_labels = ["ac", "co", "com", "gov", "ltd", "me", "mil", "mod", "net", "nhs", "nic", "org", "plc", "police", "sch", "uk"]
 rdap = "https://rdap.nominet.uk/uk"
 [zone."me.uk"]
+forbidden_labels = ["ac", "co", "com", "gov", "ltd", "me", "mil", "mod", "net", "nhs", "nic", "org", "plc", "police", "sch", "uk"]
 rdap = "https://rdap.nominet.uk/uk"
 [zone."ltd.uk"]
 rdap = "https://rdap.nominet.uk/uk"
 [zone."plc.uk"]
 rdap = "https://rdap.nominet.uk/uk"
 [zone."net.uk"]
+forbidden_labels = ["ac", "co", "com", "gov", "ltd", "me", "mil", "mod", "net", "nhs", "nic", "org", "plc", "police", "sch", "uk"]
 rdap = "https://rdap.nominet.uk/uk"
 [zone."ac.uk"]
 rdap = "https://rdap.nominet.uk/uk"
