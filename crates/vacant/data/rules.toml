@@ -6,13 +6,13 @@
 
 [meta]
 # Refreshed by `uv run ingest/psl.py` (in CI weekly).
-psl_version = "2026-05-28_06-25-58_UTC"
-psl_commit = "e596036bde712ffb073b948eb8b884c72c94c6e1"
-psl_imported_at = "2026-06-08T10:22:02Z"
+psl_version = "2026-06-13_21-47-18_UTC"
+psl_commit = "9186eeeda85cef35b1551d00731464939c765cab"
+psl_imported_at = "2026-06-15T09:22:43Z"
 # Refreshed by `uv run ingest/rdap.py` (in CI weekly).
-rdap_publication = "2026-06-02T21:00:01Z"
-rdap_imported_at = "2026-06-08T10:22:48Z"
-rdap_probed_at = "2026-06-08T10:22:48Z"
+rdap_publication = "2026-06-09T22:00:01Z"
+rdap_imported_at = "2026-06-15T09:23:18Z"
+rdap_probed_at = "2026-06-15T09:23:18Z"
 forbidden_nominet_count = 64
 forbidden_nominet_hash = "aa793b4828af623c"
 forbidden_nominet_fetched_at = "2026-06-15T09:07:18Z"
@@ -12234,43 +12234,43 @@ rdap = "https://ccrdap.twnic.tw/tw"
 rdap = "https://ccrdap.twnic.tw/tw"
 
 [zone.tz]
-rdap = "https://whois.tznic.or.tz/rdap"
+rdap = "https://rdap.tznic.or.tz"
 
 [zone."ac.tz"]
-rdap = "https://whois.tznic.or.tz/rdap"
+rdap = "https://rdap.tznic.or.tz"
 
 [zone."co.tz"]
-rdap = "https://whois.tznic.or.tz/rdap"
+rdap = "https://rdap.tznic.or.tz"
 
 [zone."go.tz"]
-rdap = "https://whois.tznic.or.tz/rdap"
+rdap = "https://rdap.tznic.or.tz"
 
 [zone."hotel.tz"]
-rdap = "https://whois.tznic.or.tz/rdap"
+rdap = "https://rdap.tznic.or.tz"
 
 [zone."info.tz"]
-rdap = "https://whois.tznic.or.tz/rdap"
+rdap = "https://rdap.tznic.or.tz"
 
 [zone."me.tz"]
-rdap = "https://whois.tznic.or.tz/rdap"
+rdap = "https://rdap.tznic.or.tz"
 
 [zone."mil.tz"]
-rdap = "https://whois.tznic.or.tz/rdap"
+rdap = "https://rdap.tznic.or.tz"
 
 [zone."mobi.tz"]
-rdap = "https://whois.tznic.or.tz/rdap"
+rdap = "https://rdap.tznic.or.tz"
 
 [zone."ne.tz"]
-rdap = "https://whois.tznic.or.tz/rdap"
+rdap = "https://rdap.tznic.or.tz"
 
 [zone."or.tz"]
-rdap = "https://whois.tznic.or.tz/rdap"
+rdap = "https://rdap.tznic.or.tz"
 
 [zone."sc.tz"]
-rdap = "https://whois.tznic.or.tz/rdap"
+rdap = "https://rdap.tznic.or.tz"
 
 [zone."tv.tz"]
-rdap = "https://whois.tznic.or.tz/rdap"
+rdap = "https://rdap.tznic.or.tz"
 
 [zone.ua]
 rdap = "https://rdap.hostmaster.ua"
@@ -14933,7 +14933,7 @@ rdap = "https://rdap.nic.george"
 rdap = "https://rdap.gmoregistry.net/rdap"
 
 [zone.gift]
-rdap = "https://rdap.tucowsregistry.net/rdap"
+rdap = "https://rdap.registry.gift/rdap"
 
 [zone.gifts]
 rdap = "https://rdap.identitydigital.services/rdap"
