@@ -25,6 +25,9 @@ jobs:
       - name: Refresh RDAP bootstrap and probe for omitted endpoints
         run: uv run ingest/rdap.py --probe
 
+      - name: Refresh registry-policy forbidden labels
+        run: uv run ingest/forbidden.py
+
       - name: Mirror canonical rules into every package
         run: just sync-rules
 
@@ -38,6 +41,7 @@ jobs:
             Weekly refresh of `rules/rules.toml` from upstream sources:
             - Public Suffix List ICANN section (`ingest/psl.py`)
             - IANA RDAP bootstrap, plus probed endpoints for TLDs it omits (`ingest/rdap.py --probe`)
+            - Registry-policy forbidden labels per registry handler (`ingest/forbidden.py`)
 
             The canonical file plus every embedded mirror is included in this PR.
             Bumped automatically by `.github/workflows/refresh-rules.yml`. Merge if CI is green.
