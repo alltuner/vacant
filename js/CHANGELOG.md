@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.4.11](https://github.com/alltuner/vacant/compare/vacant-js-v0.4.10...vacant-js-v0.4.11) (2026-06-15)
+
+
+### Features
+
+* per-zone forbidden-labels policy blocklist ([#135](https://github.com/alltuner/vacant/issues/135)) ([150173c](https://github.com/alltuner/vacant/commit/150173cf64e6495fa7a18d593182cfeff355ad3b))
+
+
+### Miscellaneous Chores
+
+* **deps:** refresh rules.toml from PSL + RDAP ([#137](https://github.com/alltuner/vacant/issues/137)) ([703271b](https://github.com/alltuner/vacant/commit/703271b77ecc2d69c81b83fb0a1a8a12f8699211))
+
 ## [0.4.10](https://github.com/alltuner/vacant/compare/vacant-js-v0.4.9...vacant-js-v0.4.10) (2026-06-15)
 
 
