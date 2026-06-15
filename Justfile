@@ -32,6 +32,14 @@ ingest-rdap *args:
 ingest-rdap-probe *args:
     uv run ingest/rdap.py --probe {{args}}
 
+# Refresh rules/rules.toml forbidden_labels from the per-registry handlers.
+ingest-forbidden *args:
+    uv run ingest/forbidden.py {{args}}
+
+# Test the ingest scripts.
+ingest-check:
+    uv run --with pytest pytest ingest/tests
+
 # Mirror rules/rules.toml into every package's embedded copy.
 sync-rules:
     cp rules/rules.toml crates/vacant/data/rules.toml

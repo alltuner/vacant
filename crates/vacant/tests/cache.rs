@@ -16,6 +16,9 @@ no_edge_hyphen = true
 no_tagged_hyphen = true
 
 [zone.com]
+
+[zone."co.uk"]
+forbidden_labels = ["gov"]
 "#;
 
 fn rules() -> RuleSet {
@@ -52,6 +55,28 @@ fn invalid_below_registrable_does_not_poison_cache() {
     // And nothing under the input-shape key either.
     let row = cache.get("vacant.alltuner.com", 86_400).expect("cache get");
     assert!(row.is_none());
+}
+
+#[test]
+fn forbidden_label_overrides_a_stale_available_cache_row() {
+    let tmp = TempDir::new().expect("tempdir");
+    let cache = DiskCache::open(&tmp.path().join("results.db")).expect("open cache");
+    let rs = rules();
+    let dc = dns();
+
+    // Seed a row as if gov.co.uk had been confirmed available before the label
+    // was added to the policy blocklist.
+    cache
+        .put("gov.co.uk", "co.uk", "available", "RDAP 404")
+        .expect("seed cache");
+
+    // Precheck must win: the deterministic policy verdict overrides the cache,
+    // and the result is not served from cache.
+    let inputs = vec!["gov.co.uk".to_string()];
+    let results = check_many(&rs, &dc, Some(&cache), &inputs, 86_400, 1, false);
+    assert_eq!(results[0].status.as_str(), "reserved");
+    assert!(!results[0].from_cache);
+    assert!(results[0].detail.contains("forbidden-label"));
 }
 
 #[test]

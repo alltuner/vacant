@@ -9,6 +9,7 @@ import tomllib
 _ZONE_HEADER = re.compile(r'^\[zone\.(?:"([^"]+)"|([A-Za-z0-9_-]+))\]$')
 _KEY = re.compile(r"^([A-Za-z0-9_]+) = ")
 _RDAP = re.compile(r"^rdap = ")
+_FORBIDDEN = re.compile(r"^forbidden_labels = ")
 _BARE_KEY = re.compile(r"^[A-Za-z0-9_-]+$")
 
 
@@ -25,6 +26,10 @@ def _format_value(value: object) -> str:
     return '"' + str(value) + '"'
 
 
+def _format_label_list(labels: list[str]) -> str:
+    return "[" + ", ".join('"' + label + '"' for label in labels) + "]"
+
+
 def zone_header(name: str) -> str:
     """The `[zone.<name>]` header as TOML writes it: bare key, or quoted if it has dots."""
     if _BARE_KEY.fullmatch(name):
@@ -37,6 +42,7 @@ def apply_edits(
     *,
     meta: dict[str, object] | None = None,
     zone_rdap: dict[str, str] | None = None,
+    zone_forbidden: dict[str, list[str]] | None = None,
     new_zones: list[str] | None = None,
 ) -> str:
     """Return `text` with the requested edits applied, touching only changed lines.
@@ -44,17 +50,21 @@ def apply_edits(
     - `meta`: replace these keys' values in the `[meta]` table.
     - `zone_rdap`: set each zone's `rdap` (replacing any existing value, inserted
       right after the header so it leads the block).
+    - `zone_forbidden`: set each zone's `forbidden_labels` array (replacing any
+      existing value, inserted right after the header).
     - `new_zones`: append these as empty `[zone.<name>]` blocks at the end.
 
     Passing no edits returns the input unchanged byte-for-byte.
     """
     meta = dict(meta or {})
     zone_rdap = dict(zone_rdap or {})
+    zone_forbidden = dict(zone_forbidden or {})
     new_zones = list(new_zones or [])
 
     out: list[str] = []
     in_meta = False
     drop_rdap = False  # inside a zone we're rewriting: drop its existing rdap line
+    drop_forbidden = False  # likewise for its existing forbidden_labels line
     meta_remaining = dict(meta)  # keys not found in [meta] get appended on the way out
     last_meta_idx: int | None = None  # index in `out` just after the last [meta] key
 
@@ -73,6 +83,7 @@ def apply_edits(
                 flush_meta()  # leaving [meta]: append any keys it didn't already have
             in_meta = header == "[meta]"
             drop_rdap = False
+            drop_forbidden = False
             out.append(line)
             match = _ZONE_HEADER.match(header)
             if match:
@@ -80,6 +91,9 @@ def apply_edits(
                 if name in zone_rdap:
                     out.append(f'rdap = "{zone_rdap[name]}"')
                     drop_rdap = True
+                if name in zone_forbidden:
+                    out.append(f"forbidden_labels = {_format_label_list(zone_forbidden[name])}")
+                    drop_forbidden = True
             continue
 
         if in_meta:
@@ -94,6 +108,8 @@ def apply_edits(
                 continue
 
         if drop_rdap and _RDAP.match(line):
+            continue  # superseded by the line inserted after the header
+        if drop_forbidden and _FORBIDDEN.match(line):
             continue  # superseded by the line inserted after the header
 
         out.append(line)
