@@ -1,7 +1,7 @@
 // ABOUTME: TOML-driven rules engine: zone matching plus per-zone label predicates.
 // ABOUTME: Ports the Python rules.py / checker pre-DNS path so the Rust engine can A/B against it.
 
-use std::collections::HashMap;
+use std::collections::{HashMap, HashSet};
 
 use regex::Regex;
 use serde::Deserialize;
@@ -92,6 +92,7 @@ enum PredicateFn {
     NoTaggedHyphen,
     Pattern(Regex),
     ForbidPattern(Regex),
+    ForbiddenLabel(HashSet<String>),
 }
 
 impl Predicate {
@@ -115,6 +116,7 @@ impl Predicate {
             }
             PredicateFn::Pattern(re) => re.is_match(label) && full_match(re, label),
             PredicateFn::ForbidPattern(re) => !re.is_match(label),
+            PredicateFn::ForbiddenLabel(set) => !set.contains(label),
         }
     }
 }
@@ -305,6 +307,8 @@ struct RawSpec {
     #[serde(default)]
     forbid_pattern: Option<String>,
     #[serde(default)]
+    forbidden_labels: Option<Vec<String>>,
+    #[serde(default)]
     rdap: Option<String>,
 }
 
@@ -326,6 +330,10 @@ fn merge(default: &RawSpec, override_: &RawSpec) -> RawSpec {
             .forbid_pattern
             .clone()
             .or_else(|| default.forbid_pattern.clone()),
+        forbidden_labels: override_
+            .forbidden_labels
+            .clone()
+            .or_else(|| default.forbidden_labels.clone()),
         rdap: override_.rdap.clone().or_else(|| default.rdap.clone()),
     }
 }
@@ -387,6 +395,16 @@ fn build_policy(zone: &str, spec: &RawSpec, _root: &RawSpec) -> Result<ZonePolic
             message: format!("label must not match {pat}"),
             test: PredicateFn::ForbidPattern(re),
         });
+    }
+    if let Some(labels) = &spec.forbidden_labels {
+        let set: HashSet<String> = labels.iter().map(|l| l.to_ascii_lowercase()).collect();
+        if !set.is_empty() {
+            predicates.push(Predicate {
+                name: "forbidden-label",
+                message: "reserved by registry policy".to_string(),
+                test: PredicateFn::ForbiddenLabel(set),
+            });
+        }
     }
     Ok(ZonePolicy {
         zone: zone.to_string(),

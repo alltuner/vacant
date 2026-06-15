@@ -23,6 +23,7 @@ rdap_probed_at = "2026-06-08T10:22:48Z"
 #   no_tagged_hyphen   bool   (forbid '-' at positions 3 and 4 unless 'xn--')
 #   pattern            regex  (label MUST match)
 #   forbid_pattern     regex  (label must NOT match)
+#   forbidden_labels   array  (labels reserved by registry policy; reported reserved)
 
 [default]
 min_length = 1

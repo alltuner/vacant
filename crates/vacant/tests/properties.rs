@@ -231,3 +231,69 @@ proptest! {
         }
     }
 }
+
+const FORBIDDEN_FIXTURE: &str = r#"
+[default]
+min_length = 1
+max_length = 63
+charset = "ldh"
+
+[zone."co.uk"]
+forbidden_labels = ["gov", "police"]
+
+[zone.com]
+forbidden_labels = []
+"#;
+
+#[test]
+fn forbidden_label_is_reserved_without_dns() {
+    let rs = RuleSet::from_str(FORBIDDEN_FIXTURE).expect("fixture is valid");
+    match rs.precheck("gov.co.uk") {
+        PreCheck::Verdict {
+            status,
+            detail,
+            zone,
+            registered,
+        } => {
+            assert_eq!(status, Status::Reserved);
+            assert!(detail.contains("forbidden-label"), "got {detail}");
+            assert!(
+                detail.contains("reserved by registry policy"),
+                "got {detail}"
+            );
+            assert_eq!(zone, "co.uk");
+            assert_eq!(registered, "gov.co.uk");
+        }
+        other => panic!("expected reserved verdict, got {other:?}"),
+    }
+}
+
+#[test]
+fn forbidden_label_match_is_case_insensitive() {
+    let rs = RuleSet::from_str(FORBIDDEN_FIXTURE).expect("fixture is valid");
+    match rs.precheck("POLICE.co.uk") {
+        PreCheck::Verdict { status, .. } => assert_eq!(status, Status::Reserved),
+        other => panic!("expected reserved verdict, got {other:?}"),
+    }
+}
+
+#[test]
+fn non_forbidden_label_in_guarded_zone_proceeds() {
+    let rs = RuleSet::from_str(FORBIDDEN_FIXTURE).expect("fixture is valid");
+    match rs.precheck("acme.co.uk") {
+        PreCheck::Proceed { zone, label, .. } => {
+            assert_eq!(zone, "co.uk");
+            assert_eq!(label, "acme");
+        }
+        other => panic!("expected proceed, got {other:?}"),
+    }
+}
+
+#[test]
+fn empty_forbidden_labels_is_a_noop() {
+    let rs = RuleSet::from_str(FORBIDDEN_FIXTURE).expect("fixture is valid");
+    match rs.precheck("anything.com") {
+        PreCheck::Proceed { zone, .. } => assert_eq!(zone, "com"),
+        other => panic!("expected proceed, got {other:?}"),
+    }
+}
