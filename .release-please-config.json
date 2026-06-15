@@ -61,5 +61,12 @@
         { "type": "test",     "section": "Tests" }
       ]
     }
-  }
+  },
+  "plugins": [
+    {
+      "type": "linked-versions",
+      "groupName": "vacant",
+      "components": ["vacant", "vacant-py", "vacant-js"]
+    }
+  ]
 }
