@@ -11,6 +11,7 @@ env:
 
 jobs:
   rules-sync:
+    if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -22,6 +23,7 @@ jobs:
           diff -q rules/rules.toml js/vacant/rules.toml
 
   ingest:
+    if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -32,6 +34,7 @@ jobs:
         run: uv run --with pytest pytest ingest/tests
 
   rust:
+    if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -55,6 +58,7 @@ jobs:
         run: cargo test --release --workspace
 
   python:
+    if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -86,6 +90,7 @@ jobs:
         working-directory: python
 
   javascript:
+    if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
