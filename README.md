@@ -19,6 +19,10 @@
   <img src="https://img.shields.io/github/stars/alltuner/vacant?color=5B2333" alt="Stars">
 </p>
 
+<p align="center">
+  <img src="https://vacant.alltuner.com/static/demo.gif" alt="vacant checking domain availability" width="800">
+</p>
+
 ---
 
 ## Get Started
