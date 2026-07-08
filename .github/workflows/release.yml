@@ -129,7 +129,7 @@ jobs:
         with:
           ref: ${{ needs.resolve-tags.outputs.engine_tag }}
 
-      - uses: houseabsolute/actions-rust-cross@v1.0.7
+      - uses: houseabsolute/actions-rust-cross@v1.0.8
         with:
           target: ${{ matrix.target }}
           args: --release --package vacant
