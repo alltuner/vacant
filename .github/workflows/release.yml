@@ -96,7 +96,7 @@ jobs:
       id-token: write
       contents: read
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           ref: ${{ needs.resolve-tags.outputs.engine_tag }}
       - uses: dtolnay/rust-toolchain@stable
@@ -125,7 +125,7 @@ jobs:
             os: ubuntu-latest
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           ref: ${{ needs.resolve-tags.outputs.engine_tag }}
 
@@ -236,7 +236,7 @@ jobs:
       matrix:
         target: [x86_64, aarch64]
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           ref: ${{ needs.resolve-tags.outputs.python_tag }}
 
@@ -264,7 +264,7 @@ jobs:
       matrix:
         target: [x86_64-apple-darwin, aarch64-apple-darwin]
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           ref: ${{ needs.resolve-tags.outputs.python_tag }}
 
@@ -287,7 +287,7 @@ jobs:
     if: needs.resolve-tags.outputs.python_tag != ''
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           ref: ${{ needs.resolve-tags.outputs.python_tag }}
 
@@ -331,7 +331,7 @@ jobs:
       matrix:
         target: [x86_64-unknown-linux-gnu, aarch64-unknown-linux-gnu]
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           ref: ${{ needs.resolve-tags.outputs.js_tag }}
 
@@ -385,7 +385,7 @@ jobs:
       matrix:
         target: [x86_64-apple-darwin, aarch64-apple-darwin]
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           ref: ${{ needs.resolve-tags.outputs.js_tag }}
 
@@ -426,7 +426,7 @@ jobs:
       id-token: write
       contents: read
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           ref: ${{ needs.resolve-tags.outputs.js_tag }}
 
