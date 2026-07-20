@@ -6,13 +6,13 @@
 
 [meta]
 # Refreshed by `uv run ingest/psl.py` (in CI weekly).
-psl_version = "2026-06-13_21-47-18_UTC"
-psl_commit = "9186eeeda85cef35b1551d00731464939c765cab"
-psl_imported_at = "2026-06-15T09:22:43Z"
+psl_version = "2026-07-15_18-13-59_UTC"
+psl_commit = "9b5c814414374aa19a93dc6dd7e47c01909524cc"
+psl_imported_at = "2026-07-20T08:44:23Z"
 # Refreshed by `uv run ingest/rdap.py` (in CI weekly).
-rdap_publication = "2026-06-09T22:00:01Z"
-rdap_imported_at = "2026-06-15T09:23:18Z"
-rdap_probed_at = "2026-06-15T09:23:18Z"
+rdap_publication = "2026-07-14T22:00:03Z"
+rdap_imported_at = "2026-07-20T08:45:06Z"
+rdap_probed_at = "2026-07-20T08:45:06Z"
 forbidden_nominet_count = 64
 forbidden_nominet_hash = "aa793b4828af623c"
 forbidden_nominet_fetched_at = "2026-06-15T09:07:18Z"
@@ -14357,7 +14357,7 @@ rdap = "https://rdap.identitydigital.services/rdap"
 rdap = "https://rdap.identitydigital.services/rdap"
 
 [zone.circle]
-rdap = "https://rdap.nominet.uk/circle"
+rdap = "https://rdap.identitydigital.services/rdap"
 
 [zone.cisco]
 rdap = "https://rdap.nic.cisco"
@@ -14381,7 +14381,7 @@ rdap = "https://rdap.identitydigital.services/rdap"
 rdap = "https://rdap.identitydigital.services/rdap"
 
 [zone.click]
-rdap = "https://rdap.tucowsregistry.net/rdap"
+rdap = "https://rdap.registry.click/rdap"
 
 [zone.clinic]
 rdap = "https://rdap.identitydigital.services/rdap"
@@ -14459,7 +14459,7 @@ rdap = "https://rdap.identitydigital.services/rdap"
 rdap = "https://rdap.nic.corsica"
 
 [zone.country]
-rdap = "https://rdap.tucowsregistry.net/rdap"
+rdap = "https://rdap.registry.click/rdap"
 
 [zone.coupon]
 rdap = "https://rdap.identitydigital.services/rdap"
@@ -14600,7 +14600,7 @@ rdap = "https://rdap.identitydigital.services/rdap"
 rdap = "https://rdap.mobile-registry.com/rdap"
 
 [zone.diy]
-rdap = "https://rdap.tucowsregistry.net/rdap"
+rdap = "https://rdap.registry.click/rdap"
 
 [zone.dnp]
 rdap = "https://rdap.gmoregistry.net/rdap"
@@ -14825,7 +14825,7 @@ rdap = "https://pubapi.registry.google/rdap"
 rdap = "https://pubapi.registry.google/rdap"
 
 [zone.food]
-rdap = "https://rdap.tucowsregistry.net/rdap"
+rdap = "https://rdap.registry.click/rdap"
 
 [zone.football]
 rdap = "https://rdap.identitydigital.services/rdap"
@@ -14993,7 +14993,7 @@ rdap = "https://pubapi.registry.google/rdap"
 rdap = "https://rdap.nominet.uk/gop"
 
 [zone.got]
-rdap = "https://rdap.nominet.uk/got"
+rdap = "https://rdap.identitydigital.services/rdap"
 
 [zone.grainger]
 rdap = "https://rdap.nic.grainger"
@@ -15080,7 +15080,7 @@ rdap = "https://rdap.gmoregistry.net/rdap"
 rdap = "https://rdap.gmoregistry.net/rdap"
 
 [zone.hiv]
-rdap = "https://rdap.tucowsregistry.net/rdap"
+rdap = "https://rdap.registry.click/rdap"
 
 [zone.hkt]
 rdap = "https://rdap.identitydigital.services/rdap"
@@ -15271,7 +15271,7 @@ rdap = "https://rdap.centralnicregistry.com/jnj"
 rdap = "https://rdap.nic.joburg/rdap"
 
 [zone.jot]
-rdap = "https://rdap.nominet.uk/jot"
+rdap = "https://rdap.identitydigital.services/rdap"
 
 [zone.joy]
 rdap = "https://rdap.nominet.uk/joy"
@@ -15418,7 +15418,7 @@ rdap = "https://rdap.identitydigital.services/rdap"
 rdap = "https://rdap.nic.lifeinsurance"
 
 [zone.lifestyle]
-rdap = "https://rdap.tucowsregistry.net/rdap"
+rdap = "https://rdap.registry.click/rdap"
 
 [zone.lighting]
 rdap = "https://rdap.identitydigital.services/rdap"
@@ -15439,13 +15439,13 @@ rdap = "https://rdap.identitydigital.services/rdap"
 rdap = "https://rdap.nic.lincoln"
 
 [zone.link]
-rdap = "https://rdap.tucowsregistry.net/rdap"
+rdap = "https://rdap.uniregistry.net/rdap"
 
 [zone.live]
 rdap = "https://rdap.identitydigital.services/rdap"
 
 [zone.living]
-rdap = "https://rdap.tucowsregistry.net/rdap"
+rdap = "https://rdap.registry.click/rdap"
 
 [zone.llc]
 rdap = "https://rdap.identitydigital.services/rdap"
@@ -15967,7 +15967,7 @@ rdap = "https://rdap.identitydigital.services/rdap"
 rdap = "https://rdap.identitydigital.services/rdap"
 
 [zone.property]
-rdap = "https://rdap.tucowsregistry.net/rdap"
+rdap = "https://rdap.registry.click/rdap"
 
 [zone.protection]
 rdap = "https://rdap.centralnic.com/protection"
@@ -16123,7 +16123,7 @@ rdap = "https://rdap.centralnic.com/saarland"
 rdap = "https://rdap.nominet.uk/safe"
 
 [zone.safety]
-rdap = "https://rdap.nic.safety"
+rdap = "https://rdap.identitydigital.services/rdap"
 
 [zone.sakura]
 rdap = "https://rdap.nic.sakura/rdap"
@@ -16231,7 +16231,7 @@ rdap = "https://rdap.identitydigital.services/rdap"
 rdap = "https://rdap.nic.sex"
 
 [zone.sexy]
-rdap = "https://rdap.tucowsregistry.net/rdap"
+rdap = "https://rdap.registry.click/rdap"
 
 [zone.sfr]
 rdap = "https://rdap.centralnic.com/sfr"
@@ -16270,7 +16270,7 @@ rdap = "https://rdap.identitydigital.services/rdap"
 rdap = "https://rdap.nominet.uk/silk"
 
 [zone.sina]
-rdap = "https://rdap.identitydigital.services/rdap"
+rdap = "https://rdap.ngtld.cn"
 
 [zone.singles]
 rdap = "https://rdap.identitydigital.services/rdap"
@@ -16567,7 +16567,7 @@ rdap = "https://rdap.identitydigital.services/rdap"
 rdap = "https://rdap.identitydigital.services/rdap"
 
 [zone.trust]
-rdap = "https://rdap.tucowsregistry.net/rdap"
+rdap = "https://rdap.registry.click/rdap"
 
 [zone.trv]
 rdap = "https://rdap.identitydigital.services/rdap"
@@ -16612,7 +16612,7 @@ rdap = "https://rdap.identitydigital.services/rdap"
 rdap = "https://rdap.identitydigital.services/rdap"
 
 [zone.vana]
-rdap = "https://rdap.tucowsregistry.net/rdap"
+rdap = "https://rdap.registry.click/rdap"
 
 [zone.vanguard]
 rdap = "https://rdap.identitydigital.services/rdap"
@@ -16732,7 +16732,7 @@ rdap = "https://rdap.nominet.uk/wed"
 rdap = "https://rdap.nic.wedding"
 
 [zone.weibo]
-rdap = "https://rdap.identitydigital.services/rdap"
+rdap = "https://rdap.ngtld.cn"
 
 [zone.weir]
 rdap = "https://rdap.identitydigital.services/rdap"
@@ -17030,3 +17030,50 @@ rdap = "https://rdap.centralnic.com/zuerich"
 
 [zone."ai.id"]
 rdap = "https://rdap.pandi.id/rdap"
+
+[zone."cyb.ge"]
+
+[zone."llc.ge"]
+
+[zone."online.ge"]
+
+[zone."tnx.ge"]
+
+[zone."aero.in"]
+rdap = "https://rdap.nixiregistry.in/rdap"
+
+[zone."alumni.in"]
+rdap = "https://rdap.nixiregistry.in/rdap"
+
+[zone."school.in"]
+rdap = "https://rdap.nixiregistry.in/rdap"
+
+[zone."ub.in"]
+rdap = "https://rdap.nixiregistry.in/rdap"
+
+[zone."gielda.no"]
+rdap = "https://rdap.norid.no"
+
+[zone."suohkan.no"]
+rdap = "https://rdap.norid.no"
+
+[zone."tjielte.no"]
+rdap = "https://rdap.norid.no"
+
+[zone."uenorge.no"]
+rdap = "https://rdap.norid.no"
+
+[zone."audnedal.no"]
+rdap = "https://rdap.norid.no"
+
+[zone."hamarøy.no"]
+rdap = "https://rdap.norid.no"
+
+[zone."karlsøy.no"]
+rdap = "https://rdap.norid.no"
+
+[zone."re.no"]
+rdap = "https://rdap.norid.no"
+
+[zone."ulstein.no"]
+rdap = "https://rdap.norid.no"
