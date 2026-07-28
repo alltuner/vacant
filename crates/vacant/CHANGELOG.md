@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.4.12](https://github.com/alltuner/vacant/compare/vacant-v0.4.11...vacant-v0.4.12) (2026-07-28)
+
+
+### Bug Fixes
+
+* **deps:** update rust crate rmcp to v2 ([#147](https://github.com/alltuner/vacant/issues/147)) ([005c895](https://github.com/alltuner/vacant/commit/005c8951a7ff86b437fe8ed8922e6f2aa5feb451))
+
+
+### Miscellaneous Chores
+
+* **deps:** refresh rules.toml from PSL + RDAP ([#139](https://github.com/alltuner/vacant/issues/139)) ([47f0ac2](https://github.com/alltuner/vacant/commit/47f0ac24a39a95dd67e2ca29567bd9e1ee7fcc26))
+
 ## [0.4.11](https://github.com/alltuner/vacant/compare/vacant-v0.4.9...vacant-v0.4.11) (2026-06-15)
 
 
