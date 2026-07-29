@@ -3,7 +3,7 @@
 
 use std::time::Duration;
 
-use reqwest::{Client, StatusCode};
+use reqwest::StatusCode;
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum RdapOutcome {
@@ -31,43 +31,99 @@ const MAX_RETRIES: u32 = 3;
 const BACKOFF_BASE: Duration = Duration::from_millis(500);
 const BACKOFF_CAP: Duration = Duration::from_secs(8);
 
-pub fn build_client(timeout: Duration) -> Result<Client, reqwest::Error> {
+/// The pair of HTTP clients an RDAP probe can use.
+///
+/// `modern` is rustls and handles every compliant endpoint. A small set of
+/// registry endpoints — puntCAT and its sibling Knipp/IronDNS-operated TLDs, plus
+/// rdap.teleinfo.cn — still terminate TLS with nothing but TLS 1.2 RSA/CBC-SHA1
+/// suites. rustls implements no such suite by design, so those probes die at the
+/// handshake and the domain is reported `unconfirmed` forever. `legacy` uses the
+/// platform TLS stack, which does still negotiate them.
+#[derive(Clone)]
+pub struct Clients {
+    modern: reqwest::Client,
+    legacy: reqwest::Client,
+}
+
+pub fn build_client(timeout: Duration) -> Result<Clients, reqwest::Error> {
     // rustls 0.23 with rustls-no-provider needs an explicit provider install.
     // The call is idempotent across the process; ignoring Err lets repeated calls succeed.
     let _ = rustls::crypto::ring::default_provider().install_default();
-    Client::builder()
-        .timeout(timeout)
-        .user_agent("vacant/0.1")
-        .build()
+    let base = || {
+        reqwest::Client::builder()
+            .timeout(timeout)
+            .user_agent("vacant/0.1")
+    };
+    // Both TLS backends are compiled in, so neither client may rely on the
+    // default: say which one each is.
+    Ok(Clients {
+        modern: base().use_rustls_tls().build()?,
+        legacy: base().use_native_tls().build()?,
+    })
 }
 
-pub async fn lookup(client: &Client, registered: &str, base_url: &str) -> RdapOutcome {
+/// Whether a failed send is worth retrying on the legacy TLS stack. Only
+/// connection-establishment failures qualify: a timeout means the host is slow or
+/// unreachable, and a second handshake would just spend the budget twice.
+fn is_handshake_failure(e: &reqwest::Error) -> bool {
+    e.is_connect() && !e.is_timeout()
+}
+
+/// Endpoint label for `detail` strings, marking the probes that only completed
+/// because we dropped to the platform TLS stack.
+fn via(base_url: &str, legacy_tls: bool) -> String {
+    if legacy_tls {
+        format!("{base_url} (legacy TLS)")
+    } else {
+        base_url.to_string()
+    }
+}
+
+async fn send(
+    clients: &Clients,
+    url: &str,
+) -> Result<(reqwest::Response, bool), (reqwest::Error, bool)> {
+    let get = |client: &reqwest::Client| {
+        client
+            .get(url)
+            .header(reqwest::header::ACCEPT, "application/rdap+json")
+            .send()
+    };
+    match get(&clients.modern).await {
+        Ok(r) => Ok((r, false)),
+        Err(e) if is_handshake_failure(&e) => match get(&clients.legacy).await {
+            Ok(r) => Ok((r, true)),
+            // Report the legacy error: it is the more specific of the two, and
+            // the modern failure is expected on exactly these hosts.
+            Err(e) => Err((e, true)),
+        },
+        Err(e) => Err((e, false)),
+    }
+}
+
+pub async fn lookup(clients: &Clients, registered: &str, base_url: &str) -> RdapOutcome {
     let base = base_url.trim_end_matches('/');
     let url = format!("{base}/domain/{registered}");
     let mut attempt = 0;
     loop {
-        let response = match client
-            .get(&url)
-            .header(reqwest::header::ACCEPT, "application/rdap+json")
-            .send()
-            .await
-        {
+        let (response, legacy_tls) = match send(clients, &url).await {
             Ok(r) => r,
-            Err(e) => {
+            Err((e, legacy_tls)) => {
                 return RdapOutcome::Inconclusive {
-                    detail: format!("RDAP request failed via {base_url}: {e}"),
+                    detail: format!("RDAP request failed via {}: {e}", via(base_url, legacy_tls)),
                 }
             }
         };
+        let via = via(base_url, legacy_tls);
         let status = response.status();
         if status.is_success() {
             return RdapOutcome::Registered {
-                detail: format!("RDAP {} via {base_url}", status.as_u16()),
+                detail: format!("RDAP {} via {via}", status.as_u16()),
             };
         }
         if status == StatusCode::NOT_FOUND {
             return RdapOutcome::Available {
-                detail: format!("RDAP 404 via {base_url}"),
+                detail: format!("RDAP 404 via {via}"),
             };
         }
         if status == StatusCode::TOO_MANY_REQUESTS {
@@ -87,15 +143,15 @@ pub async fn lookup(client: &Client, registered: &str, base_url: &str) -> RdapOu
             return RdapOutcome::RateLimited {
                 detail: match retry_after {
                     Some(after) => {
-                        format!("RDAP 429 (retry-after {}s) via {base_url}", after.as_secs())
+                        format!("RDAP 429 (retry-after {}s) via {via}", after.as_secs())
                     }
-                    None => format!("RDAP 429 via {base_url}"),
+                    None => format!("RDAP 429 via {via}"),
                 },
                 retry_after,
             };
         }
         return RdapOutcome::Inconclusive {
-            detail: format!("RDAP {} via {base_url}", status.as_u16()),
+            detail: format!("RDAP {} via {via}", status.as_u16()),
         };
     }
 }
@@ -129,6 +185,36 @@ fn retry_delay(attempt: u32, retry_after: Option<Duration>) -> Duration {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn legacy_tls_probes_are_marked_in_the_detail() {
+        assert_eq!(via("https://rdap.nic.cat", false), "https://rdap.nic.cat");
+        assert_eq!(
+            via("https://rdap.nic.cat", true),
+            "https://rdap.nic.cat (legacy TLS)"
+        );
+    }
+
+    /// The fallback hangs off `is_connect()`, so pin that a refused connection
+    /// really does classify that way — if reqwest ever reclassifies it, the
+    /// legacy-TLS retry silently stops happening and .cat regresses to
+    /// `unconfirmed`.
+    #[tokio::test]
+    async fn refused_connection_triggers_the_legacy_retry() {
+        // Bind then drop, so we hold a port number nothing is listening on.
+        let listener = std::net::TcpListener::bind("127.0.0.1:0").expect("bind");
+        let port = listener.local_addr().expect("addr").port();
+        drop(listener);
+
+        let clients = build_client(Duration::from_secs(2)).expect("clients");
+        let err = clients
+            .modern
+            .get(format!("http://127.0.0.1:{port}/"))
+            .send()
+            .await
+            .expect_err("nothing is listening");
+        assert!(is_handshake_failure(&err), "unexpected error kind: {err:?}");
+    }
 
     #[test]
     fn parses_delta_seconds_retry_after() {

@@ -25,7 +25,7 @@ tokio = { version = "1", features = ["rt-multi-thread", "net", "time", "sync", "
 rmcp = { version = "3.0.0", features = ["server", "macros", "transport-io", "schemars"] }
 schemars = "1"
 futures = "0.3"
-reqwest = { version = "0.13", default-features = false, features = ["rustls-no-provider", "http2"] }
+reqwest = { version = "0.13", default-features = false, features = ["rustls-no-provider", "native-tls-vendored", "http2"] }
 rustls = { version = "0.23", default-features = false, features = ["ring", "logging", "std", "tls12"] }
 rusqlite = { version = "0.40", features = ["bundled"] }
 idna = "1"
