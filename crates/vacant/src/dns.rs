@@ -111,7 +111,7 @@ impl RdapThrottle {
 pub struct DnsClient {
     resolver: TokioResolver,
     runtime: Arc<Runtime>,
-    http: reqwest::Client,
+    http: rdap::Clients,
     rdap_throttle: Arc<RdapThrottle>,
     host_health: Arc<HostHealth>,
     timeout: Duration,
@@ -289,7 +289,7 @@ fn combine_rdap(base_detail: &str, outcome: RdapOutcome) -> FullVerdict {
 #[allow(clippy::too_many_arguments)]
 async fn run_full_job(
     resolver: &TokioResolver,
-    http: &reqwest::Client,
+    http: &rdap::Clients,
     throttle: &RdapThrottle,
     health: &HostHealth,
     skip: &Mutex<HashSet<String>>,
