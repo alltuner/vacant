@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.14](https://github.com/alltuner/vacant/compare/vacant-v0.4.13...vacant-v0.4.14) (2026-07-29)
+
+
+### Bug Fixes
+
+* reach registries whose RDAP endpoints only speak legacy TLS ([#168](https://github.com/alltuner/vacant/issues/168)) ([c9cb519](https://github.com/alltuner/vacant/commit/c9cb51952f0c0325ade8301643b6ae658c7b59ef))
+
 ## [0.4.13](https://github.com/alltuner/vacant/compare/vacant-v0.4.12...vacant-v0.4.13) (2026-07-29)
 
 

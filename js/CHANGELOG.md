@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.14](https://github.com/alltuner/vacant/compare/vacant-js-v0.4.13...vacant-js-v0.4.14) (2026-07-29)
+
+
+### Miscellaneous Chores
+
+* **vacant-js:** Synchronize vacant versions
+
 ## [0.4.13](https://github.com/alltuner/vacant/compare/vacant-js-v0.4.12...vacant-js-v0.4.13) (2026-07-29)
 
 
