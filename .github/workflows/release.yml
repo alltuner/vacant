@@ -255,9 +255,9 @@ jobs:
           # image, so probe for it rather than assume dnf.
           before-script-linux: |
             if command -v dnf >/dev/null 2>&1; then
-              dnf install -y perl-IPC-Cmd perl-Data-Dumper perl-FindBin
+              dnf install -y perl-IPC-Cmd
             elif command -v yum >/dev/null 2>&1; then
-              yum install -y perl-IPC-Cmd perl-Data-Dumper perl-FindBin
+              yum install -y perl-IPC-Cmd
             elif command -v apt-get >/dev/null 2>&1; then
               apt-get update && apt-get install -y perl
             fi
