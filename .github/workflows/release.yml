@@ -250,14 +250,16 @@ jobs:
           manylinux: 2_28
           args: --release --out dist
           # reqwest's native-tls fallback builds OpenSSL from source, and
-          # OpenSSL 3's Configure needs IPC::Cmd, which the AlmaLinux-based
-          # manylinux_2_28 image does not ship. The package manager varies by
-          # image, so probe for it rather than assume dnf.
+          # OpenSSL 3's Configure needs Perl modules the AlmaLinux-based
+          # manylinux_2_28 image does not ship (IPC::Cmd, then Time::Piece).
+          # perl-core covers the rest of the core distribution so a future
+          # OpenSSL bump does not fail on the next missing module. The package
+          # manager varies by image, so probe for it rather than assume dnf.
           before-script-linux: |
             if command -v dnf >/dev/null 2>&1; then
-              dnf install -y perl-IPC-Cmd
+              dnf install -y perl-core perl-IPC-Cmd perl-Time-Piece
             elif command -v yum >/dev/null 2>&1; then
-              yum install -y perl-IPC-Cmd
+              yum install -y perl-core perl-IPC-Cmd perl-Time-Piece
             elif command -v apt-get >/dev/null 2>&1; then
               apt-get update && apt-get install -y perl
             fi
