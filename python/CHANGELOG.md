@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.13](https://github.com/alltuner/vacant/compare/vacant-py-v0.4.12...vacant-py-v0.4.13) (2026-07-29)
+
+
+### Miscellaneous Chores
+
+* **vacant-py:** Synchronize vacant versions
+
 ## [0.4.12](https://github.com/alltuner/vacant/compare/vacant-py-v0.4.11...vacant-py-v0.4.12) (2026-07-28)
 
 

@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.13](https://github.com/alltuner/vacant/compare/vacant-v0.4.12...vacant-v0.4.13) (2026-07-29)
+
+
+### Bug Fixes
+
+* **deps:** update rust crate rmcp to v3 ([#167](https://github.com/alltuner/vacant/issues/167)) ([4ba0d91](https://github.com/alltuner/vacant/commit/4ba0d9199adb169f02ba0c6a8d6a87f37765fb98))
+
 ## [0.4.12](https://github.com/alltuner/vacant/compare/vacant-v0.4.11...vacant-v0.4.12) (2026-07-28)
 
 
