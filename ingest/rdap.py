@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import argparse
 import asyncio
+import re
 import socket
 import sys
 from datetime import datetime, timezone
@@ -25,6 +26,12 @@ RULES = Path(__file__).resolve().parent.parent / "rules" / "rules.toml"
 # and keeps one only if it actually answers an RDAP query for that TLD's own
 # domain, so a wrong or catch-all endpoint is never recorded.
 CANDIDATE_TEMPLATES = ("https://rdap.nic.{tld}", "https://rdap.{tld}")
+# Registries that brand their infrastructure after themselves rather than the
+# TLD are invisible to those templates, but they name the same host in the IANA
+# root record: `whois.denic.de` is how `rdap.denic.de` (the .de endpoint) is
+# found. Every discovery the templates miss so far has come from this one swap.
+IANA_WHOIS = "whois.iana.org"
+_WHOIS_HOST = re.compile(r"^whois:\s*(\S+)\s*$", re.M)
 # Short connect so the many candidate hosts that don't exist fail fast.
 PROBE_TIMEOUT = httpx.Timeout(8.0, connect=4.0)
 
@@ -71,16 +78,13 @@ def missing_tlds(zones: dict, mapping: dict[str, str]) -> list[str]:
     """Top-level zones with no RDAP endpoint, from the bootstrap or already set.
 
     Only TLDs are probed; multi-level suffixes (e.g. `co.uk`) inherit their
-    parent TLD's endpoint. IDN TLDs are skipped — the `rdap.nic.<punycode>`
-    convention does not hold for them.
+    parent TLD's endpoint.
     """
     out: list[str] = []
     for zone_name, zone_table in zones.items():
         if "." in zone_name:
             continue
         tld = zone_name.lower()
-        if tld.startswith("xn--"):
-            continue
         if mapping.get(tld) is None and zone_table.get("rdap") is None:
             out.append(tld)
     return out
@@ -119,12 +123,46 @@ async def host_resolves(host: str) -> bool:
         return False
 
 
+async def registry_whois_host(sem: asyncio.Semaphore, tld: str) -> str | None:
+    """The TLD's whois host as the IANA root database records it."""
+    async with sem:
+        try:
+            reader, writer = await asyncio.wait_for(
+                asyncio.open_connection(IANA_WHOIS, 43), timeout=10.0
+            )
+        except (OSError, asyncio.TimeoutError):
+            return None
+        try:
+            writer.write(f"{tld}\r\n".encode("ascii"))
+            await writer.drain()
+            record = await asyncio.wait_for(reader.read(), timeout=15.0)
+        except (OSError, asyncio.TimeoutError):
+            return None
+        finally:
+            writer.close()
+    match = _WHOIS_HOST.search(record.decode("utf-8", "replace"))
+    return match.group(1).lower().rstrip(".") if match else None
+
+
+def candidates(tld: str, whois_host: str | None) -> list[str]:
+    """Base URLs worth probing for `tld`, most conventional first."""
+    bases = [template.format(tld=tld) for template in CANDIDATE_TEMPLATES]
+    if whois_host:
+        base = f"https://rdap.{whois_host.removeprefix('whois.')}"
+        if base not in bases:
+            bases.append(base)
+    return bases
+
+
 async def probe_one(
-    client: httpx.AsyncClient, sem: asyncio.Semaphore, tld: str
+    client: httpx.AsyncClient,
+    sem: asyncio.Semaphore,
+    whois_sem: asyncio.Semaphore,
+    tld: str,
 ) -> tuple[str, str | None]:
     async with sem:
-        for template in CANDIDATE_TEMPLATES:
-            base = template.format(tld=tld)
+        whois_host = await registry_whois_host(whois_sem, tld)
+        for base in candidates(tld, whois_host):
             host = base.split("://", 1)[1]
             if not await host_resolves(host):
                 continue
@@ -139,9 +177,11 @@ async def probe(tlds: list[str], concurrency: int, budget: float) -> tuple[dict[
     discovered endpoints and the count of probes still pending at the deadline
     (so most failing-to-resolve candidates can't stall the whole refresh)."""
     sem = asyncio.Semaphore(concurrency)
+    # A single IANA host answers every root-record lookup; stay well-mannered.
+    whois_sem = asyncio.Semaphore(min(concurrency, 8))
     discovered: dict[str, str] = {}
     async with httpx.AsyncClient(timeout=PROBE_TIMEOUT, follow_redirects=True) as client:
-        tasks = [asyncio.create_task(probe_one(client, sem, tld)) for tld in tlds]
+        tasks = [asyncio.create_task(probe_one(client, sem, whois_sem, tld)) for tld in tlds]
         done, pending = await asyncio.wait(tasks, timeout=budget)
         for task in pending:
             task.cancel()
