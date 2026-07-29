@@ -249,6 +249,18 @@ jobs:
           target: ${{ matrix.target }}
           manylinux: 2_28
           args: --release --out dist
+          # reqwest's native-tls fallback builds OpenSSL from source, and
+          # OpenSSL 3's Configure needs IPC::Cmd, which the AlmaLinux-based
+          # manylinux_2_28 image does not ship. The package manager varies by
+          # image, so probe for it rather than assume dnf.
+          before-script-linux: |
+            if command -v dnf >/dev/null 2>&1; then
+              dnf install -y perl-IPC-Cmd perl-Data-Dumper perl-FindBin
+            elif command -v yum >/dev/null 2>&1; then
+              yum install -y perl-IPC-Cmd perl-Data-Dumper perl-FindBin
+            elif command -v apt-get >/dev/null 2>&1; then
+              apt-get update && apt-get install -y perl
+            fi
 
       - uses: actions/upload-artifact@v7
         with:
