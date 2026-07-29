@@ -8,11 +8,11 @@
 # Refreshed by `uv run ingest/psl.py` (in CI weekly).
 psl_version = "2026-07-25_14-20-03_UTC"
 psl_commit = "e1b8015c3b2f0f4f8c18659c2480fc1a22c07b20"
-psl_imported_at = "2026-07-27T09:35:42Z"
+psl_imported_at = "2026-07-29T09:53:54Z"
 # Refreshed by `uv run ingest/rdap.py` (in CI weekly).
 rdap_publication = "2026-07-23T02:00:03Z"
-rdap_imported_at = "2026-07-27T09:36:10Z"
-rdap_probed_at = "2026-07-27T09:36:10Z"
+rdap_imported_at = "2026-07-29T09:59:18Z"
+rdap_probed_at = "2026-07-29T09:59:18Z"
 forbidden_nominet_count = 64
 forbidden_nominet_hash = "aa793b4828af623c"
 forbidden_nominet_fetched_at = "2026-06-15T09:07:18Z"
@@ -1573,16 +1573,22 @@ rdap = "https://rdap.registro.br"
 [zone.bv]
 
 [zone.bw]
+rdap = "https://rdap.nic.net.bw"
 
 [zone."ac.bw"]
+rdap = "https://rdap.nic.net.bw"
 
 [zone."co.bw"]
+rdap = "https://rdap.nic.net.bw"
 
 [zone."gov.bw"]
+rdap = "https://rdap.nic.net.bw"
 
 [zone."net.bw"]
+rdap = "https://rdap.nic.net.bw"
 
 [zone."org.bw"]
+rdap = "https://rdap.nic.net.bw"
 
 [zone.by]
 
@@ -1676,7 +1682,7 @@ rdap = "https://rdap.nic.ci"
 [zone."ac.ci"]
 rdap = "https://rdap.nic.ci"
 
-[zone."aéroport.ci"]
+[zone."xn--aroport-bya.ci"]
 rdap = "https://rdap.nic.ci"
 
 [zone."asso.ci"]
@@ -1753,11 +1759,11 @@ rdap = "https://rdap.nic.cm"
 
 [zone."org.cn"]
 
-[zone."公司.cn"]
+[zone."xn--55qx5d.cn"]
 
-[zone."網絡.cn"]
+[zone."xn--od0alg.cn"]
 
-[zone."网络.cn"]
+[zone."xn--io0a7i.cn"]
 
 [zone."ah.cn"]
 
@@ -1962,6 +1968,7 @@ rdap = "https://rdap.nic.cz"
 rdap = "https://rdap.nic.cz"
 
 [zone.de]
+rdap = "https://rdap.denic.de"
 
 [zone.dj]
 
@@ -2564,35 +2571,35 @@ rdap = "https://rdap.registry.gy"
 
 [zone."org.hk"]
 
-[zone."个人.hk"]
+[zone."xn--ciqpn.hk"]
 
-[zone."個人.hk"]
+[zone."xn--gmqw5a.hk"]
 
-[zone."公司.hk"]
+[zone."xn--55qx5d.hk"]
 
-[zone."政府.hk"]
+[zone."xn--mxtq1m.hk"]
 
-[zone."敎育.hk"]
+[zone."xn--lcvr32d.hk"]
 
-[zone."教育.hk"]
+[zone."xn--wcvs22d.hk"]
 
-[zone."箇人.hk"]
+[zone."xn--gmq050i.hk"]
 
-[zone."組織.hk"]
+[zone."xn--uc0atv.hk"]
 
-[zone."組织.hk"]
+[zone."xn--uc0ay4a.hk"]
 
-[zone."網絡.hk"]
+[zone."xn--od0alg.hk"]
 
-[zone."網络.hk"]
+[zone."xn--zf0avx.hk"]
 
-[zone."组織.hk"]
+[zone."xn--mk0axi.hk"]
 
-[zone."组织.hk"]
+[zone."xn--tn0ag.hk"]
 
-[zone."网絡.hk"]
+[zone."xn--od0aq3b.hk"]
 
-[zone."网络.hk"]
+[zone."xn--io0a7i.hk"]
 
 [zone.hm]
 
@@ -2787,7 +2794,7 @@ rdap = "https://rdap.pandi.id/rdap"
 [zone."web.id"]
 rdap = "https://rdap.pandi.id/rdap"
 
-[zone."ᬩᬮᬶ.id"]
+[zone."xn--9tfky.id"]
 rdap = "https://rdap.pandi.id/rdap"
 
 [zone.ie]
@@ -2812,15 +2819,15 @@ rdap = "https://rdap.pandi.id/rdap"
 
 [zone."org.il"]
 
-[zone."ישראל"]
+[zone.xn--4dbrk0ce]
 
-[zone."אקדמיה.ישראל"]
+[zone."xn--4dbgdty6c.xn--4dbrk0ce"]
 
-[zone."ישוב.ישראל"]
+[zone."xn--5dbhl8d.xn--4dbrk0ce"]
 
-[zone."צהל.ישראל"]
+[zone."xn--8dbq2a.xn--4dbrk0ce"]
 
-[zone."ממשל.ישראל"]
+[zone."xn--hebda8b.xn--4dbrk0ce"]
 
 [zone.im]
 
@@ -3029,9 +3036,9 @@ rdap = "https://rdap.iana.org"
 
 [zone."sch.ir"]
 
-[zone."ایران.ir"]
+[zone."xn--mgba3a4f16a.ir"]
 
-[zone."ايران.ir"]
+[zone."xn--mgba3a4fra.ir"]
 
 [zone.is]
 rdap = "https://rdap.isnic.is/rdap"
@@ -3148,11 +3155,11 @@ rdap = "https://rdap.isnic.is/rdap"
 
 [zone."trentin-sud-tirol.it"]
 
-[zone."trentin-süd-tirol.it"]
+[zone."xn--trentin-sd-tirol-rzb.it"]
 
 [zone."trentin-sudtirol.it"]
 
-[zone."trentin-südtirol.it"]
+[zone."xn--trentin-sdtirol-7vb.it"]
 
 [zone."trentin-sued-tirol.it"]
 
@@ -3174,11 +3181,11 @@ rdap = "https://rdap.isnic.is/rdap"
 
 [zone."trentino-sud-tirol.it"]
 
-[zone."trentino-süd-tirol.it"]
+[zone."xn--trentino-sd-tirol-c3b.it"]
 
 [zone."trentino-sudtirol.it"]
 
-[zone."trentino-südtirol.it"]
+[zone."xn--trentino-sdtirol-szb.it"]
 
 [zone."trentino-sued-tirol.it"]
 
@@ -3198,11 +3205,11 @@ rdap = "https://rdap.isnic.is/rdap"
 
 [zone."trentinosud-tirol.it"]
 
-[zone."trentinosüd-tirol.it"]
+[zone."xn--trentinosd-tirol-rzb.it"]
 
 [zone."trentinosudtirol.it"]
 
-[zone."trentinosüdtirol.it"]
+[zone."xn--trentinosdtirol-7vb.it"]
 
 [zone."trentinosued-tirol.it"]
 
@@ -3210,11 +3217,11 @@ rdap = "https://rdap.isnic.is/rdap"
 
 [zone."trentinsud-tirol.it"]
 
-[zone."trentinsüd-tirol.it"]
+[zone."xn--trentinsd-tirol-6vb.it"]
 
 [zone."trentinsudtirol.it"]
 
-[zone."trentinsüdtirol.it"]
+[zone."xn--trentinsdtirol-nsb.it"]
 
 [zone."trentinsued-tirol.it"]
 
@@ -3248,19 +3255,19 @@ rdap = "https://rdap.isnic.is/rdap"
 
 [zone."vallee-aoste.it"]
 
-[zone."vallée-aoste.it"]
+[zone."xn--valle-aoste-ebb.it"]
 
 [zone."vallee-d-aoste.it"]
 
-[zone."vallée-d-aoste.it"]
+[zone."xn--valle-d-aoste-ehb.it"]
 
 [zone."valleeaoste.it"]
 
-[zone."valléeaoste.it"]
+[zone."xn--valleaoste-e7a.it"]
 
 [zone."valleedaoste.it"]
 
-[zone."valléedaoste.it"]
+[zone."xn--valledaoste-ebb.it"]
 
 [zone."vao.it"]
 
@@ -3328,7 +3335,7 @@ rdap = "https://rdap.isnic.is/rdap"
 
 [zone."balsan-sudtirol.it"]
 
-[zone."balsan-südtirol.it"]
+[zone."xn--balsan-sdtirol-nsb.it"]
 
 [zone."balsan-suedtirol.it"]
 
@@ -3366,7 +3373,7 @@ rdap = "https://rdap.isnic.is/rdap"
 
 [zone."bozen-sudtirol.it"]
 
-[zone."bozen-südtirol.it"]
+[zone."xn--bozen-sdtirol-2ob.it"]
 
 [zone."bozen-suedtirol.it"]
 
@@ -3384,7 +3391,7 @@ rdap = "https://rdap.isnic.is/rdap"
 
 [zone."bulsan-sudtirol.it"]
 
-[zone."bulsan-südtirol.it"]
+[zone."xn--bulsan-sdtirol-nsb.it"]
 
 [zone."bulsan-suedtirol.it"]
 
@@ -3422,11 +3429,11 @@ rdap = "https://rdap.isnic.is/rdap"
 
 [zone."cesena-forli.it"]
 
-[zone."cesena-forlì.it"]
+[zone."xn--cesena-forl-mcb.it"]
 
 [zone."cesenaforli.it"]
 
-[zone."cesenaforlì.it"]
+[zone."xn--cesenaforl-i8a.it"]
 
 [zone."ch.it"]
 
@@ -3488,11 +3495,11 @@ rdap = "https://rdap.isnic.is/rdap"
 
 [zone."forli-cesena.it"]
 
-[zone."forlì-cesena.it"]
+[zone."xn--forl-cesena-fcb.it"]
 
 [zone."forlicesena.it"]
 
-[zone."forlìcesena.it"]
+[zone."xn--forlcesena-c8a.it"]
 
 [zone."fr.it"]
 
@@ -3752,7 +3759,7 @@ rdap = "https://rdap.isnic.is/rdap"
 
 [zone."ss.it"]
 
-[zone."südtirol.it"]
+[zone."xn--sdtirol-n2a.it"]
 
 [zone."suedtirol.it"]
 
@@ -4005,99 +4012,99 @@ rdap = "https://rdap.nominet.uk/jobs"
 
 [zone."yamanashi.jp"]
 
-[zone."三重.jp"]
+[zone."xn--ehqz56n.jp"]
 
-[zone."京都.jp"]
+[zone."xn--1lqs03n.jp"]
 
-[zone."佐賀.jp"]
+[zone."xn--qqqt11m.jp"]
 
-[zone."兵庫.jp"]
+[zone."xn--f6qx53a.jp"]
 
-[zone."北海道.jp"]
+[zone."xn--djrs72d6uy.jp"]
 
-[zone."千葉.jp"]
+[zone."xn--mkru45i.jp"]
 
-[zone."和歌山.jp"]
+[zone."xn--0trq7p7nn.jp"]
 
-[zone."埼玉.jp"]
+[zone."xn--5js045d.jp"]
 
-[zone."大分.jp"]
+[zone."xn--kbrq7o.jp"]
 
-[zone."大阪.jp"]
+[zone."xn--pssu33l.jp"]
 
-[zone."奈良.jp"]
+[zone."xn--ntsq17g.jp"]
 
-[zone."宮城.jp"]
+[zone."xn--uisz3g.jp"]
 
-[zone."宮崎.jp"]
+[zone."xn--6btw5a.jp"]
 
-[zone."富山.jp"]
+[zone."xn--1ctwo.jp"]
 
-[zone."山口.jp"]
+[zone."xn--6orx2r.jp"]
 
-[zone."山形.jp"]
+[zone."xn--rht61e.jp"]
 
-[zone."山梨.jp"]
+[zone."xn--rht27z.jp"]
 
-[zone."岐阜.jp"]
+[zone."xn--nit225k.jp"]
 
-[zone."岡山.jp"]
+[zone."xn--rht3d.jp"]
 
-[zone."岩手.jp"]
+[zone."xn--djty4k.jp"]
 
-[zone."島根.jp"]
+[zone."xn--klty5x.jp"]
 
-[zone."広島.jp"]
+[zone."xn--kltx9a.jp"]
 
-[zone."徳島.jp"]
+[zone."xn--kltp7d.jp"]
 
-[zone."愛媛.jp"]
+[zone."xn--c3s14m.jp"]
 
-[zone."愛知.jp"]
+[zone."xn--vgu402c.jp"]
 
-[zone."新潟.jp"]
+[zone."xn--efvn9s.jp"]
 
-[zone."東京.jp"]
+[zone."xn--1lqs71d.jp"]
 
-[zone."栃木.jp"]
+[zone."xn--4pvxs.jp"]
 
-[zone."沖縄.jp"]
+[zone."xn--uuwu58a.jp"]
 
-[zone."滋賀.jp"]
+[zone."xn--zbx025d.jp"]
 
-[zone."熊本.jp"]
+[zone."xn--8pvr4u.jp"]
 
-[zone."石川.jp"]
+[zone."xn--5rtp49c.jp"]
 
-[zone."神奈川.jp"]
+[zone."xn--ntso0iqx3a.jp"]
 
-[zone."福井.jp"]
+[zone."xn--elqq16h.jp"]
 
-[zone."福岡.jp"]
+[zone."xn--4it168d.jp"]
 
-[zone."福島.jp"]
+[zone."xn--klt787d.jp"]
 
-[zone."秋田.jp"]
+[zone."xn--rny31h.jp"]
 
-[zone."群馬.jp"]
+[zone."xn--7t0a264c.jp"]
 
-[zone."茨城.jp"]
+[zone."xn--uist22h.jp"]
 
-[zone."長崎.jp"]
+[zone."xn--8ltr62k.jp"]
 
-[zone."長野.jp"]
+[zone."xn--2m4a15e.jp"]
 
-[zone."青森.jp"]
+[zone."xn--32vp30h.jp"]
 
-[zone."静岡.jp"]
+[zone."xn--4it797k.jp"]
 
-[zone."香川.jp"]
+[zone."xn--5rtq34k.jp"]
 
-[zone."高知.jp"]
+[zone."xn--k7yn95e.jp"]
 
-[zone."鳥取.jp"]
+[zone."xn--tor131o.jp"]
 
-[zone."鹿児島.jp"]
+[zone."xn--d5qv7z876c.jp"]
 
 [zone."aisai.aichi.jp"]
 
@@ -8515,13 +8522,13 @@ rdap = "https://rdap.norid.no"
 [zone."akrehamn.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."åkrehamn.no"]
+[zone."xn--krehamn-dxa.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."algard.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."ålgård.no"]
+[zone."xn--lgrd-poac.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."arna.no"]
@@ -8530,7 +8537,7 @@ rdap = "https://rdap.norid.no"
 [zone."bronnoysund.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."brønnøysund.no"]
+[zone."xn--brnnysund-m8ac.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."brumunddal.no"]
@@ -8542,7 +8549,7 @@ rdap = "https://rdap.norid.no"
 [zone."drobak.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."drøbak.no"]
+[zone."xn--drbak-wua.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."egersund.no"]
@@ -8554,7 +8561,7 @@ rdap = "https://rdap.norid.no"
 [zone."floro.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."florø.no"]
+[zone."xn--flor-jra.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."fredrikstad.no"]
@@ -8566,7 +8573,7 @@ rdap = "https://rdap.norid.no"
 [zone."honefoss.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."hønefoss.no"]
+[zone."xn--hnefoss-q1a.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."jessheim.no"]
@@ -8575,7 +8582,7 @@ rdap = "https://rdap.norid.no"
 [zone."jorpeland.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."jørpeland.no"]
+[zone."xn--jrpeland-54a.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."kirkenes.no"]
@@ -8590,7 +8597,7 @@ rdap = "https://rdap.norid.no"
 [zone."langevag.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."langevåg.no"]
+[zone."xn--langevg-jxa.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."leirvik.no"]
@@ -8599,7 +8606,7 @@ rdap = "https://rdap.norid.no"
 [zone."mjondalen.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."mjøndalen.no"]
+[zone."xn--mjndalen-64a.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."mo-i-rana.no"]
@@ -8608,7 +8615,7 @@ rdap = "https://rdap.norid.no"
 [zone."mosjoen.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."mosjøen.no"]
+[zone."xn--mosjen-eya.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."nesoddtangen.no"]
@@ -8620,19 +8627,19 @@ rdap = "https://rdap.norid.no"
 [zone."osoyro.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."osøyro.no"]
+[zone."xn--osyro-wua.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."raholt.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."råholt.no"]
+[zone."xn--rholt-mra.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."sandnessjoen.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."sandnessjøen.no"]
+[zone."xn--sandnessjen-ogb.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."skedsmokorset.no"]
@@ -8653,7 +8660,7 @@ rdap = "https://rdap.norid.no"
 [zone."stjordalshalsen.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."stjørdalshalsen.no"]
+[zone."xn--stjrdalshalsen-sqb.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."tananger.no"]
@@ -8674,7 +8681,7 @@ rdap = "https://rdap.norid.no"
 [zone."afjord.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."åfjord.no"]
+[zone."xn--fjord-lra.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."agdenes.no"]
@@ -8686,25 +8693,25 @@ rdap = "https://rdap.norid.no"
 [zone."aknoluokta.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."ákŋoluokta.no"]
+[zone."xn--koluokta-7ya57h.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."al.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."ål.no"]
+[zone."xn--l-1fa.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."alaheadju.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."álaheadju.no"]
+[zone."xn--laheadju-7ya.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."alesund.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."ålesund.no"]
+[zone."xn--lesund-hua.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."alstahaug.no"]
@@ -8713,7 +8720,7 @@ rdap = "https://rdap.norid.no"
 [zone."alta.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."áltá.no"]
+[zone."xn--lt-liac.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."alvdal.no"]
@@ -8722,13 +8729,13 @@ rdap = "https://rdap.norid.no"
 [zone."amli.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."åmli.no"]
+[zone."xn--mli-tla.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."amot.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."åmot.no"]
+[zone."xn--mot-tla.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."andasuolo.no"]
@@ -8740,13 +8747,13 @@ rdap = "https://rdap.norid.no"
 [zone."andoy.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."andøy.no"]
+[zone."xn--andy-ira.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."ardal.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."årdal.no"]
+[zone."xn--rdal-poa.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."aremark.no"]
@@ -8755,13 +8762,13 @@ rdap = "https://rdap.norid.no"
 [zone."arendal.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."ås.no"]
+[zone."xn--s-1fa.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."aseral.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."åseral.no"]
+[zone."xn--seral-lra.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."asker.no"]
@@ -8773,7 +8780,7 @@ rdap = "https://rdap.norid.no"
 [zone."askoy.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."askøy.no"]
+[zone."xn--asky-ira.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."askvoll.no"]
@@ -8782,7 +8789,7 @@ rdap = "https://rdap.norid.no"
 [zone."asnes.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."åsnes.no"]
+[zone."xn--snes-poa.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."audnedaln.no"]
@@ -8800,7 +8807,7 @@ rdap = "https://rdap.norid.no"
 [zone."aurskog-holand.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."aurskog-høland.no"]
+[zone."xn--aurskog-hland-jnb.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."austevoll.no"]
@@ -8812,46 +8819,46 @@ rdap = "https://rdap.norid.no"
 [zone."averoy.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."averøy.no"]
+[zone."xn--avery-yua.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."badaddja.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."bådåddjå.no"]
+[zone."xn--bdddj-mrabd.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."bærum.no"]
+[zone."xn--brum-voa.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."bahcavuotna.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."báhcavuotna.no"]
+[zone."xn--bhcavuotna-s4a.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."bahccavuotna.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."báhccavuotna.no"]
+[zone."xn--bhccavuotna-k7a.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."baidar.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."báidár.no"]
+[zone."xn--bidr-5nac.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."bajddar.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."bájddar.no"]
+[zone."xn--bjddar-pta.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."balat.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."bálát.no"]
+[zone."xn--blt-elab.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."balestrand.no"]
@@ -8875,13 +8882,13 @@ rdap = "https://rdap.norid.no"
 [zone."batsfjord.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."båtsfjord.no"]
+[zone."xn--btsfjord-9za.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."bearalvahki.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."bearalváhki.no"]
+[zone."xn--bearalvhki-y4a.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."beardu.no"]
@@ -8899,13 +8906,13 @@ rdap = "https://rdap.norid.no"
 [zone."berlevag.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."berlevåg.no"]
+[zone."xn--berlevg-jxa.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."bievat.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."bievát.no"]
+[zone."xn--bievt-0qa.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."bindal.no"]
@@ -8923,7 +8930,7 @@ rdap = "https://rdap.norid.no"
 [zone."bodo.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."bodø.no"]
+[zone."xn--bod-2na.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."bokn.no"]
@@ -8932,7 +8939,7 @@ rdap = "https://rdap.norid.no"
 [zone."bomlo.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."bømlo.no"]
+[zone."xn--bmlo-gra.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."bremanger.no"]
@@ -8941,7 +8948,7 @@ rdap = "https://rdap.norid.no"
 [zone."bronnoy.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."brønnøy.no"]
+[zone."xn--brnny-wuac.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."budejju.no"]
@@ -8959,13 +8966,13 @@ rdap = "https://rdap.norid.no"
 [zone."cahcesuolo.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."čáhcesuolo.no"]
+[zone."xn--hcesuolo-7ya35b.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."davvenjarga.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."davvenjárga.no"]
+[zone."xn--davvenjrga-y4a.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."davvesiida.no"]
@@ -8986,7 +8993,7 @@ rdap = "https://rdap.norid.no"
 [zone."donna.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."dønna.no"]
+[zone."xn--dnna-gra.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."dovre.no"]
@@ -9001,7 +9008,7 @@ rdap = "https://rdap.norid.no"
 [zone."dyroy.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."dyrøy.no"]
+[zone."xn--dyry-ira.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."eid.no"]
@@ -9040,7 +9047,7 @@ rdap = "https://rdap.norid.no"
 [zone."evenassi.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."evenášši.no"]
+[zone."xn--eveni-0qa01ga.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."evenes.no"]
@@ -9064,7 +9071,7 @@ rdap = "https://rdap.norid.no"
 [zone."finnoy.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."finnøy.no"]
+[zone."xn--finny-yua.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."fitjar.no"]
@@ -9079,7 +9086,7 @@ rdap = "https://rdap.norid.no"
 [zone."fla.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."flå.no"]
+[zone."xn--fl-zia.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."flakstad.no"]
@@ -9103,7 +9110,7 @@ rdap = "https://rdap.norid.no"
 [zone."forde.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."førde.no"]
+[zone."xn--frde-gra.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."forsand.no"]
@@ -9112,7 +9119,7 @@ rdap = "https://rdap.norid.no"
 [zone."fosnes.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."fræna.no"]
+[zone."xn--frna-woa.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."frana.no"]
@@ -9133,7 +9140,7 @@ rdap = "https://rdap.norid.no"
 [zone."froya.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."frøya.no"]
+[zone."xn--frya-hra.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."fuoisku.no"]
@@ -9151,13 +9158,13 @@ rdap = "https://rdap.norid.no"
 [zone."gaivuotna.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."gáivuotna.no"]
+[zone."xn--givuotna-8ya.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."galsa.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."gálsá.no"]
+[zone."xn--gls-elac.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."gamvik.no"]
@@ -9166,7 +9173,7 @@ rdap = "https://rdap.norid.no"
 [zone."gangaviika.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."gáŋgaviika.no"]
+[zone."xn--ggaviika-8ya47h.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."gaular.no"]
@@ -9181,7 +9188,7 @@ rdap = "https://rdap.norid.no"
 [zone."gildeskal.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."gildeskål.no"]
+[zone."xn--gildeskl-g0a.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."giske.no"]
@@ -9202,7 +9209,7 @@ rdap = "https://rdap.norid.no"
 [zone."gjovik.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."gjøvik.no"]
+[zone."xn--gjvik-wua.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."gloppen.no"]
@@ -9241,19 +9248,19 @@ rdap = "https://rdap.norid.no"
 [zone."ha.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."hå.no"]
+[zone."xn--h-2fa.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."habmer.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."hábmer.no"]
+[zone."xn--hbmer-xqa.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."hadsel.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."hægebostad.no"]
+[zone."xn--hgebostad-g3a.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."hagebostad.no"]
@@ -9274,7 +9281,7 @@ rdap = "https://rdap.norid.no"
 [zone."hammarfeasta.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."hámmárfeasta.no"]
+[zone."xn--hmmrfeasta-s4ac.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."hammerfest.no"]
@@ -9283,7 +9290,7 @@ rdap = "https://rdap.norid.no"
 [zone."hapmir.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."hápmir.no"]
+[zone."xn--hpmir-xqa.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."haram.no"]
@@ -9310,7 +9317,7 @@ rdap = "https://rdap.norid.no"
 [zone."valer.hedmark.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."våler.hedmark.no"]
+[zone."xn--vler-qoa.hedmark.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."hemne.no"]
@@ -9334,7 +9341,7 @@ rdap = "https://rdap.norid.no"
 [zone."hobol.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."hobøl.no"]
+[zone."xn--hobl-ira.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."hof.no"]
@@ -9352,7 +9359,7 @@ rdap = "https://rdap.norid.no"
 [zone."holtalen.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."holtålen.no"]
+[zone."xn--holtlen-hxa.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."os.hordaland.no"]
@@ -9367,13 +9374,13 @@ rdap = "https://rdap.norid.no"
 [zone."hoyanger.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."høyanger.no"]
+[zone."xn--hyanger-q1a.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."hoylandet.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."høylandet.no"]
+[zone."xn--hylandet-54a.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."hurdal.no"]
@@ -9394,7 +9401,7 @@ rdap = "https://rdap.norid.no"
 [zone."inderoy.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."inderøy.no"]
+[zone."xn--indery-fya.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."iveland.no"]
@@ -9409,7 +9416,7 @@ rdap = "https://rdap.norid.no"
 [zone."jolster.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."jølster.no"]
+[zone."xn--jlster-bya.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."jondal.no"]
@@ -9418,13 +9425,13 @@ rdap = "https://rdap.norid.no"
 [zone."kafjord.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."kåfjord.no"]
+[zone."xn--kfjord-iua.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."karasjohka.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."kárášjohka.no"]
+[zone."xn--krjohka-hwab49j.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."karasjok.no"]
@@ -9436,7 +9443,7 @@ rdap = "https://rdap.norid.no"
 [zone."karmoy.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."karmøy.no"]
+[zone."xn--karmy-yua.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."kautokeino.no"]
@@ -9445,7 +9452,7 @@ rdap = "https://rdap.norid.no"
 [zone."klabu.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."klæbu.no"]
+[zone."xn--klbu-woa.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."klepp.no"]
@@ -9460,13 +9467,13 @@ rdap = "https://rdap.norid.no"
 [zone."kraanghke.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."kråanghke.no"]
+[zone."xn--kranghke-b0a.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."kragero.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."kragerø.no"]
+[zone."xn--krager-gya.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."kristiansand.no"]
@@ -9478,13 +9485,13 @@ rdap = "https://rdap.norid.no"
 [zone."krodsherad.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."krødsherad.no"]
+[zone."xn--krdsherad-m8a.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."kvæfjord.no"]
+[zone."xn--kvfjord-nxa.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."kvænangen.no"]
+[zone."xn--kvnangen-k0a.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."kvafjord.no"]
@@ -9511,19 +9518,19 @@ rdap = "https://rdap.norid.no"
 [zone."kvitsoy.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."kvitsøy.no"]
+[zone."xn--kvitsy-fya.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."laakesvuemie.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."lærdal.no"]
+[zone."xn--lrdal-sra.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."lahppi.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."láhppi.no"]
+[zone."xn--lhppi-xqa.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."lardal.no"]
@@ -9541,7 +9548,7 @@ rdap = "https://rdap.norid.no"
 [zone."leangaviika.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."leaŋgaviika.no"]
+[zone."xn--leagaviika-52b.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."lebesby.no"]
@@ -9586,7 +9593,7 @@ rdap = "https://rdap.norid.no"
 [zone."lindas.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."lindås.no"]
+[zone."xn--linds-pra.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."lindesnes.no"]
@@ -9595,13 +9602,13 @@ rdap = "https://rdap.norid.no"
 [zone."loabat.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."loabát.no"]
+[zone."xn--loabt-0qa.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."lodingen.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."lødingen.no"]
+[zone."xn--ldingen-q1a.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."lom.no"]
@@ -9613,13 +9620,13 @@ rdap = "https://rdap.norid.no"
 [zone."lorenskog.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."lørenskog.no"]
+[zone."xn--lrenskog-54a.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."loten.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."løten.no"]
+[zone."xn--lten-gra.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."lund.no"]
@@ -9631,7 +9638,7 @@ rdap = "https://rdap.norid.no"
 [zone."luroy.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."lurøy.no"]
+[zone."xn--lury-ira.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."luster.no"]
@@ -9646,13 +9653,13 @@ rdap = "https://rdap.norid.no"
 [zone."malatvuopmi.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."málatvuopmi.no"]
+[zone."xn--mlatvuopmi-s4a.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."malselv.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."målselv.no"]
+[zone."xn--mlselv-iua.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."malvik.no"]
@@ -9673,13 +9680,13 @@ rdap = "https://rdap.norid.no"
 [zone."masoy.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."måsøy.no"]
+[zone."xn--msy-ula0h.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."matta-varjjat.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."mátta-várjjat.no"]
+[zone."xn--mtta-vrjjat-k7af.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."meland.no"]
@@ -9694,13 +9701,13 @@ rdap = "https://rdap.norid.no"
 [zone."meloy.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."meløy.no"]
+[zone."xn--mely-ira.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."meraker.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."meråker.no"]
+[zone."xn--merker-kua.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."midsund.no"]
@@ -9712,7 +9719,7 @@ rdap = "https://rdap.norid.no"
 [zone."moareke.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."moåreke.no"]
+[zone."xn--moreke-jua.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."modalen.no"]
@@ -9730,10 +9737,10 @@ rdap = "https://rdap.norid.no"
 [zone."sande.more-og-romsdal.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."herøy.møre-og-romsdal.no"]
+[zone."xn--hery-ira.xn--mre-og-romsdal-qqb.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."sande.møre-og-romsdal.no"]
+[zone."sande.xn--mre-og-romsdal-qqb.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."moskenes.no"]
@@ -9745,16 +9752,16 @@ rdap = "https://rdap.norid.no"
 [zone."muosat.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."muosát.no"]
+[zone."xn--muost-0qa.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."naamesjevuemie.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."nååmesjevuemie.no"]
+[zone."xn--nmesjevuemie-tcba.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."nærøy.no"]
+[zone."xn--nry-yla5g.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."namdalseid.no"]
@@ -9784,7 +9791,7 @@ rdap = "https://rdap.norid.no"
 [zone."navuotna.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."návuotna.no"]
+[zone."xn--nvuotna-hwa.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."nedre-eiker.no"]
@@ -9826,13 +9833,13 @@ rdap = "https://rdap.norid.no"
 [zone."bo.nordland.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."bø.nordland.no"]
+[zone."xn--b-5ga.nordland.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."heroy.nordland.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."herøy.nordland.no"]
+[zone."xn--hery-ira.nordland.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."nordre-land.no"]
@@ -9850,7 +9857,7 @@ rdap = "https://rdap.norid.no"
 [zone."notteroy.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."nøtterøy.no"]
+[zone."xn--nttery-byae.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."odda.no"]
@@ -9859,7 +9866,7 @@ rdap = "https://rdap.norid.no"
 [zone."oksnes.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."øksnes.no"]
+[zone."xn--ksnes-uua.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."omasvuotna.no"]
@@ -9871,7 +9878,7 @@ rdap = "https://rdap.norid.no"
 [zone."oppegard.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."oppegård.no"]
+[zone."xn--oppegrd-ixa.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."orkdal.no"]
@@ -9880,19 +9887,19 @@ rdap = "https://rdap.norid.no"
 [zone."orland.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."ørland.no"]
+[zone."xn--rland-uua.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."orskog.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."ørskog.no"]
+[zone."xn--rskog-uua.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."orsta.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."ørsta.no"]
+[zone."xn--rsta-fra.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."osen.no"]
@@ -9901,19 +9908,19 @@ rdap = "https://rdap.norid.no"
 [zone."osteroy.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."osterøy.no"]
+[zone."xn--ostery-fya.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."valer.ostfold.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."våler.østfold.no"]
+[zone."xn--vler-qoa.xn--stfold-9xa.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."ostre-toten.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."østre-toten.no"]
+[zone."xn--stre-toten-zcb.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."overhalla.no"]
@@ -9922,25 +9929,25 @@ rdap = "https://rdap.norid.no"
 [zone."ovre-eiker.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."øvre-eiker.no"]
+[zone."xn--vre-eiker-k8a.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."oyer.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."øyer.no"]
+[zone."xn--yer-zna.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."oygarden.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."øygarden.no"]
+[zone."xn--ygarden-p1a.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."oystre-slidre.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."øystre-slidre.no"]
+[zone."xn--ystre-slidre-ujb.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."porsanger.no"]
@@ -9949,7 +9956,7 @@ rdap = "https://rdap.norid.no"
 [zone."porsangu.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."porsáŋgu.no"]
+[zone."xn--porsgu-sta26f.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."porsgrunn.no"]
@@ -9958,28 +9965,28 @@ rdap = "https://rdap.norid.no"
 [zone."rade.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."råde.no"]
+[zone."xn--rde-ula.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."radoy.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."radøy.no"]
+[zone."xn--rady-ira.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."rælingen.no"]
+[zone."xn--rlingen-mxa.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."rahkkeravju.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."ráhkkerávju.no"]
+[zone."xn--rhkkervju-01af.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."raisa.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."ráisa.no"]
+[zone."xn--risa-5na.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."rakkestad.no"]
@@ -10006,7 +10013,7 @@ rdap = "https://rdap.norid.no"
 [zone."rennesoy.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."rennesøy.no"]
+[zone."xn--rennesy-v1a.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."rindal.no"]
@@ -10024,7 +10031,7 @@ rdap = "https://rdap.norid.no"
 [zone."risor.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."risør.no"]
+[zone."xn--risr-ira.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."rissa.no"]
@@ -10036,7 +10043,7 @@ rdap = "https://rdap.norid.no"
 [zone."rodoy.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."rødøy.no"]
+[zone."xn--rdy-0nab.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."rollag.no"]
@@ -10048,31 +10055,31 @@ rdap = "https://rdap.norid.no"
 [zone."romskog.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."rømskog.no"]
+[zone."xn--rmskog-bya.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."roros.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."røros.no"]
+[zone."xn--rros-gra.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."rost.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."røst.no"]
+[zone."xn--rst-0na.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."royken.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."røyken.no"]
+[zone."xn--ryken-vua.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."royrvik.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."røyrvik.no"]
+[zone."xn--ryrvik-bya.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."ruovat.no"]
@@ -10087,10 +10094,10 @@ rdap = "https://rdap.norid.no"
 [zone."salat.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."sálat.no"]
+[zone."xn--slat-5na.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."sálát.no"]
+[zone."xn--slt-elab.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."saltdal.no"]
@@ -10108,7 +10115,7 @@ rdap = "https://rdap.norid.no"
 [zone."sandoy.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."sandøy.no"]
+[zone."xn--sandy-yua.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."sarpsborg.no"]
@@ -10147,13 +10154,13 @@ rdap = "https://rdap.norid.no"
 [zone."skanit.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."skánit.no"]
+[zone."xn--sknit-yqa.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."skanland.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."skånland.no"]
+[zone."xn--sknland-fxa.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."skaun.no"]
@@ -10171,7 +10178,7 @@ rdap = "https://rdap.norid.no"
 [zone."skierva.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."skiervá.no"]
+[zone."xn--skierv-uta.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."skiptvet.no"]
@@ -10180,13 +10187,13 @@ rdap = "https://rdap.norid.no"
 [zone."skjak.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."skjåk.no"]
+[zone."xn--skjk-soa.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."skjervoy.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."skjervøy.no"]
+[zone."xn--skjervy-v1a.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."skodje.no"]
@@ -10195,19 +10202,19 @@ rdap = "https://rdap.norid.no"
 [zone."smola.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."smøla.no"]
+[zone."xn--smla-hra.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."snaase.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."snåase.no"]
+[zone."xn--snase-nra.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."snasa.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."snåsa.no"]
+[zone."xn--snsa-roa.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."snillfjord.no"]
@@ -10222,7 +10229,7 @@ rdap = "https://rdap.norid.no"
 [zone."sogne.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."søgne.no"]
+[zone."xn--sgne-gra.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."sokndal.no"]
@@ -10237,13 +10244,13 @@ rdap = "https://rdap.norid.no"
 [zone."somna.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."sømna.no"]
+[zone."xn--smna-gra.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."sondre-land.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."søndre-land.no"]
+[zone."xn--sndre-land-0cb.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."songdalen.no"]
@@ -10252,37 +10259,37 @@ rdap = "https://rdap.norid.no"
 [zone."sor-aurdal.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."sør-aurdal.no"]
+[zone."xn--sr-aurdal-l8a.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."sor-fron.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."sør-fron.no"]
+[zone."xn--sr-fron-q1a.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."sor-odal.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."sør-odal.no"]
+[zone."xn--sr-odal-q1a.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."sor-varanger.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."sør-varanger.no"]
+[zone."xn--sr-varanger-ggb.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."sorfold.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."sørfold.no"]
+[zone."xn--srfold-bya.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."sorreisa.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."sørreisa.no"]
+[zone."xn--srreisa-q1a.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."sortland.no"]
@@ -10291,7 +10298,7 @@ rdap = "https://rdap.norid.no"
 [zone."sorum.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."sørum.no"]
+[zone."xn--srum-gra.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."spydeberg.no"]
@@ -10312,7 +10319,7 @@ rdap = "https://rdap.norid.no"
 [zone."stjordal.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."stjørdal.no"]
+[zone."xn--stjrdal-s1a.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."stokke.no"]
@@ -10369,7 +10376,7 @@ rdap = "https://rdap.norid.no"
 [zone."bo.telemark.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."bø.telemark.no"]
+[zone."xn--b-5ga.telemark.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."time.no"]
@@ -10387,7 +10394,7 @@ rdap = "https://rdap.norid.no"
 [zone."tjome.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."tjøme.no"]
+[zone."xn--tjme-hra.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."tokke.no"]
@@ -10399,13 +10406,13 @@ rdap = "https://rdap.norid.no"
 [zone."tonsberg.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."tønsberg.no"]
+[zone."xn--tnsberg-q1a.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."torsken.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."træna.no"]
+[zone."xn--trna-woa.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."trana.no"]
@@ -10414,7 +10421,7 @@ rdap = "https://rdap.norid.no"
 [zone."tranoy.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."tranøy.no"]
+[zone."xn--trany-yua.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."troandin.no"]
@@ -10423,7 +10430,7 @@ rdap = "https://rdap.norid.no"
 [zone."trogstad.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."trøgstad.no"]
+[zone."xn--trgstad-r1a.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."tromsa.no"]
@@ -10432,7 +10439,7 @@ rdap = "https://rdap.norid.no"
 [zone."tromso.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."tromsø.no"]
+[zone."xn--troms-zua.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."trondheim.no"]
@@ -10456,7 +10463,7 @@ rdap = "https://rdap.norid.no"
 [zone."tysnes.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."tysvær.no"]
+[zone."xn--tysvr-vra.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."tysvar.no"]
@@ -10474,7 +10481,7 @@ rdap = "https://rdap.norid.no"
 [zone."unjarga.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."unjárga.no"]
+[zone."xn--unjrga-rta.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."utsira.no"]
@@ -10486,28 +10493,28 @@ rdap = "https://rdap.norid.no"
 [zone."vadso.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."vadsø.no"]
+[zone."xn--vads-jra.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."værøy.no"]
+[zone."xn--vry-yla5g.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."vaga.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."vågå.no"]
+[zone."xn--vg-yiab.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."vagan.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."vågan.no"]
+[zone."xn--vgan-qoa.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."vagsoy.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."vågsøy.no"]
+[zone."xn--vgsy-qoa0j.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."vaksdal.no"]
@@ -10525,13 +10532,13 @@ rdap = "https://rdap.norid.no"
 [zone."vardo.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."vardø.no"]
+[zone."xn--vard-jra.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."varggat.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."várggát.no"]
+[zone."xn--vrggt-xqad.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."varoy.no"]
@@ -10546,7 +10553,7 @@ rdap = "https://rdap.norid.no"
 [zone."vegarshei.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."vegårshei.no"]
+[zone."xn--vegrshei-c0a.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."vennesla.no"]
@@ -10576,7 +10583,7 @@ rdap = "https://rdap.norid.no"
 [zone."vestvagoy.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."vestvågøy.no"]
+[zone."xn--vestvgy-ixa6o.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."vevelstad.no"]
@@ -10640,7 +10647,7 @@ rdap = "https://rdap.norid.no"
 
 [zone."maori.nz"]
 
-[zone."māori.nz"]
+[zone."xn--mori-qsa.nz"]
 
 [zone."mil.nz"]
 
@@ -13492,206 +13499,227 @@ rdap = "https://rdap.nic.vi"
 [zone."yenbai.vn"]
 
 [zone.vu]
+rdap = "https://rdap.dnrs.vu"
 
 [zone."com.vu"]
+rdap = "https://rdap.dnrs.vu"
 
 [zone."edu.vu"]
+rdap = "https://rdap.dnrs.vu"
 
 [zone."net.vu"]
+rdap = "https://rdap.dnrs.vu"
 
 [zone."org.vu"]
+rdap = "https://rdap.dnrs.vu"
 
 [zone.wf]
 rdap = "https://rdap.nic.wf"
 
 [zone.ws]
+rdap = "https://rdap.website.ws"
 
 [zone."com.ws"]
+rdap = "https://rdap.website.ws"
 
 [zone."edu.ws"]
+rdap = "https://rdap.website.ws"
 
 [zone."gov.ws"]
+rdap = "https://rdap.website.ws"
 
 [zone."net.ws"]
+rdap = "https://rdap.website.ws"
 
 [zone."org.ws"]
+rdap = "https://rdap.website.ws"
 
 [zone.yt]
 rdap = "https://rdap.nic.yt"
 
-[zone."امارات"]
+[zone.xn--mgbaam7a8h]
 
-[zone."հայ"]
+[zone.xn--y9a3aq]
 
-[zone."বাংলা"]
+[zone.xn--54b7fta0cc]
 
-[zone."бг"]
+[zone.xn--90ae]
 
-[zone."البحرين"]
+[zone.xn--mgbcpq6gpa1a]
 
-[zone."бел"]
+[zone.xn--90ais]
 
-[zone."中国"]
+[zone.xn--fiqs8s]
 
-[zone."中國"]
+[zone.xn--fiqz9s]
 
-[zone."الجزائر"]
+[zone.xn--lgbbat1ad8j]
 
-[zone."مصر"]
+[zone.xn--wgbh1c]
 
-[zone."ею"]
+[zone.xn--e1a4c]
 
-[zone."ευ"]
+[zone.xn--qxa6a]
 
-[zone."موريتانيا"]
+[zone.xn--mgbah1a3hjkrd]
 
-[zone."გე"]
+[zone.xn--node]
 
-[zone."ελ"]
+[zone.xn--qxam]
 
-[zone."香港"]
+[zone.xn--j6w193g]
 
-[zone."個人.香港"]
+[zone."xn--gmqw5a.xn--j6w193g"]
 
-[zone."公司.香港"]
+[zone."xn--55qx5d.xn--j6w193g"]
 
-[zone."政府.香港"]
+[zone."xn--mxtq1m.xn--j6w193g"]
 
-[zone."教育.香港"]
+[zone."xn--wcvs22d.xn--j6w193g"]
 
-[zone."組織.香港"]
+[zone."xn--uc0atv.xn--j6w193g"]
 
-[zone."網絡.香港"]
+[zone."xn--od0alg.xn--j6w193g"]
 
-[zone."ಭಾರತ"]
+[zone.xn--2scrj9c]
 
-[zone."ଭାରତ"]
+[zone.xn--3hcrj9c]
 
-[zone."ভাৰত"]
+[zone.xn--45br5cyl]
 
-[zone."भारतम्"]
+[zone.xn--h2breg3eve]
 
-[zone."भारोत"]
+[zone.xn--h2brj9c8c]
 
-[zone."ڀارت"]
+[zone.xn--mgbgu82a]
 
-[zone."ഭാരതം"]
+[zone.xn--rvc1e0am3e]
 
-[zone."भारत"]
+[zone.xn--h2brj9c]
 
-[zone."بارت"]
+[zone.xn--mgbbh1a]
 
-[zone."بھارت"]
+[zone.xn--mgbbh1a71e]
 
-[zone."భారత్"]
+[zone.xn--fpcrj9c3d]
 
-[zone."ભારત"]
+[zone.xn--gecrj9c]
 
-[zone."ਭਾਰਤ"]
+[zone.xn--s9brj9c]
 
-[zone."ভারত"]
+[zone.xn--45brj9c]
 
-[zone."இந்தியா"]
+[zone.xn--xkc2dl3a5ee0h]
 
-[zone."ایران"]
+[zone.xn--mgba3a4f16a]
 
-[zone."ايران"]
+[zone.xn--mgba3a4fra]
 
-[zone."عراق"]
+[zone.xn--mgbtx2b]
 
-[zone."الاردن"]
+[zone.xn--mgbayh7gpa]
 
-[zone."한국"]
+[zone.xn--3e0b707e]
 
-[zone."қаз"]
+[zone.xn--80ao21a]
 
-[zone."ລາວ"]
+[zone.xn--q7ce6a]
 
-[zone."ලංකා"]
+[zone.xn--fzc2c9e2c]
 
-[zone."இலங்கை"]
+[zone.xn--xkc2al3hye2a]
 
-[zone."المغرب"]
+[zone.xn--mgbc0a9azcg]
 
-[zone."мкд"]
+[zone.xn--d1alf]
 
-[zone."мон"]
+[zone.xn--l1acc]
 
-[zone."澳門"]
+[zone.xn--mix891f]
 
-[zone."澳门"]
+[zone.xn--mix082f]
 
-[zone."مليسيا"]
+[zone.xn--mgbx4cd0ab]
 
-[zone."عمان"]
+[zone.xn--mgb9awbf]
 
-[zone."پاکستان"]
+[zone.xn--mgbai9azgqp6j]
 
-[zone."پاكستان"]
+[zone.xn--mgbai9a5eva00b]
 
-[zone."فلسطين"]
+[zone.xn--ygbi2ammx]
 
-[zone."срб"]
+[zone.xn--90a3ac]
 
-[zone."ак.срб"]
+[zone."xn--80au.xn--90a3ac"]
 
-[zone."обр.срб"]
+[zone."xn--90azh.xn--90a3ac"]
 
-[zone."од.срб"]
+[zone."xn--d1at.xn--90a3ac"]
 
-[zone."орг.срб"]
+[zone."xn--c1avg.xn--90a3ac"]
 
-[zone."пр.срб"]
+[zone."xn--o1ac.xn--90a3ac"]
 
-[zone."упр.срб"]
+[zone."xn--o1ach.xn--90a3ac"]
 
-[zone."рф"]
+[zone.xn--p1ai]
 
-[zone."قطر"]
+[zone.xn--wgbl6a]
 
-[zone."السعودية"]
+[zone.xn--mgberp4a5d4ar]
 
-[zone."السعودیة"]
+[zone.xn--mgberp4a5d4a87g]
 
-[zone."السعودیۃ"]
+[zone.xn--mgbqly7c0a67fbc]
 
-[zone."السعوديه"]
+[zone.xn--mgbqly7cvafr]
 
-[zone."سودان"]
+[zone.xn--mgbpl2fh]
 
-[zone."新加坡"]
+[zone.xn--yfro4i67o]
+rdap = "https://rdap.zh.sgnic.sg/rdap"
 
-[zone."சிங்கப்பூர்"]
+[zone.xn--clchc0ea0b2g2a9gcd]
+rdap = "https://rdap.ta.sgnic.sg/rdap"
 
-[zone."سورية"]
+[zone.xn--ogbpf8fl]
 
-[zone."سوريا"]
+[zone.xn--mgbtf8fl]
 
-[zone."ไทย"]
+[zone.xn--o3cw4h]
+rdap = "https://rdap.thains.co.th"
 
-[zone."ทหาร.ไทย"]
+[zone."xn--o3cyx2a.xn--o3cw4h"]
+rdap = "https://rdap.thains.co.th"
 
-[zone."ธุรกิจ.ไทย"]
+[zone."xn--12co0c3b4eva.xn--o3cw4h"]
+rdap = "https://rdap.thains.co.th"
 
-[zone."เน็ต.ไทย"]
+[zone."xn--m3ch0j3a.xn--o3cw4h"]
+rdap = "https://rdap.thains.co.th"
 
-[zone."รัฐบาล.ไทย"]
+[zone."xn--h3cuzk1di.xn--o3cw4h"]
+rdap = "https://rdap.thains.co.th"
 
-[zone."ศึกษา.ไทย"]
+[zone."xn--12c1fe0br.xn--o3cw4h"]
+rdap = "https://rdap.thains.co.th"
 
-[zone."องค์กร.ไทย"]
+[zone."xn--12cfi8ixb8l.xn--o3cw4h"]
+rdap = "https://rdap.thains.co.th"
 
-[zone."تونس"]
+[zone.xn--pgbs0dh]
 
-[zone."台灣"]
+[zone.xn--kpry57d]
+rdap = "https://ccrdap.twnic.tw/taiwan"
 
-[zone."台湾"]
+[zone.xn--kprw13d]
 
-[zone."臺灣"]
+[zone.xn--nnx388a]
 
-[zone."укр"]
+[zone.xn--j1amh]
 
-[zone."اليمن"]
+[zone.xn--mgb2ddes]
 
 [zone.xxx]
 rdap = "https://rdap.nic.xxx"
@@ -16797,185 +16825,275 @@ rdap = "https://rdap.teleinfo.cn"
 [zone.xin]
 rdap = "https://rdap.identitydigital.services/rdap"
 
-[zone."कॉम"]
+[zone.xn--11b4c3d]
+rdap = "https://tld-rdap.verisign.com/xn--11b4c3d/v1"
 
-[zone."セール"]
+[zone.xn--1ck2e1b]
+rdap = "https://rdap.identitydigital.services/rdap"
 
-[zone."佛山"]
+[zone.xn--1qqw23a]
+rdap = "https://restwhois.ngtld.cn"
 
-[zone."慈善"]
+[zone.xn--30rr7y]
+rdap = "https://rdap.zdnsgtld.com/xn--30rr7y"
 
-[zone."集团"]
+[zone.xn--3bst00m]
+rdap = "https://rdap.zdnsgtld.com/xn--3bst00m"
 
-[zone."在线"]
+[zone.xn--3ds443g]
+rdap = "https://rdap.teleinfo.cn/xn--3ds443g"
 
-[zone."点看"]
+[zone.xn--3pxu8k]
+rdap = "https://tld-rdap.verisign.com/xn--3pxu8k/v1"
 
-[zone."คอม"]
+[zone.xn--42c2d9a]
+rdap = "https://tld-rdap.verisign.com/xn--42c2d9a/v1"
 
-[zone."八卦"]
+[zone.xn--45q11c]
+rdap = "https://rdap.zdnsgtld.com/XN--45Q11C"
 
-[zone."موقع"]
+[zone.xn--4gbrim]
+rdap = "https://rdap.centralnic.com/xn--4gbrim"
 
-[zone."公益"]
+[zone.xn--55qw42g]
+rdap = "https://rdap.ngtld.cn"
 
-[zone."公司"]
+[zone.xn--55qx5d]
+rdap = "https://rdap.ngtld.cn"
 
-[zone."香格里拉"]
+[zone.xn--5su34j936bgsg]
+rdap = "https://rdap.identitydigital.services/rdap"
 
-[zone."网站"]
+[zone.xn--5tzm5g]
+rdap = "https://rdap.identitydigital.services/rdap"
 
-[zone."移动"]
+[zone.xn--6frz82g]
+rdap = "https://rdap.identitydigital.services/rdap"
 
-[zone."我爱你"]
+[zone.xn--6qq986b3xl]
+rdap = "https://rdap.zdnsgtld.com/xn--6qq986b3xl"
 
-[zone."москва"]
+[zone.xn--80adxhks]
+rdap = "https://rdap.flexireg.net"
 
-[zone."католик"]
+[zone.xn--80aqecdr1a]
+rdap = "https://rdap.nic.xn--80aqecdr1a"
 
-[zone."онлайн"]
+[zone.xn--80asehdb]
+rdap = "https://rdap.nic.xn--80asehdb"
 
-[zone."сайт"]
+[zone.xn--80aswg]
+rdap = "https://rdap.nic.xn--80aswg"
 
-[zone."联通"]
+[zone.xn--8y0a063a]
+rdap = "https://rdap.zdnsgtld.com/xn--8y0a063a"
 
-[zone."קום"]
+[zone.xn--9dbq2a]
+rdap = "https://tld-rdap.verisign.com/xn--9dbq2a/v1"
 
-[zone."时尚"]
+[zone.xn--9et52u]
+rdap = "https://rdap.zdnsgtld.com/xn--9et52u"
 
-[zone."微博"]
+[zone.xn--9krt00a]
+rdap = "https://rdap.ngtld.cn"
 
-[zone."淡马锡"]
+[zone.xn--b4w605ferd]
+rdap = "https://rdap.identitydigital.services/rdap"
 
-[zone."ファッション"]
+[zone.xn--bck1b9a5dre4c]
+rdap = "https://rdap.identitydigital.services/rdap"
 
-[zone."орг"]
+[zone.xn--c1avg]
+rdap = "https://rdap.publicinterestregistry.org/rdap"
 
-[zone."नेट"]
+[zone.xn--c2br7g]
+rdap = "https://tld-rdap.verisign.com/xn--c2br7g/v1"
 
-[zone."ストア"]
+[zone.xn--cck2b3b]
+rdap = "https://rdap.identitydigital.services/rdap"
 
-[zone."アマゾン"]
+[zone.xn--cckwcxetd]
+rdap = "https://rdap.nominet.uk/xn--cckwcxetd"
 
-[zone."삼성"]
+[zone.xn--cg4bki]
+rdap = "https://nic.samsung/rdap"
 
-[zone."商标"]
+[zone.xn--czr694b]
+rdap = "https://rdap.zdnsgtld.com/xn--czr694b"
 
-[zone."商店"]
+[zone.xn--czrs0t]
+rdap = "https://rdap.identitydigital.services/rdap"
 
-[zone."商城"]
+[zone.xn--czru2d]
+rdap = "https://rdap.zdnsgtld.com/xn--czru2d"
 
-[zone."дети"]
+[zone.xn--d1acj3b]
+rdap = "https://whois.nic.xn--d1acj3b/rdap"
 
-[zone."ポイント"]
+[zone.xn--eckvdtc9d]
+rdap = "https://rdap.identitydigital.services/rdap"
 
-[zone."新闻"]
+[zone.xn--efvy88h]
+rdap = "https://rdap.zdnsgtld.com/XN--EFVY88H"
 
-[zone."家電"]
+[zone.xn--fct429k]
+rdap = "https://rdap.identitydigital.services/rdap"
 
-[zone."كوم"]
+[zone.xn--fhbei]
+rdap = "https://tld-rdap.verisign.com/xn--fhbei/v1"
 
-[zone."中文网"]
+[zone.xn--fiq228c5hs]
+rdap = "https://rdap.teleinfo.cn/xn--fiq228c5hs"
 
-[zone."中信"]
+[zone.xn--fiq64b]
+rdap = "https://rdap.zdnsgtld.com/xn--fiq64b"
 
-[zone."娱乐"]
+[zone.xn--fjq720a]
+rdap = "https://rdap.identitydigital.services/rdap"
 
-[zone."谷歌"]
+[zone.xn--flw351e]
+rdap = "https://pubapi.registry.google/rdap"
 
-[zone."電訊盈科"]
+[zone.xn--fzys8d69uvgm]
+rdap = "https://rdap.identitydigital.services/rdap"
 
-[zone."购物"]
+[zone.xn--g2xx48c]
+rdap = "https://rdap.nic.xn--g2xx48c"
 
-[zone."クラウド"]
+[zone.xn--gckr3f0f]
+rdap = "https://rdap.identitydigital.services/rdap"
 
-[zone."通販"]
+[zone.xn--gk3at1e]
+rdap = "https://rdap.identitydigital.services/rdap"
 
-[zone."网店"]
+[zone.xn--hxt814e]
+rdap = "https://rdap.zdnsgtld.com/xn--hxt814e"
 
-[zone."संगठन"]
+[zone.xn--i1b6b1a6a2e]
+rdap = "https://rdap.publicinterestregistry.org/rdap"
 
-[zone."餐厅"]
+[zone.xn--imr513n]
+rdap = "https://rdap.zdnsgtld.com/xn--imr513n"
 
-[zone."网络"]
+[zone.xn--io0a7i]
+rdap = "https://rdap.ngtld.cn"
 
-[zone."ком"]
+[zone.xn--j1aef]
+rdap = "https://tld-rdap.verisign.com/xn--j1aef/v1"
 
-[zone."亚马逊"]
+[zone.xn--jlq480n2rg]
+rdap = "https://rdap.nominet.uk/xn--jlq480n2rg"
 
-[zone."食品"]
+[zone.xn--jvr189m]
+rdap = "https://rdap.identitydigital.services/rdap"
 
-[zone."飞利浦"]
+[zone.xn--kcrx77d1x4a]
+rdap = "https://rdap.nic.xn--kcrx77d1x4a"
 
-[zone."手机"]
+[zone.xn--kput3i]
+rdap = "https://rdap.teleinfo.cn/xn--kput3i"
 
-[zone."ارامكو"]
+[zone.xn--mgba3a3ejt]
+rdap = "https://rdap.nic.xn--mgba3a3ejt"
 
-[zone."العليان"]
+[zone.xn--mgba7c0bbn0a]
+rdap = "https://rdap.nic.xn--mgba7c0bbn0a"
 
-[zone."بازار"]
+[zone.xn--mgbab2bd]
+rdap = "https://rdap.nic.xn--mgbab2bd"
 
-[zone."ابوظبي"]
+[zone.xn--mgbca7dzdo]
+rdap = "https://rdap.nic.xn--mgbca7dzdo"
 
-[zone."كاثوليك"]
+[zone.xn--mgbi4ecexp]
+rdap = "https://rdap.nic.xn--mgbi4ecexp"
 
-[zone."همراه"]
+[zone.xn--mgbt3dhd]
+rdap = "https://rdap.nominet.uk/xn--mgbt3dhd"
 
-[zone."닷컴"]
+[zone.xn--mk1bu44c]
+rdap = "https://tld-rdap.verisign.com/xn--mk1bu44c/v1"
 
-[zone."政府"]
+[zone.xn--mxtq1m]
+rdap = "https://rdap.twnic.tw/rdap"
 
-[zone."شبكة"]
+[zone.xn--ngbc5azd]
+rdap = "https://rdap.nic.xn--ngbc5azd"
 
-[zone."بيتك"]
+[zone.xn--ngbe9e0a]
+rdap = "https://rdap.registry.kfh/rdap"
 
-[zone."عرب"]
+[zone.xn--ngbrx]
+rdap = "https://rdap.nic.xn--ngbrx"
 
-[zone."机构"]
+[zone.xn--nqv7f]
+rdap = "https://rdap.publicinterestregistry.org/rdap"
 
-[zone."组织机构"]
+[zone.xn--nqv7fs00ema]
+rdap = "https://rdap.publicinterestregistry.org/rdap"
 
-[zone."健康"]
+[zone.xn--nyqy26a]
+rdap = "https://rdap.teleinfo.cn/xn--nyqy26a"
 
-[zone."招聘"]
+[zone.xn--otu796d]
+rdap = "https://rdap.zdnsgtld.com/xn--otu796d"
 
-[zone."рус"]
+[zone.xn--p1acf]
+rdap = "https://rdap.nic.xn--p1acf"
 
-[zone."大拿"]
+[zone.xn--pssy2u]
+rdap = "https://tld-rdap.verisign.com/xn--pssy2u/v1"
 
-[zone."みんな"]
+[zone.xn--q9jyb4c]
+rdap = "https://pubapi.registry.google/rdap"
 
-[zone."グーグル"]
+[zone.xn--qcka1pmc]
+rdap = "https://pubapi.registry.google/rdap"
 
-[zone."世界"]
+[zone.xn--rhqv96g]
+rdap = "https://rdap.teleinfo.cn/xn--rhqv96g"
 
-[zone."書籍"]
+[zone.xn--rovu88b]
+rdap = "https://rdap.identitydigital.services/rdap"
 
-[zone."网址"]
+[zone.xn--ses554g]
+rdap = "https://rdap.zdnsgtld.com/xn--ses554g"
 
-[zone."닷넷"]
+[zone.xn--t60b56a]
+rdap = "https://tld-rdap.verisign.com/xn--t60b56a/v1"
 
-[zone."コム"]
+[zone.xn--tckwe]
+rdap = "https://tld-rdap.verisign.com/xn--tckwe/v1"
 
-[zone."天主教"]
+[zone.xn--tiq49xqyj]
+rdap = "https://rdap.nic.xn--tiq49xqyj"
 
-[zone."游戏"]
+[zone.xn--unup4y]
+rdap = "https://rdap.identitydigital.services/rdap"
 
-[zone."vermögensberater"]
+[zone.xn--vermgensberater-ctb]
+rdap = "https://rdap.centralnic.com/xn--vermgensberater-ctb"
 
-[zone."vermögensberatung"]
+[zone.xn--vermgensberatung-pwb]
+rdap = "https://rdap.centralnic.com/xn--vermgensberatung-pwb"
 
-[zone."企业"]
+[zone.xn--vhquv]
+rdap = "https://rdap.identitydigital.services/rdap"
 
-[zone."信息"]
+[zone.xn--vuq861b]
+rdap = "https://rdap.teleinfo.cn"
 
-[zone."嘉里大酒店"]
+[zone.xn--w4r85el8fhu5dnra]
+rdap = "https://rdap.identitydigital.services/rdap"
 
-[zone."嘉里"]
+[zone.xn--w4rs40l]
+rdap = "https://rdap.identitydigital.services/rdap"
 
-[zone."广东"]
+[zone.xn--xhq521b]
+rdap = "https://restwhois.ngtld.cn"
 
-[zone."政务"]
+[zone.xn--zfr164b]
+rdap = "https://rdap.ngtld.cn"
 
 [zone.xyz]
 rdap = "https://rdap.centralnic.com/xyz"
@@ -17074,10 +17192,10 @@ rdap = "https://rdap.norid.no"
 [zone."audnedal.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."hamarøy.no"]
+[zone."xn--hamary-fya.no"]
 rdap = "https://rdap.norid.no"
 
-[zone."karlsøy.no"]
+[zone."xn--karlsy-fya.no"]
 rdap = "https://rdap.norid.no"
 
 [zone."re.no"]

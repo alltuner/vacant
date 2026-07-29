@@ -38,7 +38,7 @@ ingest-forbidden *args:
 
 # Test the ingest scripts.
 ingest-check:
-    uv run --with pytest pytest ingest/tests
+    uv run --with pytest --with httpx pytest ingest/tests
 
 # Mirror rules/rules.toml into every package's embedded copy.
 sync-rules:

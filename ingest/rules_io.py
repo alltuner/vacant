@@ -43,6 +43,7 @@ def apply_edits(
     meta: dict[str, object] | None = None,
     zone_rdap: dict[str, str] | None = None,
     zone_forbidden: dict[str, list[str]] | None = None,
+    zone_renames: dict[str, str] | None = None,
     new_zones: list[str] | None = None,
 ) -> str:
     """Return `text` with the requested edits applied, touching only changed lines.
@@ -52,6 +53,8 @@ def apply_edits(
       right after the header so it leads the block).
     - `zone_forbidden`: set each zone's `forbidden_labels` array (replacing any
       existing value, inserted right after the header).
+    - `zone_renames`: rewrite each zone's header to the new name, keeping the
+      block's contents and position. Other edits key off the old name.
     - `new_zones`: append these as empty `[zone.<name>]` blocks at the end.
 
     Passing no edits returns the input unchanged byte-for-byte.
@@ -59,6 +62,7 @@ def apply_edits(
     meta = dict(meta or {})
     zone_rdap = dict(zone_rdap or {})
     zone_forbidden = dict(zone_forbidden or {})
+    zone_renames = dict(zone_renames or {})
     new_zones = list(new_zones or [])
 
     out: list[str] = []
@@ -84,10 +88,12 @@ def apply_edits(
             in_meta = header == "[meta]"
             drop_rdap = False
             drop_forbidden = False
-            out.append(line)
             match = _ZONE_HEADER.match(header)
+            name = None
             if match:
                 name = match.group(1) if match.group(1) is not None else match.group(2)
+            out.append(zone_header(zone_renames[name]) if name in zone_renames else line)
+            if match:
                 if name in zone_rdap:
                     out.append(f'rdap = "{zone_rdap[name]}"')
                     drop_rdap = True

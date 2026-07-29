@@ -18,6 +18,11 @@ rdap = "https://rdap.nominet.uk/uk"
 [zone."org.uk"]
 rdap = "https://rdap.nominet.uk/uk"
 forbidden_labels = ["old"]
+
+[zone."москва"]
+rdap = "https://rdap.example/moscow"
+
+[zone."bodø.no"]
 """
 
 
@@ -70,6 +75,35 @@ def test_new_meta_keys_are_appended():
     out = rules_io.apply_edits(BASE, meta={"forbidden_x_count": 3})
     data = tomllib.loads(out)
     assert data["meta"]["forbidden_x_count"] == 3
+
+
+def test_zone_rename_keeps_the_block_contents():
+    out = rules_io.apply_edits(BASE, zone_renames={"москва": "xn--80adxhks"})
+    data = tomllib.loads(out)
+    assert "москва" not in data["zone"]
+    assert data["zone"]["xn--80adxhks"]["rdap"] == "https://rdap.example/moscow"
+
+
+def test_zone_rename_emits_a_bare_key_when_it_can():
+    out = rules_io.apply_edits(BASE, zone_renames={"москва": "xn--80adxhks"})
+    assert "[zone.xn--80adxhks]" in out
+
+
+def test_zone_rename_quotes_a_dotted_name():
+    out = rules_io.apply_edits(BASE, zone_renames={"bodø.no": "xn--bod-2na.no"})
+    assert '[zone."xn--bod-2na.no"]' in out
+    assert "xn--bod-2na.no" in tomllib.loads(out)["zone"]
+
+
+def test_zone_rename_composes_with_rdap():
+    out = rules_io.apply_edits(
+        BASE,
+        zone_renames={"москва": "xn--80adxhks"},
+        zone_rdap={"москва": "https://rdap.example/new"},
+    )
+    data = tomllib.loads(out)
+    assert data["zone"]["xn--80adxhks"]["rdap"] == "https://rdap.example/new"
+    assert out.count("https://rdap.example/moscow") == 0
 
 
 def test_format_label_list():
