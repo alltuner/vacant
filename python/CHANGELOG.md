@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.15](https://github.com/alltuner/vacant/compare/vacant-py-v0.4.14...vacant-py-v0.4.15) (2026-07-29)
+
+
+### Bug Fixes
+
+* reach the TLDs vacant could never confirm ([#174](https://github.com/alltuner/vacant/issues/174)) ([b8949d0](https://github.com/alltuner/vacant/commit/b8949d03ea1f3dc9c06805287412893a3d788394))
+
 ## [0.4.14](https://github.com/alltuner/vacant/compare/vacant-py-v0.4.13...vacant-py-v0.4.14) (2026-07-29)
 
 
