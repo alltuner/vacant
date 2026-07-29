@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.4.13](https://github.com/alltuner/vacant/compare/vacant-js-v0.4.12...vacant-js-v0.4.13) (2026-07-29)
+
+
+### Miscellaneous Chores
+
+* **deps:** update dependency @modelcontextprotocol/sdk to v1.30.0 ([#160](https://github.com/alltuner/vacant/issues/160)) ([573aee0](https://github.com/alltuner/vacant/commit/573aee0b281cb5a0a4cffd31659fd4e3c87ef523))
+* **deps:** update dependency @napi-rs/cli to v3.8.0 ([#161](https://github.com/alltuner/vacant/issues/161)) ([e6d3d6d](https://github.com/alltuner/vacant/commit/e6d3d6dd45f9cc822def4b17afe9fe61eff847c1))
+
 ## [0.4.12](https://github.com/alltuner/vacant/compare/vacant-js-v0.4.11...vacant-js-v0.4.12) (2026-07-28)
 
 
