@@ -1,7 +1,7 @@
 #!/usr/bin/env -S uv run --script
 # /// script
 # requires-python = ">=3.11"
-# dependencies = ["httpx>=0.28"]
+# dependencies = ["httpx>=0.28", "idna>=3.10"]
 # ///
 # ABOUTME: Refresh rules/rules.toml from the Public Suffix List ICANN section.
 # ABOUTME: Run via `uv run ingest/psl.py [--dry-run] [--force]`. Bumps [meta] psl_version + psl_commit.
@@ -14,6 +14,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 import httpx
+import idna
 import rules_io
 
 URL = "https://publicsuffix.org/list/public_suffix_list.dat"
@@ -42,6 +43,20 @@ def parse_header(text: str) -> tuple[str, str]:
     return version, commit
 
 
+def to_ascii(suffix: str) -> str:
+    """The suffix in A-label form.
+
+    The PSL writes IDN suffixes as Unicode, but every lookup arrives already
+    IDNA-encoded, so zones are stored as A-labels or they can never match.
+    """
+    if suffix.isascii():
+        return suffix
+    return ".".join(
+        idna.encode(label, uts46=True, transitional=False).decode("ascii")
+        for label in suffix.split(".")
+    )
+
+
 def parse_icann(text: str) -> list[str]:
     in_section = False
     out: list[str] = []
@@ -56,13 +71,26 @@ def parse_icann(text: str) -> list[str]:
             continue
         if stripped.startswith(("*", "!")):
             continue
-        out.append(stripped.lower())
+        out.append(to_ascii(stripped.lower()))
     return out
 
 
-def new_suffixes(zones: dict, suffixes: list[str]) -> list[str]:
+def renames(zones: dict) -> dict[str, str]:
+    """Existing zones stored under a Unicode name, mapped to their A-label form."""
+    out: dict[str, str] = {}
+    for name in zones:
+        if name.isascii():
+            continue
+        encoded = to_ascii(name)
+        if encoded not in zones:
+            out[name] = encoded
+    return out
+
+
+def new_suffixes(zones: dict, renamed: dict[str, str], suffixes: list[str]) -> list[str]:
     """Suffixes from the PSL not already present as zones, in PSL order."""
-    return [suffix for suffix in suffixes if suffix not in zones]
+    known = set(zones) | set(renamed.values())
+    return [suffix for suffix in suffixes if suffix not in known]
 
 
 def already_current(data: dict, version: str, commit: str) -> bool:
@@ -90,20 +118,29 @@ def main() -> int:
         sys.stdout.write(f"already at PSL version {version} ({commit[:8]})\n")
         return 0
 
+    zones = data.get("zone", {})
     suffixes = parse_icann(text)
-    added = new_suffixes(data.get("zone", {}), suffixes)
+    renamed = renames(zones)
+    added = new_suffixes(zones, renamed, suffixes)
+    for old, new in sorted(renamed.items())[:20]:
+        sys.stdout.write(f"~ {old} -> {new}\n")
+    if len(renamed) > 20:
+        sys.stdout.write(f"  ... and {len(renamed) - 20} more\n")
     for suffix in added[:20]:
         sys.stdout.write(f"+ {suffix}\n")
     if len(added) > 20:
         sys.stdout.write(f"  ... and {len(added) - 20} more\n")
     sys.stdout.write(
-        f"{len(added)} zone(s) added (PSL {version}, commit {commit[:8]})"
+        f"{len(added)} zone(s) added, {len(renamed)} encoded to A-labels"
+        f" (PSL {version}, commit {commit[:8]})"
         f"{'; dry-run, not writing' if args.dry_run else ''}\n"
     )
     if not args.dry_run:
         now = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
         meta = {"psl_version": version, "psl_commit": commit, "psl_imported_at": now}
-        text_out = rules_io.apply_edits(raw, meta=meta, new_zones=added)
+        text_out = rules_io.apply_edits(
+            raw, meta=meta, zone_renames=renamed, new_zones=added
+        )
         RULES.write_text(text_out, encoding="utf-8")
     return 0
 
