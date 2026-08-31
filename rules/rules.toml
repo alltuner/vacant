@@ -6,13 +6,13 @@
 
 [meta]
 # Refreshed by `uv run ingest/psl.py` (in CI weekly).
-psl_version = "2026-07-25_14-20-03_UTC"
-psl_commit = "e1b8015c3b2f0f4f8c18659c2480fc1a22c07b20"
-psl_imported_at = "2026-07-29T09:53:54Z"
+psl_version = "2026-08-29_12-33-06_UTC"
+psl_commit = "e8c9a2b2b2856b6449999dd0ec0d118f364ed0cd"
+psl_imported_at = "2026-08-31T12:18:51Z"
 # Refreshed by `uv run ingest/rdap.py` (in CI weekly).
 rdap_publication = "2026-07-23T02:00:03Z"
-rdap_imported_at = "2026-07-29T09:59:18Z"
-rdap_probed_at = "2026-07-29T09:59:18Z"
+rdap_imported_at = "2026-08-31T12:19:25Z"
+rdap_probed_at = "2026-08-31T12:19:25Z"
 forbidden_nominet_count = 64
 forbidden_nominet_hash = "aa793b4828af623c"
 forbidden_nominet_fetched_at = "2026-06-15T09:07:18Z"
