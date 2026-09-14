@@ -6,13 +6,13 @@
 
 [meta]
 # Refreshed by `uv run ingest/psl.py` (in CI weekly).
-psl_version = "2026-07-25_14-20-03_UTC"
-psl_commit = "e1b8015c3b2f0f4f8c18659c2480fc1a22c07b20"
-psl_imported_at = "2026-07-29T09:53:54Z"
+psl_version = "2026-09-08_12-18-37_UTC"
+psl_commit = "3955e3ec29b94c3cca7bd4509c5f14a7c0959e26"
+psl_imported_at = "2026-09-14T11:22:09Z"
 # Refreshed by `uv run ingest/rdap.py` (in CI weekly).
-rdap_publication = "2026-07-23T02:00:03Z"
-rdap_imported_at = "2026-07-29T09:59:18Z"
-rdap_probed_at = "2026-07-29T09:59:18Z"
+rdap_publication = "2026-09-09T23:00:03Z"
+rdap_imported_at = "2026-09-14T11:22:43Z"
+rdap_probed_at = "2026-09-14T11:22:43Z"
 forbidden_nominet_count = 64
 forbidden_nominet_hash = "aa793b4828af623c"
 forbidden_nominet_fetched_at = "2026-06-15T09:07:18Z"
@@ -11967,18 +11967,25 @@ rdap = "https://rdap.nic.ss"
 [zone."gov.sx"]
 
 [zone.sy]
+rdap = "https://rdap.nic.sy"
 
 [zone."com.sy"]
+rdap = "https://rdap.nic.sy"
 
 [zone."edu.sy"]
+rdap = "https://rdap.nic.sy"
 
 [zone."gov.sy"]
+rdap = "https://rdap.nic.sy"
 
 [zone."mil.sy"]
+rdap = "https://rdap.nic.sy"
 
 [zone."net.sy"]
+rdap = "https://rdap.nic.sy"
 
 [zone."org.sy"]
+rdap = "https://rdap.nic.sy"
 
 [zone.sz]
 
@@ -16025,7 +16032,7 @@ rdap = "https://rdap.centralnic.com/quest"
 rdap = "https://rdap.nic.racing"
 
 [zone.radio]
-rdap = "https://rdap.nic.radio"
+rdap = "https://rdap.centralnic.com/radio"
 
 [zone.read]
 rdap = "https://rdap.nominet.uk/read"
@@ -17206,3 +17213,5 @@ rdap = "https://rdap.norid.no"
 
 [zone.web]
 rdap = "https://tld-rdap.verisign.com/web/v1"
+
+[zone."ia.bo"]
