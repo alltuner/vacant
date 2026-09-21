@@ -6,13 +6,13 @@
 
 [meta]
 # Refreshed by `uv run ingest/psl.py` (in CI weekly).
-psl_version = "2026-07-25_14-20-03_UTC"
-psl_commit = "e1b8015c3b2f0f4f8c18659c2480fc1a22c07b20"
-psl_imported_at = "2026-07-29T09:53:54Z"
+psl_version = "2026-09-20_14-15-26_UTC"
+psl_commit = "645b36c9a51ff0b3718df0ba02f6570aa6921632"
+psl_imported_at = "2026-09-21T11:37:07Z"
 # Refreshed by `uv run ingest/rdap.py` (in CI weekly).
-rdap_publication = "2026-07-23T02:00:03Z"
-rdap_imported_at = "2026-07-29T09:59:18Z"
-rdap_probed_at = "2026-07-29T09:59:18Z"
+rdap_publication = "2026-09-16T19:00:03Z"
+rdap_imported_at = "2026-09-21T11:37:33Z"
+rdap_probed_at = "2026-09-21T11:37:33Z"
 forbidden_nominet_count = 64
 forbidden_nominet_hash = "aa793b4828af623c"
 forbidden_nominet_fetched_at = "2026-06-15T09:07:18Z"
@@ -7605,72 +7605,106 @@ rdap = "https://rdap.nic.kn"
 [zone."tra.kp"]
 
 [zone.kr]
+rdap = "https://rdap.nic.or.kr"
 
 [zone."ac.kr"]
+rdap = "https://rdap.nic.or.kr"
 
 [zone."ai.kr"]
+rdap = "https://rdap.nic.or.kr"
 
 [zone."co.kr"]
+rdap = "https://rdap.nic.or.kr"
 
 [zone."es.kr"]
+rdap = "https://rdap.nic.or.kr"
 
 [zone."go.kr"]
+rdap = "https://rdap.nic.or.kr"
 
 [zone."hs.kr"]
+rdap = "https://rdap.nic.or.kr"
 
 [zone."io.kr"]
+rdap = "https://rdap.nic.or.kr"
 
 [zone."it.kr"]
+rdap = "https://rdap.nic.or.kr"
 
 [zone."kg.kr"]
+rdap = "https://rdap.nic.or.kr"
 
 [zone."me.kr"]
+rdap = "https://rdap.nic.or.kr"
 
 [zone."mil.kr"]
+rdap = "https://rdap.nic.or.kr"
 
 [zone."ms.kr"]
+rdap = "https://rdap.nic.or.kr"
 
 [zone."ne.kr"]
+rdap = "https://rdap.nic.or.kr"
 
 [zone."or.kr"]
+rdap = "https://rdap.nic.or.kr"
 
 [zone."pe.kr"]
+rdap = "https://rdap.nic.or.kr"
 
 [zone."re.kr"]
+rdap = "https://rdap.nic.or.kr"
 
 [zone."sc.kr"]
+rdap = "https://rdap.nic.or.kr"
 
 [zone."busan.kr"]
+rdap = "https://rdap.nic.or.kr"
 
 [zone."chungbuk.kr"]
+rdap = "https://rdap.nic.or.kr"
 
 [zone."chungnam.kr"]
+rdap = "https://rdap.nic.or.kr"
 
 [zone."daegu.kr"]
+rdap = "https://rdap.nic.or.kr"
 
 [zone."daejeon.kr"]
+rdap = "https://rdap.nic.or.kr"
 
 [zone."gangwon.kr"]
+rdap = "https://rdap.nic.or.kr"
 
 [zone."gwangju.kr"]
+rdap = "https://rdap.nic.or.kr"
 
 [zone."gyeongbuk.kr"]
+rdap = "https://rdap.nic.or.kr"
 
 [zone."gyeonggi.kr"]
+rdap = "https://rdap.nic.or.kr"
 
 [zone."gyeongnam.kr"]
+rdap = "https://rdap.nic.or.kr"
 
 [zone."incheon.kr"]
+rdap = "https://rdap.nic.or.kr"
 
 [zone."jeju.kr"]
+rdap = "https://rdap.nic.or.kr"
 
 [zone."jeonbuk.kr"]
+rdap = "https://rdap.nic.or.kr"
 
 [zone."jeonnam.kr"]
+rdap = "https://rdap.nic.or.kr"
 
 [zone."seoul.kr"]
+rdap = "https://rdap.nic.or.kr"
 
 [zone."ulsan.kr"]
+rdap = "https://rdap.nic.or.kr"
 
 [zone.kw]
 
@@ -11967,18 +12001,25 @@ rdap = "https://rdap.nic.ss"
 [zone."gov.sx"]
 
 [zone.sy]
+rdap = "https://rdap.nic.sy"
 
 [zone."com.sy"]
+rdap = "https://rdap.nic.sy"
 
 [zone."edu.sy"]
+rdap = "https://rdap.nic.sy"
 
 [zone."gov.sy"]
+rdap = "https://rdap.nic.sy"
 
 [zone."mil.sy"]
+rdap = "https://rdap.nic.sy"
 
 [zone."net.sy"]
+rdap = "https://rdap.nic.sy"
 
 [zone."org.sy"]
+rdap = "https://rdap.nic.sy"
 
 [zone.sz]
 
@@ -13620,6 +13661,7 @@ rdap = "https://rdap.nic.yt"
 [zone.xn--mgbayh7gpa]
 
 [zone.xn--3e0b707e]
+rdap = "https://rdap.nic.or.kr"
 
 [zone.xn--80ao21a]
 
@@ -16025,7 +16067,7 @@ rdap = "https://rdap.centralnic.com/quest"
 rdap = "https://rdap.nic.racing"
 
 [zone.radio]
-rdap = "https://rdap.nic.radio"
+rdap = "https://rdap.centralnic.com/radio"
 
 [zone.read]
 rdap = "https://rdap.nominet.uk/read"
@@ -17206,3 +17248,5 @@ rdap = "https://rdap.norid.no"
 
 [zone.web]
 rdap = "https://tld-rdap.verisign.com/web/v1"
+
+[zone."ia.bo"]
