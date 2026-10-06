@@ -75,7 +75,7 @@ js-develop: sync-rules
     cd js && npm ci
     cd js && npm run build:napi
 
-# Typecheck + tsup + node:test smoke for the JS package.
+# Typecheck + tsdown + node:test smoke for the JS package.
 js-check: js-develop
     cd js && npm run typecheck
     cd js && npm run build

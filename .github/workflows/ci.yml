@@ -115,7 +115,7 @@ jobs:
         run: npm run build:napi
         working-directory: js
 
-      - name: tsup build
+      - name: tsdown build
         run: npm run build
         working-directory: js
 
