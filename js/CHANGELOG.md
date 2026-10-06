@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.4.16](https://github.com/alltuner/vacant/compare/vacant-js-v0.4.15...vacant-js-v0.4.16) (2026-10-06)
+
+
+### Miscellaneous Chores
+
+* **deps:** refresh rules.toml from PSL + RDAP ([#182](https://github.com/alltuner/vacant/issues/182)) ([0fe2a1e](https://github.com/alltuner/vacant/commit/0fe2a1eb7878038defc64c17cf50bead82d495a1))
+* **deps:** update dependency @napi-rs/cli to v3.10.8 ([#178](https://github.com/alltuner/vacant/issues/178)) ([e03a400](https://github.com/alltuner/vacant/commit/e03a4009edd91b17f6d7aea9a9c34f27ae6910c2))
+* use hello@alltuner.com as author email ([#186](https://github.com/alltuner/vacant/issues/186)) ([8b99d32](https://github.com/alltuner/vacant/commit/8b99d32487004e62906a0342819ad7f0f9adfd46))
+
+
+### Build System
+
+* **js:** generate declarations with TypeScript 7 ([#192](https://github.com/alltuner/vacant/issues/192)) ([a279911](https://github.com/alltuner/vacant/commit/a27991114d864a8f063b17508834315aa67a4282))
+
 ## [0.4.15](https://github.com/alltuner/vacant/compare/vacant-js-v0.4.14...vacant-js-v0.4.15) (2026-07-29)
 
 
