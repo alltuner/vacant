@@ -3,7 +3,7 @@
   "version": "0.4.15",
   "description": "Fast domain availability checker — asks authoritative TLD nameservers directly instead of WHOIS.",
   "license": "MIT",
-  "author": "David Poblador i Garcia <david@poblador.com>",
+  "author": "David Poblador i Garcia <hello@alltuner.com>",
   "homepage": "https://github.com/alltuner/vacant",
   "repository": {
     "type": "git",
