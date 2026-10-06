@@ -60,7 +60,7 @@
   },
   "scripts": {
     "artifacts": "napi artifacts --output-dir .",
-    "build": "tsup",
+    "build": "tsup && tsc -p tsconfig.build.json",
     "build:napi": "napi build --release --platform --manifest-path ../crates/vacant-js/Cargo.toml --output-dir . --package-json-path ./package.json --js index.cjs",
     "build:napi:debug": "napi build --platform --manifest-path ../crates/vacant-js/Cargo.toml --output-dir . --package-json-path ./package.json --js index.cjs",
     "test": "node --test tests/*.test.mjs",
@@ -70,7 +70,7 @@
     "@napi-rs/cli": "^3.4.0",
     "@types/node": "^22.0.0",
     "tsup": "^8.3.0",
-    "typescript": "^6.0.0"
+    "typescript": "^7.0.2"
   },
   "optionalDependencies": {
     "@alltuner/vacant-darwin-arm64": "0.4.0",
