@@ -3,7 +3,7 @@ name = "vacant-pyext"
 version = "0.0.6"
 edition = "2021"
 license = "MIT"
-authors = ["David Poblador i Garcia <david@poblador.com>"]
+authors = ["David Poblador i Garcia <hello@alltuner.com>"]
 description = "PyO3 bindings for the vacant Rust engine — domain availability via authoritative DNS."
 # Internal cdylib for the python wheel; never published to crates.io. The
 # wheel's version comes from python/pyproject.toml — this version field is

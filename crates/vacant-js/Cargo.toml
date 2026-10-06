@@ -3,7 +3,7 @@ name = "vacant-js"
 version = "0.0.6"
 edition = "2021"
 license = "MIT"
-authors = ["David Poblador i Garcia <david@poblador.com>"]
+authors = ["David Poblador i Garcia <hello@alltuner.com>"]
 description = "napi-rs bindings for the vacant Rust engine — domain availability via authoritative DNS."
 # Internal cdylib for the npm package; never published to crates.io. The npm
 # package's version comes from js/package.json — this version field is
