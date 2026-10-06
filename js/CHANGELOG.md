@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.4.17](https://github.com/alltuner/vacant/compare/vacant-js-v0.4.16...vacant-js-v0.4.17) (2026-10-06)
+
+
+### Miscellaneous Chores
+
+* **deps:** update dependency @modelcontextprotocol/sdk to v1.32.1 ([#199](https://github.com/alltuner/vacant/issues/199)) ([05b15c7](https://github.com/alltuner/vacant/commit/05b15c7e0bd751d5db1fc11de5ff100179eb4ba2))
+* **deps:** update dependency @types/node to v22.20.5 ([#188](https://github.com/alltuner/vacant/issues/188)) ([3cfd8fb](https://github.com/alltuner/vacant/commit/3cfd8fb29ada0e210f1d0b07836ab9becfe4759a))
+
+
+### Build System
+
+* **js:** replace tsup with tsdown ([#196](https://github.com/alltuner/vacant/issues/196)) ([66d0428](https://github.com/alltuner/vacant/commit/66d04288f479d0d836b5b294aed95e6b3db85e58))
+
 ## [0.4.16](https://github.com/alltuner/vacant/compare/vacant-js-v0.4.15...vacant-js-v0.4.16) (2026-10-06)
 
 
