@@ -473,7 +473,7 @@ jobs:
         working-directory: js
         run: npm run build:napi
 
-      - name: Build dist (tsup)
+      - name: Build dist (tsdown)
         run: npm run build
         working-directory: js
 

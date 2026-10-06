@@ -53,7 +53,7 @@ function dirHere(): string {
 function loadNative(): NativeBinding {
   // dist/index.{cjs,js} or dist/bin/vacant.js -> walk up to the package root,
   // then load the napi-generated loader. Walk up looking for the file that
-  // exports loadRules (i.e. the napi loader, not a sibling tsup bundle).
+  // exports loadRules (i.e. the napi loader, not a sibling tsdown bundle).
   const here = dirHere()
   const candidates = [
     join(here, '..', 'index.cjs'),

@@ -3,9 +3,8 @@
 
 import { stdin } from 'node:process'
 
-import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
-import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js'
-import { z } from 'zod'
+import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
+import type { z } from 'zod'
 
 import pkg from '../package.json' with { type: 'json' }
 import { checkMany } from './checker.js'
@@ -23,25 +22,23 @@ against the registry (RDAP). Without it, a name with no DNS delegation reports \
 Set verify=true when the user asks whether a specific name is free; leave it false \
 to cheaply screen a large list down to candidates.`
 
-const domainStatus = z.object({ domain: z.string(), status: z.string() })
-
-export async function serve(): Promise<void> {
-  const server = new McpServer({ name: 'vacant', version: pkg.version })
+function registerCheckDomains(server: McpServer, zod: typeof z): void {
+  const domainStatus = zod.object({ domain: zod.string(), status: zod.string() })
 
   server.registerTool(
     'check_domains',
     {
       description: CHECK_DOMAINS_DESCRIPTION,
       inputSchema: {
-        domains: z.array(z.string()).describe('Domain names to check. Blank entries and ones starting with "#" are skipped.'),
-        verify: z
+        domains: zod.array(zod.string()).describe('Domain names to check. Blank entries and ones starting with "#" are skipped.'),
+        verify: zod
           .boolean()
           .default(false)
           .describe('Confirm undelegated names against the registry (RDAP) so they resolve to "available" or "registered" rather than "unconfirmed".'),
       },
       // MCP requires structured output to have an object root, so the per-input
       // list is nested under `result` — matching the Python and Rust servers.
-      outputSchema: { result: z.array(domainStatus) },
+      outputSchema: { result: zod.array(domainStatus) },
     },
     ({ domains, verify }) => {
       const cleaned = domains
@@ -58,6 +55,18 @@ export async function serve(): Promise<void> {
       }
     },
   )
+}
+
+export async function serve(): Promise<void> {
+  // Imported lazily so plain CLI checks never pay the MCP SDK and zod load time.
+  const [{ McpServer }, { StdioServerTransport }, { z }] = await Promise.all([
+    import('@modelcontextprotocol/sdk/server/mcp.js'),
+    import('@modelcontextprotocol/sdk/server/stdio.js'),
+    import('zod'),
+  ])
+
+  const server = new McpServer({ name: 'vacant', version: pkg.version })
+  registerCheckDomains(server, z)
 
   const transport = new StdioServerTransport()
   await server.connect(transport)
