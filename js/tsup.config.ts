@@ -8,6 +8,7 @@ export default defineConfig([
     entry: ['src/index.ts'],
     format: ['esm', 'cjs'],
     outDir: 'dist',
+    // tsup's dts pipeline needs the TypeScript JS compiler API, which TypeScript 7 does not ship.
     dts: false,
     clean: true,
     splitting: false,
