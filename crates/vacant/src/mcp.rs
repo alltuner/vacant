@@ -6,7 +6,7 @@ use std::time::Duration;
 
 use rmcp::handler::server::router::tool::ToolRouter;
 use rmcp::handler::server::wrapper::Parameters;
-use rmcp::model::{Implementation, ServerCapabilities, ServerInfo};
+use rmcp::model::{Implementation, ServerCapabilities, ServerConfig};
 use rmcp::schemars::{self, JsonSchema};
 use rmcp::transport::stdio;
 use rmcp::{tool, tool_handler, tool_router, Json, ServerHandler, ServiceExt};
@@ -120,8 +120,8 @@ impl VacantServer {
 
 #[tool_handler]
 impl ServerHandler for VacantServer {
-    fn get_info(&self) -> ServerInfo {
-        ServerInfo::new(ServerCapabilities::builder().enable_tools().build())
+    fn get_info(&self) -> ServerConfig {
+        ServerConfig::new(ServerCapabilities::builder().enable_tools().build())
             .with_server_info(Implementation::new("vacant", env!("CARGO_PKG_VERSION")))
             .with_instructions("Check domain availability across any TLD via authoritative DNS.")
     }
