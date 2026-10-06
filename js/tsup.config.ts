@@ -1,4 +1,4 @@
-// ABOUTME: tsup build config — emits dual ESM+CJS, plus a Node-shebanged CLI bin.
+// ABOUTME: tsup build config — emits dual ESM+CJS, plus a Node-shebanged CLI bin; `tsc -p tsconfig.build.json` emits the .d.ts.
 // ABOUTME: Native bindings (index.cjs / index.d.ts at repo root) are loaded at runtime, not bundled.
 
 import { defineConfig } from 'tsup'
@@ -8,7 +8,7 @@ export default defineConfig([
     entry: ['src/index.ts'],
     format: ['esm', 'cjs'],
     outDir: 'dist',
-    dts: true,
+    dts: false,
     clean: true,
     splitting: false,
     sourcemap: false,
