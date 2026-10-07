@@ -2502,7 +2502,7 @@ dependencies = [
 
 [[package]]
 name = "vacant"
-version = "0.4.17"
+version = "0.4.18"
 dependencies = [
  "clap",
  "futures",
