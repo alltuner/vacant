@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.19](https://github.com/alltuner/vacant/compare/vacant-py-v0.4.18...vacant-py-v0.4.19) (2026-10-13)
+
+
+### Miscellaneous Chores
+
+* **deps:** refresh rules.toml from PSL + RDAP ([#208](https://github.com/alltuner/vacant/issues/208)) ([19a5ed7](https://github.com/alltuner/vacant/commit/19a5ed74a46c2580f7ac524621943a3ef993d1b7))
+
 ## [0.4.18](https://github.com/alltuner/vacant/compare/vacant-py-v0.4.17...vacant-py-v0.4.18) (2026-10-07)
 
 
