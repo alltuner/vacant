@@ -479,7 +479,7 @@ jobs:
 
       - name: Sync stub versions and publish per-platform stubs (napi prepublish)
         working-directory: js
-        run: npx napi prepublish -t npm
+        run: npx napi prepublish -t npm --no-gh-release
 
       - name: Publish main package to npm
         working-directory: js

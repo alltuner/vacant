@@ -25,7 +25,7 @@
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "bin": {
-    "vacant": "./dist/bin/vacant.cjs"
+    "vacant": "dist/bin/vacant.cjs"
   },
   "exports": {
     ".": {
