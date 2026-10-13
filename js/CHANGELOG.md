@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.4.19](https://github.com/alltuner/vacant/compare/vacant-js-v0.4.18...vacant-js-v0.4.19) (2026-10-13)
+
+
+### Miscellaneous Chores
+
+* **deps:** refresh rules.toml from PSL + RDAP ([#208](https://github.com/alltuner/vacant/issues/208)) ([19a5ed7](https://github.com/alltuner/vacant/commit/19a5ed74a46c2580f7ac524621943a3ef993d1b7))
+* **deps:** update dependency tsdown to v0.23.1 ([#205](https://github.com/alltuner/vacant/issues/205)) ([412da7a](https://github.com/alltuner/vacant/commit/412da7abb74f34dfb2bc93284b52b629ad312a8b))
+
 ## [0.4.18](https://github.com/alltuner/vacant/compare/vacant-js-v0.4.17...vacant-js-v0.4.18) (2026-10-07)
 
 
