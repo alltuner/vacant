@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.20](https://github.com/alltuner/vacant/compare/vacant-js-v0.4.19...vacant-js-v0.4.20) (2026-10-13)
+
+
+### CI/CD Changes
+
+* silence npm publish warnings in the release job ([#211](https://github.com/alltuner/vacant/issues/211)) ([db8b24e](https://github.com/alltuner/vacant/commit/db8b24e4845103f82a84333994b37211d8e03465))
+
 ## [0.4.19](https://github.com/alltuner/vacant/compare/vacant-js-v0.4.18...vacant-js-v0.4.19) (2026-10-13)
 
 

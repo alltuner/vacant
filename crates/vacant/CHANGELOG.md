@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.20](https://github.com/alltuner/vacant/compare/vacant-v0.4.19...vacant-v0.4.20) (2026-10-13)
+
+
+### Miscellaneous Chores
+
+* **vacant:** Synchronize vacant versions
+
 ## [0.4.19](https://github.com/alltuner/vacant/compare/vacant-v0.4.18...vacant-v0.4.19) (2026-10-13)
 
 
