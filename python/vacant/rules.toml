@@ -6,13 +6,13 @@
 
 [meta]
 # Refreshed by `uv run ingest/psl.py` (in CI weekly).
-psl_version = "2026-10-07_07-28-19_UTC"
-psl_commit = "3929462652695bad04f0a27afb600974014a3c8b"
-psl_imported_at = "2026-10-12T14:02:27Z"
+psl_version = "2026-11-08_13-21-08_UTC"
+psl_commit = "7a21dc3491d43db036124fdd6a3a77d1cc44ad8a"
+psl_imported_at = "2026-11-09T14:49:26Z"
 # Refreshed by `uv run ingest/rdap.py` (in CI weekly).
-rdap_publication = "2026-09-30T23:00:03Z"
-rdap_imported_at = "2026-10-12T14:03:04Z"
-rdap_probed_at = "2026-10-12T14:03:04Z"
+rdap_publication = "2026-10-28T22:00:04Z"
+rdap_imported_at = "2026-11-09T14:49:55Z"
+rdap_probed_at = "2026-11-09T14:49:55Z"
 forbidden_nominet_count = 64
 forbidden_nominet_hash = "aa793b4828af623c"
 forbidden_nominet_fetched_at = "2026-06-15T09:07:18Z"
@@ -11718,16 +11718,22 @@ rdap = "https://rdap.nic.sb"
 rdap = "https://rdap.nic.sb"
 
 [zone.sc]
+rdap = "https://rdap.identitydigital.services/rdap"
 
 [zone."com.sc"]
+rdap = "https://rdap.identitydigital.services/rdap"
 
 [zone."edu.sc"]
+rdap = "https://rdap.identitydigital.services/rdap"
 
 [zone."gov.sc"]
+rdap = "https://rdap.identitydigital.services/rdap"
 
 [zone."net.sc"]
+rdap = "https://rdap.identitydigital.services/rdap"
 
 [zone."org.sc"]
+rdap = "https://rdap.identitydigital.services/rdap"
 
 [zone.sd]
 rdap = "https://rdap.nic.sd"
@@ -17257,3 +17263,9 @@ rdap = "https://rdap.norid.no"
 rdap = "https://tld-rdap.verisign.com/web/v1"
 
 [zone."ia.bo"]
+
+[zone."ad.vn"]
+
+[zone."ap.vn"]
+
+[zone."on.vn"]
